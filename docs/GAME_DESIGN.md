@@ -54,4 +54,4 @@ Ordre de découverte : Kévin et Nadia au RDC (dialogue d'intro, choix d'âge), 
 ## Mise à jour 0.6
 - RDC : gobelet de Kévin sur Roger (nettoie 10 s), clope de Nadia sur Dédé (fumoir 60 s), puis portillon bleu
 - Étage 1 : gobelet sur Dylan (nettoie, puis café), ordinateur de l'open space piraté par Nadia = managers à la cafétéria
-- Un état 'clean' puis 'coffee' dans 38_enemies_ai.js, fonctions goCoffee/smokeBreak/managersCoffee dans 34_noise.js
+- Un état 'clean' puis 'coffee' dans game/enemiesAi.ts, fonctions goCoffee/smokeBreak/managersCoffee dans game/noise.ts

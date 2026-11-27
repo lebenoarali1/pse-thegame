@@ -1,38 +1,41 @@
 # Architecture
 
 ## Principe
-`src/js/*.js` sont des fichiers de code assemblés par `build.mjs` dans l'ordre alphabétique en un seul script (portée commune, pas de modules). Les numéros de fichiers donnent l'ordre d'exécution : les données d'abord, la logique ensuite, le rendu et l'interface à la fin. Phase suivante prévue : vrais modules TypeScript.
+Le jeu est écrit en TypeScript, en vrais modules ES (`src/game/*.ts`), construits par Vite. `src/main.ts` charge le style puis `game/boot.ts`, qui lance la boucle.
+- **Types du modèle** : `game/types.ts` (Character, Enemy, GameState, Store). Les champs ajoutés par les mécaniques passent par un index souple, à resserrer au fil du temps.
+- **Variables partagées** (vue courante, pause, zoom, état `S`...) : objet `ST` du module `store.ts`, par exemple `ST.view`, `ST.S`.
+- **Vérifications** : `npm run typecheck`, puis `npm run build` et `npm test`.
 
 ## Carte des fichiers
 
 | Fichier | Contenu |
 |---|---|
-| 00_utils | helpers (clamp, iso, angles), dimensions de grille |
-| 10_map_helpers | outils de dessin de carte (room, hline, vline, put) |
-| 11, 12, 13_floor* | une fonction par étage : la carte en code (`#` mur, `.` sol, `1 2 3` portes niveaux 1 à 3, `U N` escaliers, `V` gaine, `X` ascenseur, `S` coffre, `T` terminal, `c r d p m b x` mobilier) |
-| 14_level_data | zones de sol, escaliers, gaines, fumoirs (`SMK`) |
-| 15_pathing_vision | A*, ligne de vue, cônes de vision |
-| 20_cast_data | personnages (pouvoirs `ACT`, apparences `APP`, départs `makeChars`) et PNJ (`makeEnemies`) |
-| 21_texts | tous les textes drôles : dialogues d'intro et de recrutement, bavardages, baratin, pauses clope |
-| 22_video_data | trajets du faux trailer |
-| 30_state | état de la partie `S` (100 % JSON, sérialisable), terminaux |
-| 31_sound | synthèse sonore |
-| 32_dialogues | moteur de dialogues avec choix |
-| 33_messages, 34_noise | bulles, toasts, bruit (`hear`), pause clope (`breakSmoke`) |
-| 35_movement | déplacement, portes, escaliers |
-| 36_powers_orders | actions des pouvoirs (`doAction`), arrivée à destination (`arrive`), tâches (`updateBusy`) |
-| 37_update_chars | mise à jour des personnages, baratin, élimination |
-| 38_enemies_ai | IA des PNJ : patrouille, regarder, poursuite, pause, appel, bug |
-| 39_events | événements chronométrés (17h50, 17h55...) |
-| 40_logic_loop | boucle logique, victoire, défaite |
+| utils | helpers (clamp, iso, angles), dimensions de grille |
+| mapHelpers | outils de dessin de carte (room, hline, vline, put) |
+| floorRdc, floor1, floor2 | une fonction par étage : la carte en code (`#` mur, `.` sol, `1 2 3` portes niveaux 1 à 3, `U N` escaliers, `V` gaine, `X` ascenseur, `S` coffre, `T` terminal, `c r d p m b x` mobilier) |
+| levelData | zones de sol, escaliers, gaines, fumoirs (`SMK`) |
+| pathing | A*, ligne de vue, cônes de vision |
+| castData | personnages (pouvoirs `ACT`, apparences `APP`, départs `makeChars`) et PNJ (`makeEnemies`) |
+| texts | tous les textes drôles : dialogues d'intro et de recrutement, bavardages, baratin, pauses clope |
+| video | trajets du faux trailer |
+| state | état de la partie `S` (100 % JSON, sérialisable), terminaux |
+| sound | synthèse sonore |
+| dialogues | moteur de dialogues avec choix |
+| messages, noise | bulles, toasts, bruit (`hear`), pause clope (`breakSmoke`) |
+| movement | déplacement, portes, escaliers |
+| powers | actions des pouvoirs (`doAction`), arrivée à destination (`arrive`), tâches (`updateBusy`) |
+| updateChars | mise à jour des personnages, baratin, élimination |
+| enemiesAi | IA des PNJ : patrouille, regarder, poursuite, pause, appel, bug |
+| events | événements chronométrés (17h50, 17h55...) |
+| logicLoop | boucle logique, victoire, défaite |
 | 50 à 54 | rendu : sols pré-rendus, formes, personnages, visibilité, boucle de rendu |
 | 60_ui, 61_input | HUD (cartes, boutons, objectifs), souris, tactile, clavier |
-| 70_video | vidéo d'introduction |
-| 99_main | démarrage |
+| video | vidéo d'introduction |
+| boot | démarrage |
 
 ## Recettes
 
-**Ajouter un texte drôle** : `21_texts.js` (listes `BAR`, `CHAT`, `BRK_SAY`, `RECRUIT`, `introSteps`).
+**Ajouter un texte drôle** : `game/texts.ts` (listes `BAR`, `CHAT`, `BRK_SAY`, `RECRUIT`, `introSteps`).
 
 **Ajouter un PNJ** : une ligne dans `makeEnemies` (20_cast_data) : `E(id, nom, type, étage, x, y, {fov, range, sp, route:[{x,y,wait,face}], scan:{base,amp,period}})`. Types connus : vigile, manager, beaugosse, drh, assistante, dg, employe, camera. Un nouveau type demande une apparence dans `APP`, un rôle dans `ROLE` et des répliques dans `CHAT`.
 

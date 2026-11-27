@@ -1,7 +1,7 @@
 # Changelog
 
 ## 1.3
-- Passage à Vite et TypeScript (les sources de src/js sont encore assemblées par un plugin, migration en modules à suivre)
+- Passage à Vite et TypeScript : 30 modules ES dans src/game, types du modèle (types.ts), variables partagées dans store.ts, vérification `npm run typecheck`
 - Déploiement GitHub Pages automatique par GitHub Actions
 
 ## 1.2
