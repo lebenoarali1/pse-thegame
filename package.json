@@ -1,0 +1,10 @@
+{
+  "name": "plan-social",
+  "version": "0.5.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs",
+    "test": "python3 tests/run_all.py"
+  }
+}

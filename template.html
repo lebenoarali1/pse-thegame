@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>PLAN SOCIAL, infiltration en open space</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+{{CSS}}
+</style>
+</head>
+<body>
+<canvas id="cv"></canvas>
+<div id="vig"></div><div id="alertfx"></div>
+
+<div id="tl" class="pn"><div id="ck">17:45<small id="ck2"></small></div><div id="bar"><i id="barf"></i></div><div id="obj"></div></div>
+<div id="tr">
+  <button class="ib" id="bPause" title="Pause (Espace)">⏸</button>
+  <button class="ib" id="bSpeed" title="Vitesse x2">⏩</button>
+  <button class="ib" id="bAssist" title="Vue tactique : tous les gardes visibles">👁</button>
+  <button class="ib" id="bSnd" title="Son">🔊</button>
+  <button class="ib" id="bDbg" title="Mode debug (D)">🐞</button>
+  <button class="ib dbgonly" id="bLim" title="Debug : temps illimité">∞</button>
+  <button class="ib" id="bState" title="Exporter ou importer l'état de la partie">📋</button>
+  <button class="ib" id="bSave" title="Sauvegarde rapide (F5)">💾</button>
+  <button class="ib" id="bLoad" title="Charger (F9)">📂</button>
+  <button class="ib" id="bZi" title="Zoom +">＋</button>
+  <button class="ib" id="bZo" title="Zoom -">－</button>
+</div>
+<div id="fl"></div>
+<div id="toast"></div>
+<div id="ban"></div>
+<div id="pcm"></div>
+<div id="dlg"><div class="dbox"><div class="dh"><i id="dAv"></i><b id="dWho"></b><button id="dSkip">Passer</button></div><div id="dTxt"></div><div id="dCh"></div><div id="dHint">Toucher pour continuer</div></div></div>
+<div id="bt">
+  <div id="acts"></div>
+  <div id="cards"></div>
+</div>
+
+<div class="ov show" id="intro"><div class="box">
+  <h1>PLAN<br><span>SOCIAL</span></h1>
+  <div class="sub">Infiltration en open space · Démo jouable</div>
+  <p><b>17h45, vendredi.</b> À 18h, une réunion annonce un plan social. Le coffre du DG, au 2e étage, contient de quoi faire levier. Il faut récupérer la clé et sortir <b>tous ensemble</b> par l'ascenseur de service avant 18h.</p>
+  <p>Vous commencez à deux. Les autres sont quelque part dans l'immeuble : il faudra les retrouver.</p>
+  <div class="grid">
+    <div class="gc" style="--c:#ffa23a"><b>Kévin · stagiaire</b>Petit, rapide, passe par les gaines. Lance des objets pour distraire un garde. (7 ans ? 77 ans ?)<br><i>Faiblesse : repéré, c'est l'alerte immédiate</i></div>
+    <div class="gc" style="--c:#b57bff"><b>Nadia · technicienne SI</b>Pirate serveur et portes. Lance une clope à un vigile : il file fumer 1 min, vue enfumée.<br><i>Faiblesse : lente, et perd ses moyens devant un beau gosse</i></div>
+  </div>
+  <button class="btn" id="bStart">Commencer</button>
+  <div class="keys"><b>Toucher</b> un perso pour le choisir, toucher le sol pour le déplacer, glisser pour déplacer la vue. Les boutons d'action demandent parfois de toucher une cible.<br>
+  Clavier : <kbd>1-4</kbd> choix · <kbd>Q</kbd><kbd>E</kbd> actions · <kbd>R</kbd> courir · <kbd>Espace</kbd> pause · <kbd>F5</kbd>/<kbd>F9</kbd> sauver/charger · <kbd>V</kbd> vue</div>
+</div></div>
+
+<div id="dbg"></div><div id="bfeed"></div>
+<div id="vid"><canvas id="vc"></canvas><button id="vSkip">Passer ▶▶</button><button id="vGo">Commencer</button></div>
+
+<div class="ov" id="stBox"><div class="box">
+  <h2>État de la partie</h2><p>Copiez ce texte pour l'envoyer à Claude (il rejouera exactement votre situation), ou collez un état pour le charger.</p>
+  <textarea id="stTxt" spellcheck="false" style="width:100%;height:150px;background:#0a0e19;color:#cfe;border:1px solid #345;border-radius:8px;font:11px monospace;padding:6px"></textarea>
+  <button class="btn" id="stCopy">Copier</button><button class="btn s" id="stLoad">Charger</button><button class="btn s" id="stClose">Fermer</button>
+</div></div>
+
+<div class="ov" id="end"><div class="box">
+  <h2 id="eT"></h2><p id="eP"></p>
+  <button class="btn" id="bRetry">Recharger la sauvegarde</button><button class="btn s" id="bRestart">Recommencer</button>
+</div></div>
+
+<script>
+{{JS}}
+</script>
+</body>
+</html>

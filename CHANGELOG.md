@@ -1,0 +1,80 @@
+# Changelog
+
+## 1.2
+- Horloge plus lente (8 min de jeu pour 15 min affichées)
+- Menu de Nadia filtré par étage (portes, notification, café, réunion, imprimante selon ce qui existe)
+- KO de Max fiable (le garde se fige), réveil après 50 s et jamais pendant qu'on prend sa tenue
+- Clic droit : affiche ou masque les cônes de vision
+- Cônes verts pour le support et les salariés ; le support cafte au manager, qui chasse ; les salariés ne cafent pas
+- R+1 : 1 support (Hugo) et 2 salariés (Lucie, Karim)
+- Le DG ne tient pas dans le seau ; Max peut vider son chariot (X)
+- Imprimantes : l'impression à distance attire tout le personnel de l'étage
+- Max se déplace pour poser une flaque
+
+## 1.1
+- Le menu de piratage s'affiche à chaque PC (y compris serveur : code du coffre, caméras R+2 ; accueil : portillon) et met le temps en pause
+- Un PNJ planqué dans le chariot de Max ne se réveille plus ; le chariot contient 2 corps au maximum
+- Djibril déguisé ne peut pas être repéré ni viré (en attendant les événements)
+
+## 1.0
+- Icône de chargement 📂 ; les portraits en bas fonctionnent toujours (liés à l'état courant) et amènent à l'étage du personnage
+- Employés du support assis sur une chaise
+- Menu de piratage d'un PC : ouvrir la porte, notification (salle serveur), pause café, réunion, éteindre les caméras, imprimer à distance
+- Djibril peut retirer son déguisement (même bouton)
+- Un PNJ baratiné a un cône de vision réduit
+- Un assommé perd ses étoiles puis se réveille (30 s, plus long planqué)
+- Max : 3e pouvoir Flaque (W), qui assomme 20 s le PNJ qui glisse
+- Une porte ouverte reste ouverte
+- Test 13 (13/13 OK)
+
+## 0.9.2
+- Déguisement : Djibril peut prendre la tenue d'un vigile, d'un agent de sécurité (Dylan) ou d'un manager assommé, même planqué (test 12)
+
+## 0.9.1
+- Vidéo d'intro deux fois plus lente (constante VSLOW dans 70_video.js)
+
+## 0.9
+- Vidéo d'intro refaite en vue à la première personne (bureau, mail de convocation, panorama des quatre collègues, SMS anonyme, course vers la porte du DG), jouée avant le menu Commencer
+- #novid dans l'URL saute la vidéo
+
+## 0.8.1
+- Nadia peut pirater n'importe quel PC (T ou bureau avec écran), toujours de près ; sur R+1 le premier envoie le SMS, les autres donnent une réplique
+- Employés placés devant un écran, face à lui
+- Toucher le portrait d'un perso pas encore recruté ou licencié explique pourquoi et montre où il est
+- Recrutement possible jusqu'à 2,6 cases
+
+## 0.8
+- Porte rouge de l'escalier R+2 : Nadia peut la pirater de près (8 s), en plus du costume de manager
+- Un seul manager (Manon) à R+1 ; trois employés calmes devant leur PC (Lucie, Hugo, Karim), sans vision, avec qui on parle en les touchant
+- Piratage d'un PC uniquement de près (plus à distance)
+- Pirater le PC de l'open space envoie un SMS : manager et techniciens (Hugo, Karim) filent en salle serveur 45 s
+- Tests 07 et 11 (11/11 OK)
+
+## 0.7
+- Clavier : les flèches déplacent le personnage sélectionné (haut = haut de l'écran, diagonales possibles), l'escalier se prend en marchant dessus. Le déplacement de la caméra passe au glisser ou au clic sur le personnage
+- Boutons d'étage renommés RDC, R+1, R+2
+- Test 10 ajouté (10/10 OK)
+
+## 0.6
+- Clope ciblée : Nadia la lance sur un vigile précis (Dédé au RDC), 60 s au fumoir, vue réduite
+- Gobelet : le PNJ nettoie 10 s, puis va prendre un café si l'étage a une cafétéria (étage 1, nord-est)
+- Nadia pirate l'ordinateur de l'open space : pause café des managers (45 s). Fini Gaëtan, le support est au téléphone
+- Roger et Dylan font les cent pas, Kévin peut jeter son gobelet hors de leur vue
+- Tests 02, 05, 07 réécrits (9/9 OK)
+
+## 0.5 (refonte)
+- Projet découpé en 30 fichiers sources, build en un seul HTML, 8 scénarios de test automatiques dont une chaîne complète jusqu'à la victoire.
+- Export et import de l'état de la partie, mode debug avec timers et temps illimité.
+
+## 0.4
+- Baratin soutenu de Djibril (attire un PNJ, fil des bêtises), plus de brouillard.
+- Étage 1 refait : Dylan devant les toilettes (gobelet vers la plante), Gaëtan au support (bug du PC par Nadia), Patrick et Manon mobiles.
+
+## 0.3
+- Pause clope : fumoir au RDC, 60 s, vue réduite. Éliminations individuelles. Vidéo d'intro (faux trailer en briques, quatre bandeaux de présentation).
+
+## 0.2
+- Départ avec Kévin et Nadia, recrutement progressif de Djibril et Max, dialogues avec choix.
+
+## 0.1
+- Première démo : quatre personnages, trois étages, détection, déguisements, piratage.
