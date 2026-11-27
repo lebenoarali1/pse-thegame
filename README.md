@@ -19,6 +19,7 @@ Ajouter `#novid` à l'URL pour sauter la vidéo d'intro. Le déploiement sur Git
 
 - `docs/GAME_DESIGN.md` : histoire, personnages, pouvoirs, règles, étages, solutions, backlog. C'est la référence à modifier pour piloter le projet.
 - `docs/ARCHITECTURE.md` : carte des fichiers et marche à suivre pour ajouter un pouvoir, un PNJ, un étage ou un texte.
+- `docs/MCO.md` : maintien en condition opérationnelle, paramétrage, mode opératoire avec Claude.
 - `CHANGELOG.md` : historique des versions.
 
 ## Debug en jeu

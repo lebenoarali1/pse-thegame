@@ -46,4 +46,4 @@ Le jeu est écrit en TypeScript, en vrais modules ES (`src/game/*.ts`), construi
 **Modifier un réglage** : portées, durées et vitesses sont dans les données de PNJ et dans `doAction`. Le tableau des valeurs est dans `docs/GAME_DESIGN.md`.
 
 ## Tests
-`tests/lib.py` lance Chrome, charge `dist/index.html#novid` et fait avancer le temps par pas de 0,05 s (`g.run(secs)`). Les crochets `window.__G` (fin de `99_main`) donnent accès à l'état et aux actions. Chaque fichier de `tests/scenarios/` expose `main()` et doit lever une assertion en cas d'échec. Un scénario par énigme, plus la chaîne complète (gardes rendus aveugles : elle teste les règles, pas la furtivité).
+`tests/lib.py` lance Chrome, sert `dist/` en local et charge la page avec `#novid` et fait avancer le temps par pas de 0,05 s (`g.run(secs)`). Les crochets `window.__G` (fin de `99_main`) donnent accès à l'état et aux actions. Chaque fichier de `tests/scenarios/` expose `main()` et doit lever une assertion en cas d'échec. Un scénario par énigme, plus la chaîne complète (gardes rendus aveugles : elle teste les règles, pas la furtivité).

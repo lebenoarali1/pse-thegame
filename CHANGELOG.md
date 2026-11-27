@@ -1,6 +1,8 @@
 # Changelog
 
 ## 1.3
+- Typage strict (strict et noImplicitAny) sur tous les modules
+- Nouveau document docs/MCO.md : maintien en condition opérationnelle, paramétrage et mode opératoire du codage assisté
 - Passage à Vite et TypeScript : 30 modules ES dans src/game, types du modèle (types.ts), variables partagées dans store.ts, vérification `npm run typecheck`
 - Déploiement GitHub Pages automatique par GitHub Actions
 

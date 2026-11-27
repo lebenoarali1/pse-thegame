@@ -20,7 +20,7 @@ Ordre de découverte : Kévin et Nadia au RDC (dialogue d'intro, choix d'âge), 
 - Un corps assommé découvert : défaite. Il faut le planquer (Max).
 - Déguisé, un perso n'est pas détecté au-delà de 2 cases (sauf DRH, DG).
 - Victoire : clé obtenue, tous les survivants autour de l'ascenseur (RDC, 21,5 / 12,5).
-- Défaite : 360 s écoulées, corps trouvé, équipe décimée.
+- Défaite : 480 s de jeu écoulées, corps trouvé, équipe décimée.
 - Aucun brouillard : tous les PNJ sont visibles.
 
 ## Étages et énigmes
@@ -36,11 +36,11 @@ Ordre de découverte : Kévin et Nadia au RDC (dialogue d'intro, choix d'âge), 
 **Étage 2** : couloir, DRH en ronde, Brigitte à l'accueil, deux caméras, bureau du DG (porte niveau 3). Le DG quitte son bureau à 17h55 (240 s). Kévin prend la gaine (16,8) vers le bureau (16,2), ouvre le coffre (22,1) avec le code, revient par la gaine.
 
 ## Événements chronométrés
-120 s : pause café des managers. 240 s : le DG quitte son bureau. 288 s : fin de pause. 330 s : dernière minute.
+320 s : le DG quitte son bureau. 440 s : dernière minute (la durée totale `TL` vaut 480 s).
 
 ## État de validation
 - Chaîne complète de mécaniques jusqu'à la victoire : testée automatiquement (gardes aveugles).
-- Solvabilité en furtivité totale sans debug : non démontrée, à confirmer en jeu. Risque principal : le temps (360 s) pour un premier essai.
+- Solvabilité en furtivité totale sans debug : non démontrée, à confirmer en jeu. Risque principal : le temps (480 s) pour un premier essai.
 
 ## Backlog (à prioriser)
 1. Valider la furtivité de bout en bout et régler la difficulté (temps, portées, durées).
@@ -49,7 +49,7 @@ Ordre de découverte : Kévin et Nadia au RDC (dialogue d'intro, choix d'âge), 
 4. Sons et musique, son de la vidéo à tester.
 5. Polish : lumière, animations, sprites.
 6. Modes de difficulté, score, rejeu.
-7. Passage en modules TypeScript (Vite), éditeur de niveaux (Angular possible), hébergement GitHub Pages.
+7. Éditeur de niveaux (Angular possible). Fait : modules TypeScript, Vite, hébergement GitHub Pages.
 
 ## Mise à jour 0.6
 - RDC : gobelet de Kévin sur Roger (nettoie 10 s), clope de Nadia sur Dédé (fumoir 60 s), puis portillon bleu
