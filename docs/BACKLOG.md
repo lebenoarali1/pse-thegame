@@ -33,7 +33,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 
 | ID | Story | Statut | Prio | Taille |
 |---|---|---|---|---|
-| E1-1 | En tant que concepteur, je veux un mode « démonstration » qui rejoue automatiquement une solution complète en furtivité totale, afin de prouver que la partie est gagnable | TODO | Must | L |
+| E1-1 | En tant que concepteur, je veux une solution complète rejouée automatiquement (test 18, sans téléportation) afin de prouver que la partie est gagnable | DONE (1.7) | Must | L |
 | E1-2 | En tant que joueur, je veux que la partie se gagne en moins de 8 minutes de jeu sans debug au premier essai raisonnable, afin de ne pas être bloqué par le chrono | TODO | Must | M |
 | E1-3 | En tant que concepteur, je veux consigner les paramètres de difficulté (temps, portées, durées de KO) dans un seul tableau de réglages, afin de les ajuster sans fouiller le code | TODO | Should | M |
 | E1-4 | En tant que joueur, je veux trois niveaux de difficulté (Stagiaire, Cadre, Directeur) qui modifient le temps et la vigilance, afin d'adapter le défi | TODO | Should | M |
@@ -155,7 +155,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | Lot | Contenu | Pourquoi dans cet ordre |
 |---|---|---|
 | 1. Fiabilité (livré en 1.4) | E8-4, E8-6, E8-9, E9-1, E5-2, E5-5 | Petits, rapides, et ils sécurisent tout le reste |
-| 2. Première partie réussie (E2-1, E2-2, E2-5, E6-4 livrés en 1.5 et 1.6) | E1-1, E1-2, E2-1, E2-2, E2-5, E6-4 | Rend le jeu jouable et gagnable par un inconnu |
+| 2. Première partie réussie (E2-1, E2-2, E2-5, E6-4 livrés en 1.5 et 1.6) | E1-2, E1-1, E2-1, E2-2, E2-5, E6-4 | Rend le jeu jouable et gagnable par un inconnu |
 | 3. Confort et accessibilité | E5-3, E5-4, E6-5, E6-6, E6-7, E6-8 | Élargit le public, surtout sur mobile |
 | 4. Contenu final | E7-3, E7-4, E3-8, E4-4 | Donne un vrai final et adoucit l'échec |
 | 5. Ambiance | E7-6, E3-6, E9-2 | Polish et installation en application |
@@ -164,6 +164,6 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 ## Risques et hypothèses
 
 - **Hypothèse** : le public principal joue sur téléphone ; à vérifier avec les premiers retours (E9-4)
-- **Risque** : l'équilibrage change avec chaque nouvelle mécanique ; sans E1-1 (démonstration automatique), chaque ajout peut rendre le jeu injouable sans que personne ne s'en rende compte
+- **Risque** : l'équilibrage change avec chaque nouvelle mécanique ; sans le test 18 (solution automatique), chaque ajout peut rendre le jeu injouable sans que personne ne s'en rende compte
 - **Risque** : les tests de bout en bout dépendent du temps réel et deviennent lents ; à surveiller en croissant le nombre de scénarios
 - **Décision à prendre** : mesure d'audience (E9-5) classée `Won't` tant qu'aucun consentement explicite n'est prévu

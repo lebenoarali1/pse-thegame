@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.7
+- Test 18 : une solution complète rejouée sans téléportation (RDC, code, Max, porte rouge, caméras, coffre du DG, ascenseur) gagne en moins de 8 minutes de jeu ; validé 3 fois sur 3
+- Constats pour l'équilibrage (E1-2) : la fenêtre du DG (attente d'environ 60 s à l'étage 2) est longue, et la descente finale à découvert coûte deux personnages
+
 ## 1.6
 - Astuces au premier usage : une bulle explique chaque pouvoir (Max, Djibril, Nadia, Kévin) et le déplacement ; chacune n'apparaît qu'une fois, mémorisée dans le navigateur
 - Bouton « Revoir les astuces » dans l'écran des commandes
