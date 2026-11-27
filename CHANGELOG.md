@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.3
+- Passage à Vite et TypeScript (les sources de src/js sont encore assemblées par un plugin, migration en modules à suivre)
+- Déploiement GitHub Pages automatique par GitHub Actions
+
 ## 1.2
 - Horloge plus lente (8 min de jeu pour 15 min affichées)
 - Menu de Nadia filtré par étage (portes, notification, café, réunion, imprimante selon ce qui existe)

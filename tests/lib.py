@@ -2,13 +2,22 @@
 import asyncio, json, os, sys
 from playwright.async_api import async_playwright
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-URL = 'file://' + os.path.join(ROOT, 'dist', 'index.html') + '#novid'
+import functools, http.server, threading
+DIST = os.path.join(ROOT, 'dist')
+
+def serve():
+    h = functools.partial(http.server.SimpleHTTPRequestHandler, directory=DIST)
+    h.log_message = lambda *a, **k: None
+    srv = http.server.ThreadingHTTPServer(('127.0.0.1', 0), h)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return srv
 OUT = os.path.join(ROOT, 'tests', 'out')
 os.makedirs(OUT, exist_ok=True)
 
 class G:
     def __init__(self, w=900, h=620): self.w, self.h = w, h
     async def __aenter__(self):
+        self.srv = serve(); URL = f'http://127.0.0.1:{self.srv.server_port}/#novid'
         self.p = await async_playwright().start()
         self.b = await self.p.chromium.launch(channel='chrome', args=['--no-sandbox'])
         self.pg = await self.b.new_page(viewport={'width': self.w, 'height': self.h})
@@ -20,7 +29,7 @@ class G:
         await self.pg.evaluate("__G.paused=true")
         return self
     async def __aexit__(self, *a):
-        await self.b.close(); await self.p.stop()
+        await self.b.close(); await self.p.stop(); self.srv.shutdown()
     async def ev(self, js): return await self.pg.evaluate(js)
     async def run(self, secs):
         """Avance la simulation de `secs` secondes (pas de 0,05 s)."""

@@ -5,12 +5,15 @@ Jeu d'infiltration isométrique humoristique (esprit Desperados / Commandos), da
 ## Utilisation
 
 ```
-npm run build   # assemble src/ en dist/index.html (un seul fichier)
-npm test        # lance tous les scénarios (Chrome + Playwright Python requis)
+npm install       # une seule fois
+npm run dev       # jeu sur localhost, rechargement automatique
+npm run build     # construit dist/
+npm run typecheck # vérification TypeScript
+npm test          # lance tous les scénarios (npm run build avant ; Chrome + Playwright Python requis)
 python3 tests/run_all.py chaine   # un seul scénario (filtre sur le nom)
 ```
 
-Ouvrir `dist/index.html` dans un navigateur. Ajouter `#novid` à l'URL pour sauter la vidéo d'intro.
+Ajouter `#novid` à l'URL pour sauter la vidéo d'intro. Le déploiement sur GitHub Pages est automatique à chaque push sur `main` (workflow `.github/workflows/pages.yml`).
 
 ## Documents
 
