@@ -29,7 +29,7 @@ Le jeu est écrit en TypeScript, en vrais modules ES (`src/game/*.ts`), construi
 | events | événements chronométrés (17h50, 17h55...) |
 | logicLoop | boucle logique, victoire, défaite |
 | 50 à 54 | rendu : sols pré-rendus, formes, personnages, visibilité, boucle de rendu |
-| 60_ui, 61_input | HUD (cartes, boutons, objectifs), souris, tactile, clavier |
+| ui, input | HUD (cartes, boutons, objectifs), souris, tactile, clavier |
 | video | vidéo d'introduction |
 | boot | démarrage |
 
@@ -37,9 +37,9 @@ Le jeu est écrit en TypeScript, en vrais modules ES (`src/game/*.ts`), construi
 
 **Ajouter un texte drôle** : `game/texts.ts` (listes `BAR`, `CHAT`, `BRK_SAY`, `RECRUIT`, `introSteps`).
 
-**Ajouter un PNJ** : une ligne dans `makeEnemies` (20_cast_data) : `E(id, nom, type, étage, x, y, {fov, range, sp, route:[{x,y,wait,face}], scan:{base,amp,period}})`. Types connus : vigile, manager, beaugosse, drh, assistante, dg, employe, camera. Un nouveau type demande une apparence dans `APP`, un rôle dans `ROLE` et des répliques dans `CHAT`.
+**Ajouter un PNJ** : une ligne dans `makeEnemies` (castData.ts) : `E(id, nom, type, étage, x, y, {fov, range, sp, route:[{x,y,wait,face}], scan:{base,amp,period}})`. Types connus : vigile, manager, beaugosse, drh, assistante, dg, employe, camera. Un nouveau type demande une apparence dans `APP`, un rôle dans `ROLE` et des répliques dans `CHAT`.
 
-**Ajouter un pouvoir** : 1) une entrée dans `ACT` (20_cast_data) avec `mode` (`auto`, `tile`, `enemy`, `hack`) ; 2) un `else if(k==='...')` dans `doAction` (36) ; 3) l'effet de fin de tâche dans `updateBusy` si le pouvoir dure ; 4) un scénario de test.
+**Ajouter un pouvoir** : 1) une entrée dans `ACT` (castData.ts) avec `mode` (`auto`, `tile`, `enemy`, `hack`) ; 2) un `else if(k==='...')` dans `doAction` (36) ; 3) l'effet de fin de tâche dans `updateBusy` si le pouvoir dure ; 4) un scénario de test.
 
 **Ajouter un étage** : une fonction `buildFloorN` (fichier 1x), l'ajouter à `buildMaps` (14), zones `ZN`, escaliers `STAIRS`, `MAP`/`FLOORC` (boucles `for f<3` à passer à N+1 : chercher `f<3`).
 
