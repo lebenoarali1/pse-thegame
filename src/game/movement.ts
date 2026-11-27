@@ -2,9 +2,10 @@ import { ST } from './store';
 import { ch, isDoor } from './levelData';
 import { say } from './messages';
 import { DOORS } from './state';
+import type { Character } from './types';
 /* déplacement */
-export function doorOpenFor(e){return true}
-export function stepEntity(e,dt,speed,isChar){
+export function doorOpenFor(e: any){return true}
+export function stepEntity(e: any,dt: any,speed: any,isChar: boolean){
   e.moving=false;if(!e.path||!e.path.length)return;
   let rem=speed*dt;
   while(rem>0&&e.path.length){
@@ -17,7 +18,7 @@ export function stepEntity(e,dt,speed,isChar){
     else{e.x+=dx/d*rem;e.y+=dy/d*rem;e.face=Math.atan2(dy,dx);rem=0;e.moving=true}
   }
 }
-export function accLevel(c){if(c.id==='jordan'&&c.f<=1)return 1;if(c.disguise==='manager')return 2;if(c.disguise==='vigile')return 1;return 0}
+export function accLevel(c: Character){if(c.id==='jordan'&&c.f<=1)return 1;if(c.disguise==='manager')return 2;if(c.disguise==='vigile')return 1;return 0}
 export function updateDoors(){ST.S.dLatch=ST.S.dLatch||{};ST.S.puddles=ST.S.puddles||[];
   for(const d of DOORS){const k=d.f+','+d.x+','+d.y,cx=d.x+.5,cy=d.y+.5;let open=false;
     if(d.l<=2&&(ST.S.doorHack[k]||0)>ST.S.t)open=true;

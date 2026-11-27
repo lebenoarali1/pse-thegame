@@ -15,7 +15,7 @@ export interface Character {
   id: CharId | string;
   name: string;
   f: number; x: number; y: number; face: number;
-  path: Point[]; order: any; busy: Busy | null;
+  path: number[][]; order: any; busy: Busy | null;
   hide: boolean; disguise: 'vigile' | 'manager' | null;
   run: boolean; cd: { q: number; e: number; w?: number };
   sp: number; moving: boolean; say: string; sayT: number;
@@ -31,8 +31,8 @@ export interface Enemy {
   state: EnemyState; det: number; tgt: string | null;
   ko: boolean; hidden: boolean; uniformTaken: boolean;
   calm?: boolean; tech?: boolean; cart?: boolean;
-  koT?: number; koDur?: number; freeze?: number;
-  path: Point[]; moving: boolean; say: string; sayT: number;
+  koT: number; koDur: number; freeze: number;
+  path: number[][]; moving: boolean; say: string; sayT: number;
   [k: string]: any;
 }
 

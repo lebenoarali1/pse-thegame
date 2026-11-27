@@ -2,8 +2,9 @@ import { ST } from './store';
 import { APP } from './castData';
 import { clamp, iso } from './utils';
 import { rr } from './renderShapes';
+import type { Enemy } from './types';
 /* rendu : personnages */
-export function drawPerson(g,fx,fy,o){
+export function drawPerson(g: any,fx: number,fy: number,o: any){
   const a=APP[o.look],s=o.s||1,mv=o.moving,t=ST.S.t+(o.ph||0),sw=mv?Math.sin(t*10)*4:0,bob=mv?Math.abs(Math.sin(t*10))*1.6:0;
   const sdx=Math.cos(o.dir)-Math.sin(o.dir),sdy=Math.cos(o.dir)+Math.sin(o.dir),away=sdy<-.35,ex=clamp(sdx,-1,1);
   let body=a.body,legs=a.legs,skin=a.skin;
@@ -50,21 +51,21 @@ export function drawPerson(g,fx,fy,o){
   if(o.smoke&&!away){g.fillStyle='#f4f4f4';g.fillRect(ex*6-1,hy+3,6,1.7);g.fillStyle='#ff7a3a';g.fillRect(ex*6+4.6,hy+3,1.7,1.7)}
   g.restore();
 }
-export function drawBody(g,e){ /* assommé */
+export function drawBody(g: any,e: Enemy){ /* assommé */
   const [fx,fy]=iso(e.x,e.y);
   g.save();g.translate(fx,fy);g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(0,0,17,6,0,0,7);g.fill();g.restore();
   g.save();g.translate(fx,fy-4);g.rotate(-1.45);drawPerson(g,0,0,{look:e.type,kind:e.type,dir:0,moving:false,boxers:e.uniformTaken,ko:true,s:.9});g.restore();
   const ns=Math.max(1,Math.ceil(5*(1-(e.koT||0)/(e.koDur||30))));for(let k=0;k<ns;k++){const an=ST.S.t*3+k*6.283/ns,sx=fx+Math.cos(an)*13,sy=fy-22+Math.sin(an)*3.5;g.fillStyle='#ffd54a';g.font='10px sans-serif';g.textAlign='center';g.fillText('★',sx,sy)}
 }
-export function drawCamera(g,e){
+export function drawCamera(g: any,e: Enemy){
   const [fx,fy]=iso(e.x,e.y);g.save();g.translate(fx,fy-30);
   g.fillStyle='#39414e';g.fillRect(-3,0,6,10);g.fillStyle=e.off?'#4a4f58':'#d6dbe4';rr(g,-8,-6,16,9,2);g.fill();
   const sd=Math.cos(e.face)-Math.sin(e.face);g.fillStyle=e.off?'#222':'#101419';g.beginPath();g.arc(clamp(sd,-1,1)*6,-1.5,3,0,7);g.fill();
   g.fillStyle=e.off?'#555':(Math.floor(ST.S.t*2)%2?'#ff4d4d':'#7a1f1f');g.beginPath();g.arc(-5,-4,1.6,0,7);g.fill();g.restore();
 }
-export function bubble(g,x,y,text,col?){
+export function bubble(g: any,x: number,y: number,text: string,col?: any){
   g.save();g.font='600 12px "Barlow Condensed",sans-serif';const w=g.measureText(text).width+12;
   g.translate(x,y);g.fillStyle='rgba(255,255,255,.94)';rr(g,-w/2,-18,w,18,6);g.fill();g.beginPath();g.moveTo(-3,0);g.lineTo(3,0);g.lineTo(0,5);g.closePath();g.fill();
   g.fillStyle=col||'#1a1d26';g.textAlign='center';g.fillText(text,0,-5);g.restore();
 }
-export function drawBar(g,x,y,w,v,col,bg?){g.fillStyle=bg||'rgba(0,0,0,.55)';g.fillRect(x-w/2,y,w,4);g.fillStyle=col;g.fillRect(x-w/2,y,w*v,4)}
+export function drawBar(g: any,x: number,y: number,w: number,v: number,col: string,bg?: any){g.fillStyle=bg||'rgba(0,0,0,.55)';g.fillRect(x-w/2,y,w,4);g.fillStyle=col;g.fillRect(x-w/2,y,w*v,4)}

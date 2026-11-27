@@ -8,30 +8,31 @@ import { spotNear } from './noise';
 import { releaseTalk } from './updateChars';
 import { angDiff } from './utils';
 import { SMK, VENTS } from './levelData';
+import type { Enemy, Character } from './types';
 /* ordres */
-export function gotoPos(c,x,y,order?){
+export function gotoPos(c: any,x: any,y: any,order?: any){
   if(c.smoke){c.smoke=false;say(c,'*écrase sa clope*',2)}
   if(c.busy&&c.busy.lock){toast(c.name+' est occupé','w');return false}
   const p=findPath(c.f,Math.floor(c.x),Math.floor(c.y),Math.floor(x),Math.floor(y));
   if(!p){say(c,"Impossible d'y aller",1.8);return false}
   c.busy=null;c.path=p;c.order=order||null;c.stall=0;return true}
-export function startBusy(c,k,max,extra?){c.busy=Object.assign({k,t:0,max,lock:true},extra||{});c.path=[];c.order=null}
-export function nearestEnemy(c,pred,maxd=99){let b=null,bd=maxd;for(const e of ST.S.enemies){if(e.f!==c.f||!pred(e))continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<bd){bd=d;b=e}}return b}
+export function startBusy(c: any,k: string,max: any,extra?: any){c.busy=Object.assign({k,t:0,max,lock:true},extra||{});c.path=[];c.order=null}
+export function nearestEnemy(c: any,pred: any,maxd=99){let b=null,bd=maxd;for(const e of ST.S.enemies){if(e.f!==c.f||!pred(e))continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<bd){bd=d;b=e}}return b}
 
-export function doAction(c,k,arg?){
+export function doAction(c: Character,k: any,arg?: any){
   if(ST.S.over||ST.paused&&!ST.S.over&&false)return;
   const slot=['q','e','w','x'][Math.max(0,ACT[c.id].findIndex(a=>a.k===k))];
-  if(c.cd[slot]>0&&k!=='flux'){toast('Pas encore prêt','w');return}
+  if((c.cd as any)[slot]>0&&k!=='flux'){toast('Pas encore prêt','w');return}
   if(k==='ko'){const e=arg&&getE(arg.eid);if(!e||e.ko||e.type==='camera'||e.f!==c.f){toast('Touchez un garde à assommer','w');return}
     if(gotoPos(c,e.x,e.y,{k:'ko',eid:e.id}))snd(300,.05,'square',.03)}
   else if(k==='empty'){const B=ST.S.enemies.filter(q=>q.cart);if(!B.length){toast('Le chariot est vide','w');return}
     B.forEach((q,i)=>{const p=spotNear(c.f,c.x+(i?.9:-.9),c.y+(i?.5:-.5),0);q.f=c.f;q.x=p[0];q.y=p[1];q.hidden=false;q.cart=false;q.koT=0;q.koDur=50;q.state='ko'});say(c,'Je vide le chariot. Ne me remerciez pas.',2.4);toast(B.length+' corps déposé'+(B.length>1?'s':'')+' : ils se réveilleront','w');snd(200,.2,'sine',.05)}
   else if(k==='puddle'){if(!passable(c.f,Math.floor(arg.x),Math.floor(arg.y))){toast('Il faut un sol libre','w');return}
     if(gotoPos(c,Math.floor(arg.x)+.5,Math.floor(arg.y)+.5,{k:'puddle',x:Math.floor(arg.x)+.5,y:Math.floor(arg.y)+.5}))toast('Max va poser une flaque','g')}
-  else if(k==='hide'){if(ST.S.enemies.filter(e=>e.cart).length>=2){toast('Chariot plein : 2 corps maximum','w');return}const e=nearestEnemy(c,e=>e.ko&&!e.hidden&&e.type!=='dg');if(!e){toast(ST.S.enemies.some(q=>q.ko&&!q.hidden&&q.type==='dg'&&q.f===c.f)?'Le DG ne tient pas dans le seau':'Aucun corps à planquer ici','w');return}
+  else if(k==='hide'){if(ST.S.enemies.filter(e=>e.cart).length>=2){toast('Chariot plein : 2 corps maximum','w');return}const e=nearestEnemy(c,(e: Enemy)=>e.ko&&!e.hidden&&e.type!=='dg');if(!e){toast(ST.S.enemies.some(q=>q.ko&&!q.hidden&&q.type==='dg'&&q.f===c.f)?'Le DG ne tient pas dans le seau':'Aucun corps à planquer ici','w');return}
     gotoPos(c,e.x,e.y,{k:'hide',eid:e.id})}
   else if(k==='uniform'&&c.disguise){c.disguise=null;say(c,'Je range le costume. La cravate reste.',2.2);toast('Djibril retire son déguisement','g')}
-  else if(k==='uniform'){const e=nearestEnemy(c,e=>e.ko&&!e.uniformTaken&&(e.type==='vigile'||e.type==='beaugosse'||e.type==='manager'));
+  else if(k==='uniform'){const e=nearestEnemy(c,(e: Enemy)=>e.ko&&!e.uniformTaken&&(e.type==='vigile'||e.type==='beaugosse'||e.type==='manager'));
     if(!e){const o=ST.S.enemies.find(q=>q.ko&&!q.uniformTaken&&(q.type==='vigile'||q.type==='beaugosse'||q.type==='manager'));toast(o?'Le corps est à l\'étage '+['RDC','1','2'][o.f]+' : rejoignez-le':"Il faut un vigile, un agent de sécurité ou un manager assommé (dont la tenue n'a pas déjà été prise)",'w');return}
     gotoPos(c,e.x,e.y,{k:'uniform',eid:e.id})}
   else if(k==='talk'){if(c.talking){releaseTalk(c);return}

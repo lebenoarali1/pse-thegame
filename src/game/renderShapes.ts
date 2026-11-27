@@ -2,16 +2,16 @@ import { ST } from './store';
 import { H, W, iso } from './utils';
 import { ch, isDoor } from './levelData';
 /* rendu : formes */
-export function poly(g,pts,fill,stroke?){g.beginPath();g.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)g.lineTo(pts[i][0],pts[i][1]);g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.strokeStyle=stroke;g.lineWidth=1;g.stroke()}}
-export function cube(g,x0,y0,x1,y1,z0,z1,top,left,right){
+export function poly(g: any,pts: number[][],fill: any,stroke?: any){g.beginPath();g.moveTo(pts[0][0],pts[0][1]);for(let i=1;i<pts.length;i++)g.lineTo(pts[i][0],pts[i][1]);g.closePath();if(fill){g.fillStyle=fill;g.fill()}if(stroke){g.strokeStyle=stroke;g.lineWidth=1;g.stroke()}}
+export function cube(g: any,x0: any,y0: any,x1: any,y1: any,z0: number,z1: never | number,top: string,left: string,right: string){
   poly(g,[iso(x0,y1,z1),iso(x1,y1,z1),iso(x1,y1,z0),iso(x0,y1,z0)],left);
   poly(g,[iso(x1,y0,z1),iso(x1,y1,z1),iso(x1,y1,z0),iso(x1,y0,z0)],right);
   poly(g,[iso(x0,y0,z1),iso(x1,y0,z1),iso(x1,y1,z1),iso(x0,y1,z1)],top)}
-export function rr(g,x,y,w,h,r){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
-export const WH=[];for(let f=0;f<3;f++)WH.push(new Float32Array(W*H));
-export function tallH(c,i,j){if(c==='#'){return(j===H-1||i===W-1)?9:40}if(c==='c')return 34;if(c==='r')return 42;return 0}
+export function rr(g: any,x: number,y: number,w: any,h: number,r: number){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+export const WH: Float32Array[]=[];for(let f=0;f<3;f++)WH.push(new Float32Array(W*H));
+export function tallH(c: any,i: number,j: number){if(c==='#'){return(j===H-1||i===W-1)?9:40}if(c==='c')return 34;if(c==='r')return 42;return 0}
 
-export function drawTile(g,f,i,j,c,t?){
+export function drawTile(g: any,f: number,i: number,j: number,c: any,t?: any){
   if(c==='#'){
     const h=WH[f][j*W+i],out=(j===H-1||i===W-1);
     const top=out?'#8d98aa':'#a9b4c4',L=out?'#69758a':'#7d8aa0',R=out?'#505c72':'#5f6c83';

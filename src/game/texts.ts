@@ -1,4 +1,5 @@
 import { ST } from './store';
+import type { Point } from './types';
 /* Textes du jeu : humour, dialogues, bavardages. Modifiable sans toucher aux règles */
 export const BRK_SAY=['Une clope ? Allez, cinq minutes. Mon burn-out attendra.','Chut, le DG ne doit pas savoir que je prends ma pause légale.','Ça fait du bien, un plan social, ça vide les bureaux.','Tu crois que je suis sur la liste ? Moi aussi, je suis un coût.','Sur mon contrat, il est écrit \"vigilance\". Pas \"loyauté\".'];
 
@@ -6,7 +7,7 @@ export const BAR=['Nous allons disrupter votre verticale pour activer un levier 
 
 export const BAR_R=['Hum. Oui. Je note.','Je ne comprends rien, mais c\'est passionnant.','Vous avez un support de présentation ?','Mmh. Mmh. Mmh.','Je dois en parler à mon manager. Qui ne m\'écoute pas.','Vous pouvez répéter, mais en français ?','D\'accord. Et concrètement ?','Je vais faire semblant de réfléchir.'];
 
-export const CHAT={vigile:['Rien à signaler. Comme toujours.','On m\'a dit \"sécurité renforcée\". Pas \"effectifs\".','Mon badge fonctionne encore. Pour combien de temps ?'],manager:['On va réorganiser tout ça.','Pas de budget, mais beaucoup d\'attentes.','Je ne vous mets pas la pression, je vous l\'explique.','Ce n\'est pas un licenciement, c\'est une opportunité.'],beaugosse:['Je ne suis pas payé pour réfléchir.','Je fais de la sécurité. Et du sport.'],drh:['Je ne licencie pas, j\'accompagne.','Le bien-être au travail, c\'est ma priorité. Après le chiffre.'],assistante:['Tout est sous contrôle. Et sous mon bureau.','Le DG n\'est pas là. Il est en réunion, comme toujours.'],dg:['Les effectifs sont ma variable d\'ajustement.','Mon coffre est un coffre. Il n\'y a rien dedans.']};
+export const CHAT: Record<string, string[]>={vigile:['Rien à signaler. Comme toujours.','On m\'a dit \"sécurité renforcée\". Pas \"effectifs\".','Mon badge fonctionne encore. Pour combien de temps ?'],manager:['On va réorganiser tout ça.','Pas de budget, mais beaucoup d\'attentes.','Je ne vous mets pas la pression, je vous l\'explique.','Ce n\'est pas un licenciement, c\'est une opportunité.'],beaugosse:['Je ne suis pas payé pour réfléchir.','Je fais de la sécurité. Et du sport.'],drh:['Je ne licencie pas, j\'accompagne.','Le bien-être au travail, c\'est ma priorité. Après le chiffre.'],assistante:['Tout est sous contrôle. Et sous mon bureau.','Le DG n\'est pas là. Il est en réunion, comme toujours.'],dg:['Les effectifs sont ma variable d\'ajustement.','Mon coffre est un coffre. Il n\'y a rien dedans.']};
 
 export function introSteps(){return [
  {w:'nadege',t:"Tiens, le petit. Toi aussi, tu as reçu le mail ?"},
@@ -22,7 +23,7 @@ export function introSteps(){return [
  {w:'nadege',t:"Djibril s'est enfermé dans une salle de réunion du 1er pour pleurer, discrètement, en faisant semblant de répéter un pitch. Et Max, notre homme de ménage, est sûrement aux toilettes du 1er, téléphone en main, et pas pour la raison habituelle."},
  {w:'nadege',t:"Les vigiles ne doivent pas nous voir. Toi surtout : le moindre regard, et l'alerte est donnée. Toi, tu jettes un gobelet : un vigile qui nettoie ne surveille rien. Moi, je lance une clope au second : un vigile qui fume ne surveille presque rien, avec la fumée. Ensuite, je pirate le portillon bleu. Tu cours."}]}
 
-export const RECRUIT={
+export const RECRUIT: Record<string, any>={
  marc:()=>[
   {w:'marc',t:"*renifle* Non, ne regardez pas ! Je répétais mon discours de départ. Il est si beau que j'en pleure. Enfin, c'est surtout le mascara."},
   {w:'$',t:"On est virés à 18h, Djibril."},
@@ -54,9 +55,9 @@ export const VCARD=[
 export const CLEAN_SAY=['Encore un gobelet ! Ces stagiaires, je vous jure.','Qui jette ça par terre ? Une gratification, ça ne se mérite pas ?','Je suis vigile, pas femme de ménage. Mais bon.','Un gobelet. Voilà ce qui arrive sans plan de formation.'];
 export const COF_SAY=['Le café de la cafétéria est le seul avantage du contrat.','Un expresso, ça fait oublier le plan social.','Tu as vu la liste ? Moi non. Je préfère ne pas savoir.','Ce café n\'a pas de nom, comme nos postes.','Un café. Un gobelet. Je commence à voir un schéma.'];
 export const SMS_SAY=['Le serveur est en panne ? Moi, je n\'ai touché à rien.','Qui a écrit ce SMS ? Le numéro est interne.','On a tous reçu le même message. C\'est louche, ou c\'est la DSI.','Je redémarre tout. Ça marche une fois sur deux.'];
-export const TALK={
+export const TALK: Record<string, string[]>={
  lucie:['Chut, je fais semblant de travailler. C\'est épuisant.','Les licenciements ? Je n\'ai rien entendu. Je ne suis pas payée pour entendre.','Prenez un café, ici c\'est la seule chose que la direction ne compte pas.'],
  hugo:['Je suis technicien. Je répare des choses que personne ne comprend, y compris moi.','Le serveur ? Ne le touchez pas, il est fragile. Comme moi le lundi.','Si vous cherchez la sortie, elle est à droite de ma démission.'],
  karim:['Mon PC met 12 minutes à démarrer. Je l\'allume en arrivant et je déjeune.','Vous avez un badge ? Moi, plus pour longtemps, apparemment.','Je ne dirai rien, mais je note tout. Pour mes prud\'hommes.']};
-export const TALK_R={kevin:['Euh, bonjour. Je suis le stagiaire.','Vous avez déjà vu un stagiaire embauché ?','Je cherche mon tuteur. Il est parti en 2019.'],nadege:['Joli écran. Dommage pour le mot de passe.','Je ne suis pas de la DSI, je suis de la bonne DSI.','Votre WiFi est pourri, je dis ça pour vous.'],marc:['Écoutez, j\'ai une offre irrésistible.','Entre nous, vous méritez mieux que cette entreprise.','Je vous vends du rêve, à crédit.'],jordan:['Ouais. Je passe nettoyer. Enfin, je passe.','Pas de souci, je n\'ai rien vu.','Je suis là pour le ménage. Les corbeilles, c\'est mon pouvoir.']};
+export const TALK_R: Record<string, string[]>={kevin:['Euh, bonjour. Je suis le stagiaire.','Vous avez déjà vu un stagiaire embauché ?','Je cherche mon tuteur. Il est parti en 2019.'],nadege:['Joli écran. Dommage pour le mot de passe.','Je ne suis pas de la DSI, je suis de la bonne DSI.','Votre WiFi est pourri, je dis ça pour vous.'],marc:['Écoutez, j\'ai une offre irrésistible.','Entre nous, vous méritez mieux que cette entreprise.','Je vous vends du rêve, à crédit.'],jordan:['Ouais. Je passe nettoyer. Enfin, je passe.','Pas de souci, je n\'ai rien vu.','Je suis là pour le ménage. Les corbeilles, c\'est mon pouvoir.']};
 export const PC_SAY=['Mot de passe : Azerty123. Le DG est un visionnaire.','Quarante mails non lus, dont « Plan social : rien à signaler ».','Dossier « Stratégie 2026 » : un tableau Excel de trois cellules.','Historique : « comment se faire licencier avec la prime ». Pas le premier.','Fond d\'écran : le DG au ski. Casque de ski, sourire de requin.'];

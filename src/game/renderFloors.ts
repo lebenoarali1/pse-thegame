@@ -1,10 +1,10 @@
 import { H, OFFX, OFFY, W, iso } from './utils';
 import { STY, ch, zoneOf } from './levelData';
 /* rendu : floors pré-rendus */
-export const FLOORC=[];
-export function diamond(g,x,y,fill){const [sx,sy]=iso(x,y);g.beginPath();g.moveTo(sx,sy);g.lineTo(sx+32,sy+16);g.lineTo(sx,sy+32);g.lineTo(sx-32,sy+16);g.closePath();g.fillStyle=fill;g.fill()}
-export function buildFloor(f){
-  const cv=document.createElement('canvas');cv.width=(W+H)*32+140;cv.height=(W+H)*16+OFFY+90;const g=cv.getContext('2d');g.translate(OFFX,OFFY);
+export const FLOORC: HTMLCanvasElement[]=[];
+export function diamond(g: CanvasRenderingContext2D,x: number,y: number,fill: any){const [sx,sy]=iso(x,y);g.beginPath();g.moveTo(sx,sy);g.lineTo(sx+32,sy+16);g.lineTo(sx,sy+32);g.lineTo(sx-32,sy+16);g.closePath();g.fillStyle=fill;g.fill()}
+export function buildFloor(f: number){
+  const cv=document.createElement('canvas');cv.width=(W+H)*32+140;cv.height=(W+H)*16+OFFY+90;const g=cv.getContext('2d') as CanvasRenderingContext2D;g.translate(OFFX,OFFY);
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){
     const c=ch(f,x,y);if(c===' '||c==='#')continue;
     const z=zoneOf(f,x,y),col=STY[z][(x+y)&1];diamond(g,x,y,col);
@@ -21,7 +21,7 @@ export function buildFloor(f){
   FLOORC[f]=cv;
 }
 /* éclairage */
-export const LIGHTS=[[],[],[]];
-for(let f=0;f<3;f++)for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){if(x%4!==2||y%4!==2)continue;const c=ch(f,x,y);if(c==='#'||c===' ')continue;const z=zoneOf(f,x,y);LIGHTS[f].push([x+.5,y+.5,z==='server'?'#4ee3f0':z==='wood'?'#ffb866':z==='lino'?'#ffe2b0':null])}
-export const lightSpr=(()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d'),r=g.createRadialGradient(128,128,0,128,128,128);r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.45,'rgba(255,255,255,.7)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,256,256);return c})();
-export const glowSpr=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d'),r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'rgba(255,255,255,.55)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128);return c})();
+export const LIGHTS: any[][]=[[],[],[]];
+for(let f=0;f<3;f++)for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){if(x%4!==2||y%4!==2)continue;const c=ch(f,x,y);if(c==='#'||c===' ')continue;const z=zoneOf(f,x,y);LIGHTS[f].push([x+.5,y+.5,z==='server'?'#4ee3f0':z==='wood'?'#ffb866':z==='lino'?'#ffe2b0':null as any])}
+export const lightSpr=(()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d') as CanvasRenderingContext2D,r=g.createRadialGradient(128,128,0,128,128,128);r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.45,'rgba(255,255,255,.7)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,256,256);return c})();
+export const glowSpr=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d') as CanvasRenderingContext2D,r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'rgba(255,255,255,.55)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128);return c})();

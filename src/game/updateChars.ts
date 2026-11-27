@@ -10,11 +10,12 @@ import { hear, smsServeur } from './noise';
 import { stepEntity } from './movement';
 import { snd } from './sound';
 import { pcEffect, pcOpen } from './pcMenu';
+import type { Enemy, Character } from './types';
 /* mise à jour persos */
-export function feed(who,txt,me){const f=$('bfeed');if(!f)return;const d=document.createElement('div');d.className=me?'':'n';d.innerHTML='<b>'+who+'</b> '+txt;f.appendChild(d);while(f.children.length>3)f.removeChild(f.firstChild)}
-export function releaseTalk(c){const e=getE(c.talking);c.talking=null;if(e&&!e.ko){e.talk=Math.min(e.talk,2.6);if(e.state==='call'){e.state='patrol';e.path=[]}else say(e,'Bon, je dois y aller, j\'ai un ticket.',2.6)}
+export function feed(who: string,txt: string,me: boolean){const f=$('bfeed');if(!f)return;const d=document.createElement('div');d.className=me?'':'n';d.innerHTML='<b>'+who+'</b> '+txt;f.appendChild(d);while(f.children.length>3)f.removeChild(f.firstChild)}
+export function releaseTalk(c: any){const e=getE(c.talking);c.talking=null;if(e&&!e.ko){e.talk=Math.min(e.talk,2.6);if(e.state==='call'){e.state='patrol';e.path=[]}else say(e,'Bon, je dois y aller, j\'ai un ticket.',2.6)}
   feed('Djibril','*file avant qu\'on lui pose une question*',true);setTimeout(()=>{if(!ST.S.chars.some(q=>q.talking)){const f=$('bfeed');if(f)f.innerHTML=''}},4500)}
-export function updateChar(c,dt){
+export function updateChar(c: Character,dt: any){
   if(c.out)return;
   if(!c.joined){if(c.sayT>0)c.sayT-=dt;return}
   if(c.sayT>0)c.sayT-=dt;c.cd.q=Math.max(0,c.cd.q-dt);c.cd.e=Math.max(0,c.cd.e-dt);c.cd.w=Math.max(0,(c.cd.w||0)-dt);
@@ -40,14 +41,14 @@ export function updateChar(c,dt){
     for(let y=Math.floor(c.y)-1;y<=Math.floor(c.y)+1;y++)for(let x=Math.floor(c.x)-1;x<=Math.floor(c.x)+1;x++){
       const t=ch(c.f,x,y);if(t!=='m'&&t!=='b')continue;const k=c.f+','+x+','+y;
       if(Math.hypot(c.x-x-.5,c.y-y-.5)<1.45&&(ST.S.distCd[k]||0)<ST.S.t){ST.S.distCd[k]=ST.S.t+30;
-        {const sp=c.path,so=c.order;startBusy(c,'dist',3);c.busy.sp=sp;c.busy.so=so}say(c,t==='m'?'Oh, un café. Juste un. Ou dix.':'Un canapé. Deux minutes. Réveillez-moi à la retraite.',3);return}}}
+        {const sp=c.path,so=c.order;startBusy(c,'dist',3);c.busy!.sp=sp;c.busy!.so=so}say(c,t==='m'?'Oh, un café. Juste un. Ou dix.':'Un canapé. Deux minutes. Réveillez-moi à la retraite.',3);return}}}
   if(c.id===ST.S.sel&&KEYS.size&&!ST.S.over){
     const vx=(KEYS.has('arrowdown')?1:0)+(KEYS.has('arrowright')?1:0)-(KEYS.has('arrowup')?1:0)-(KEYS.has('arrowleft')?1:0);
     const vy=(KEYS.has('arrowdown')?1:0)+(KEYS.has('arrowleft')?1:0)-(KEYS.has('arrowup')?1:0)-(KEYS.has('arrowright')?1:0);
     const n=Math.hypot(vx,vy);
     if(n>0){c.path=[];c.order=null;if(c.smoke){c.smoke=false}cam.free=false;ST.view=c.f;
       const sp=c.sp*(c.run?1.75:1)*dt,dx=vx/n*sp,dy=vy/n*sp;
-      const ok=(x,y)=>{const i=Math.floor(x),j=Math.floor(y);if(!passable(c.f,i,j))return false;const t=ch(c.f,i,j);
+      const ok=(x: any,y: any)=>{const i=Math.floor(x),j=Math.floor(y);if(!passable(c.f,i,j))return false;const t=ch(c.f,i,j);
         if(isDoor(t)&&!ST.S.dOpen[c.f+','+i+','+j]&&!(Math.floor(c.x)===i&&Math.floor(c.y)===j))return false;return true};
       let m=false;if(ok(c.x+dx,c.y+dy)){c.x+=dx;c.y+=dy;m=true}else{if(ok(c.x+dx,c.y)){c.x+=dx;m=true}if(ok(c.x,c.y+dy)){c.y+=dy;m=true}}
       c.moving=m;c.face=Math.atan2(dy,dx);
@@ -59,7 +60,7 @@ export function updateChar(c,dt){
   if(c.moving&&!c.hide&&Math.random()<dt*2.2&&c.id!=='kevin')ST.P.push({f:c.f,x:c.x,y:c.y,z:1,vx:0,vy:0,vz:6,life:.4,col:'rgba(255,255,255,.25)',sz:1.5});
   if(!c.path.length&&c.order)arrive(c,c.order);
 }
-export function arrive(c,o){
+export function arrive(c: any,o: any){
   const kind=o.k;
   if(kind==='puddle'){c.order=null;if((c.cd.w||0)>0){toast('Pas encore prêt','w');return}c.cd.w=20;ST.S.puddles.push({f:c.f,x:o.x,y:o.y,t:0});
     say(c,['Attention, sol glissant. Panneau non fourni.','Je viens de passer la serpillère. Oups, trop mouillé.','Sécurité du travail : zéro.'][Math.floor(Math.random()*3)],2.8);snd(240,.18,'sine',.05,-90);
@@ -79,11 +80,11 @@ export function arrive(c,o){
     else{if(d>3.6){say(c,'Trop loin de la serrure.',1.6);return}const dd=DOORS.find(q=>q.f===o.f&&q.x===o.x&&q.y===o.y);
       if(!dd||dd.l>2){say(c,"Cette serrure résiste, pas de réseau.",2.2);return}startBusy(c,'hack',dd.l===2?8:4,{what:'door',f:o.f,x:o.x,y:o.y})}}
 }
-export function transit(c,to){c.f=to.f;c.x=to.x;c.y=to.y;c.path=[];c.order=null;c.stall=0;snd(330,.12,'triangle',.04);
+export function transit(c: any,to: { f: number; x: number; y: number; }){c.f=to.f;c.x=to.x;c.y=to.y;c.path=[];c.order=null;c.stall=0;snd(330,.12,'triangle',.04);
   if(ST.S.sel===c.id){ST.view=to.f;cam.free=false}}
-export function updateBusy(c,dt){
+export function updateBusy(c: any,dt: any){
   const b=c.busy;let rate=1;
-  if(b.k==='hack'){const sees=nearestEnemy(c,e=>e.type==='beaugosse'&&!e.ko&&Math.hypot(e.x-c.x,e.y-c.y)<9&&los(c.f,c.x,c.y,e.x,e.y),99);
+  if(b.k==='hack'){const sees=nearestEnemy(c,(e: Enemy)=>e.type==='beaugosse'&&!e.ko&&Math.hypot(e.x-c.x,e.y-c.y)<9&&los(c.f,c.x,c.y,e.x,e.y),99);
     if(sees){rate=.35;if(Math.random()<dt*.5)say(c,['Oh là là, regarde-moi ces épaules. Il fait de la muscu ou du management ?','Mmh. Il est là, lui. Le RH fait de la gonflette.','Concentre-toi, Nadia. Ce n\'est qu\'un polo moulant.'][Math.floor(Math.random()*3)],2.2)}
     b.slow=!!sees}
   b.t+=dt*rate;

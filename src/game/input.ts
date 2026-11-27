@@ -13,18 +13,18 @@ import { advDlg } from './dialogues';
 import { snd } from './sound';
 import { startGame } from './video';
 /* saisie */
-export function toWorld(px,py){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
-export function tapAt(px,py){
+export function toWorld(px: any,py: any){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
+export function tapAt(px: any,py: any){
   if(!ST.started||ST.S.over||ST.dlg)return;
   const w=toWorld(px,py),sc=selC();
   /* personnage */
   let hit=null,hd=34;
-  const test=(x,y,arr?)=>{const[fx,fy]=iso(x,y);const d=Math.hypot(w.sx-fx,w.sy-(fy-20));return d};
+  const test=(x: number,y: number,arr?: any)=>{const[fx,fy]=iso(x,y);const d=Math.hypot(w.sx-fx,w.sy-(fy-20));return d};
   if(!ST.pend)for(const c of ST.S.chars){if(c.f!==ST.view||c.hide)continue;const d=test(c.x,c.y);if(d<hd*Math.max(.7,1/ST.zoom*.7)){hd=d;hit=c}}
   if(hit&&hit.joined){selectChar(hit.id);return}
   if(hit&&!hit.joined&&!ST.pend){if(sc.f===ST.view&&gotoPos(sc,hit.x,hit.y))toast('Approchez-vous pour lui parler','w');return}
   const tx=Math.floor(w.x),ty=Math.floor(w.y);
-  if(ST.pend){const a=ACT[sc.id].find(q=>q.k===ST.pend.k);
+  if(ST.pend){const a=ACT[sc.id].find(q=>q.k===ST.pend.k)!;
     if(a.mode==='enemy'){let be=null,bd=1e9;for(const e of ST.S.enemies){if(e.f!==ST.view||e.ko||e.type==='camera'||!enemyVisible(e))continue;const[fx,fy]=iso(e.x,e.y),d=Math.hypot(w.sx-fx,w.sy-(fy-20));if(d<bd){bd=d;be=e}}
       if(!be||bd>=60){let wd=1.7;for(const e of ST.S.enemies){if(e.f!==ST.view||e.ko||e.type==='camera'||!enemyVisible(e))continue;const d=Math.hypot(w.x-e.x,w.y-e.y);if(d<wd){wd=d;be=e;bd=0}}}
       if(be&&bd<60){const k=ST.pend.k;ST.pend=null;$('ban').style.display='none';doAction(sc,k,{eid:be.id})}else toast('Touchez un garde visible','w')}
@@ -45,7 +45,7 @@ export function tapAt(px,py){
   else if(!passable(ST.view,tx,ty)&&c!=='T'&&c!=='S'){ /* mur : se rapprocher */ gotoPos(sc,w.x,w.y)}
   else{if(gotoPos(sc,tx+.5,ty+.5))marker(tx,ty)}
 }
-export function marker(x,y){ST.P.push({f:ST.view,x:x+.5,y:y+.5,z:0,vx:0,vy:0,vz:0,life:.6,col:'#fff',sz:0,ring:true,age:0})}
+export function marker(x: number,y: number){ST.P.push({f:ST.view,x:x+.5,y:y+.5,z:0,vx:0,vy:0,vz:0,life:.6,col:'#fff',sz:0,ring:true,age:0})}
 /* pointeur : tap ou glisser */
 ST.ptr=null;
 cv.addEventListener('contextmenu',e=>{e.preventDefault();ST.showCones=!ST.showCones;toast(ST.showCones?'Cônes de vision affichés':'Cônes de vision masqués','g')});
@@ -54,7 +54,7 @@ cv.addEventListener('pointermove',e=>{if(!ST.ptr)return;const dx=e.clientX-ST.pt
 cv.addEventListener('pointerup',e=>{if(ST.ptr&&!ST.ptr.drag)tapAt(e.clientX,e.clientY);ST.ptr=null});
 cv.addEventListener('pointercancel',()=>{ST.ptr=null});
 cv.addEventListener('wheel',e=>{e.preventDefault();setZoom(ST.zoom*(e.deltaY<0?1.1:.9))},{passive:false});
-export function setZoom(z){ST.zoom=clamp(z,.45,1.7)}
+export function setZoom(z: number){ST.zoom=clamp(z,.45,1.7)}
 window.addEventListener('keydown',e=>{
   if(!ST.started)return;const k=e.key.toLowerCase();
   if(ST.dlg){if(k===' '||k==='enter'){e.preventDefault();advDlg()}return}
