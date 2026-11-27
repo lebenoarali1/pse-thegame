@@ -9,10 +9,11 @@ const pages = [
   { file: 'docs/MCO.md', slug: 'index', title: 'MCO et mode opératoire' },
   { file: 'docs/ARCHITECTURE.md', slug: 'architecture', title: 'Architecture du code' },
   { file: 'docs/GAME_DESIGN.md', slug: 'conception', title: 'Conception du jeu' },
+  { file: 'docs/BACKLOG.md', slug: 'backlog', title: 'Backlog' },
   { file: 'CHANGELOG.md', slug: 'changelog', title: 'Historique des versions' },
   { file: 'README.md', slug: 'readme', title: 'Présentation' },
 ];
-const linkMap = { 'MCO.md': 'index.html', 'ARCHITECTURE.md': 'architecture.html', 'GAME_DESIGN.md': 'conception.html', 'CHANGELOG.md': 'changelog.html', 'README.md': 'readme.html' };
+const linkMap = { 'MCO.md': 'index.html', 'ARCHITECTURE.md': 'architecture.html', 'GAME_DESIGN.md': 'conception.html', 'BACKLOG.md': 'backlog.html', 'CHANGELOG.md': 'changelog.html', 'README.md': 'readme.html' };
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 const css = `

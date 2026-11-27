@@ -42,14 +42,8 @@ Ordre de découverte : Kévin et Nadia au RDC (dialogue d'intro, choix d'âge), 
 - Chaîne complète de mécaniques jusqu'à la victoire : testée automatiquement (gardes aveugles).
 - Solvabilité en furtivité totale sans debug : non démontrée, à confirmer en jeu. Risque principal : le temps (480 s) pour un premier essai.
 
-## Backlog (à prioriser)
-1. Valider la furtivité de bout en bout et régler la difficulté (temps, portées, durées).
-2. Tutoriel intégré (premières minutes guidées).
-3. Étage 2 : plus de gags et de situations (DRH, Brigitte, DG).
-4. Sons et musique, son de la vidéo à tester.
-5. Polish : lumière, animations, sprites.
-6. Modes de difficulté, score, rejeu.
-7. Éditeur de niveaux (Angular possible). Fait : modules TypeScript, Vite, hébergement GitHub Pages.
+## Backlog
+Voir [BACKLOG.md](BACKLOG.md) : épopées, user stories, statut (DONE, TODO, IDEE), priorités et ordre de travail.
 
 ## Mise à jour 0.6
 - RDC : gobelet de Kévin sur Roger (nettoie 10 s), clope de Nadia sur Dédé (fumoir 60 s), puis portillon bleu

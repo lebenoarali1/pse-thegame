@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.3
+- Nouvelle page Backlog (docs/BACKLOG.md) : analyse 360, 10 épopées, user stories avec statut et priorité, ordre de travail proposé
 - Documentation publiée sur GitHub Pages (/docs/), générée depuis les fichiers Markdown par `npm run build`
 - Typage strict (strict et noImplicitAny) sur tous les modules ; zéro `any` explicite (de 200 à 0) : ordres, actions, dialogues, menu de piratage, particules et état de jeu typés dans types.ts
 - Nouveau document docs/MCO.md : maintien en condition opérationnelle, paramétrage et mode opératoire du codage assisté
