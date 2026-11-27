@@ -10,9 +10,9 @@ export function cube(g: CanvasRenderingContext2D,x0: number,y0: number,x1: numbe
   poly(g,[iso(x0,y0,z1),iso(x1,y0,z1),iso(x1,y1,z1),iso(x0,y1,z1)],top)}
 export function rr(g: CanvasRenderingContext2D,x: number,y: number,w: number,h: number,r: number){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 export const WH: Float32Array[]=[];for(let f=0;f<3;f++)WH.push(new Float32Array(W*H));
-export function tallH(c: any,i: any,j: number){if(c==='#'){return(j===H-1||i===W-1)?9:40}if(c==='c')return 34;if(c==='r')return 42;return 0}
+export function tallH(c: string,i: number,j: number){if(c==='#'){return(j===H-1||i===W-1)?9:40}if(c==='c')return 34;if(c==='r')return 42;return 0}
 
-export function drawTile(g: any,f: any,i: any,j: number,c: any,t?: any){
+export function drawTile(g: CanvasRenderingContext2D,f: number,i: number,j: number,c: string,t?: number){
   if(c==='#'){
     const h=WH[f][j*W+i],out=(j===H-1||i===W-1);
     const top=out?'#8d98aa':'#a9b4c4',L=out?'#69758a':'#7d8aa0',R=out?'#505c72':'#5f6c83';

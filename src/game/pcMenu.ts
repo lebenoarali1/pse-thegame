@@ -34,8 +34,8 @@ export function pcChoose(k: any){const c=getC('nadege');if(!pcm||c.out)return;co
   if((ST.S.flags['pc_'+k]||0)>ST.S.t){toast('Déjà fait il y a peu, attendez un peu','w');return}
   pcClose();if(k==='code'){startBusy(c,'hack',a.t,{what:'code',f:c.f});return}if(k==='cams2'){startBusy(c,'hack',a.t,{what:'cams',f:c.f});return}if(k==='portillon'){startBusy(c,'hack',a.t,{what:'accueil',f:c.f});return}startBusy(c,'hack',a.t,{what:'pcact',act:k,f:c.f})}
 export function pcTick(){if(!pcm)return;const c=getC('nadege');if(c.out)pcClose()}
-export function sendTo(e: any,pt: { x: number; y: number },dur: number,lines: string[],hello: string,n: any){const p=spotNear(e.f,pt.x,pt.y,n);e.state='coffee';e.cof={x:p[0],y:p[1],t:0,arrived:false,dur,sy:0,lines};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,hello,3.4)}
-export function pcEffect(k: any,c: any){const f=c.f;ST.S.flags['pc_'+k]=ST.S.t+45;let n=0;
+export function sendTo(e: Enemy,pt: { x: number; y: number },dur: number,lines: string[],hello: string,n: number){const p=spotNear(e.f,pt.x,pt.y,n);e.state='coffee';e.cof={x:p[0],y:p[1],t:0,arrived:false,dur,sy:0,lines};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,hello,3.4)}
+export function pcEffect(k: string,c: Character){const f=c.f;ST.S.flags['pc_'+k]=ST.S.t+45;let n=0;
   const staff=ST.S.enemies.filter(e=>e.f===f&&!e.ko&&e.state!=='chase'&&(e.type==='manager'||e.tech));
   if(k==='door'){for(const d of DOORS){if(d.f===f&&d.l<=2&&Math.hypot(d.x-c.x,d.y-c.y)<12){ST.S.doorHack[f+','+d.x+','+d.y]=ST.S.t+30;n++}}
     toast(n?n+' porte'+(n>1?'s':'')+' déverrouillée'+(n>1?'s':'')+', elle'+(n>1?'s restent':' reste')+' ouverte'+(n>1?'s':''):'Aucune porte à portée','g');say(c,'Porte ouverte. Ticket clôturé.',2.2)}

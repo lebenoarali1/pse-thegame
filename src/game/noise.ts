@@ -8,12 +8,12 @@ import type { Enemy } from './types';
 export const OFF=[[0,0],[.9,.4],[-.8,.6],[.3,-.9],[-.5,-.5]];
 export function spotNear(f: number,x: number,y: number,n: number){const o=OFF[n%OFF.length];let tx=x+o[0],ty=y+o[1];if(!passable(f,Math.floor(tx),Math.floor(ty))){tx=x;ty=y}return [tx,ty]}
 /* Clope : UN garde va fumer au fumoir 60 s, vue réduite (enfumée) */
-export function smokeBreak(e: any){const k=SMK[e.f];if(!e||e.ko||!k)return;if(e.state==='chase'){return}
+export function smokeBreak(e: Enemy){const k=SMK[e.f];if(!e||e.ko||!k)return;if(e.state==='chase'){return}
   const p=spotNear(e.f,k.x,k.y,ST.S.enemies.filter(q=>q.state==='break').length);
   e.state='break';e.brk={x:p[0],y:p[1],t:0,arrived:false,dur:60,face:Math.random()*6.283,sy:Math.floor(Math.random()*BRK_SAY.length)};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,BRK_SAY[e.brk.sy],3);
   toast(e.name+' file au fumoir pour 1 min, vue enfumée','g')}
 /* Café : un PNJ va à la cafétéria de l'étage */
-export function goCoffee(e: any,dur: number){const k=CAFE[e.f];if(!k||e.ko||e.state==='chase')return false;
+export function goCoffee(e: Enemy,dur: number){const k=CAFE[e.f];if(!k||e.ko||e.state==='chase')return false;
   const p=spotNear(e.f,k.x,k.y,ST.S.enemies.filter(q=>q.state==='coffee').length);
   e.state='coffee';e.cof={x:p[0],y:p[1],t:0,arrived:false,dur,sy:Math.floor(Math.random()*COF_SAY.length)};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,'Un petit café, ça ne se refuse pas.',3);return true}
 /* SMS de Nadia : managers et techniciens filent en salle serveur */

@@ -27,14 +27,14 @@ export function eliminate(c: Character,e: Enemy,why: string){if(c.out||c.disguis
   if(c.id==='kevin'&&!ST.S.team.key){fail('Sans Kévin, pas de coffre',why+' Lui seul passe par la gaine jusqu\'au coffre du DG. Rechargez la sauvegarde rapide ou recommencez.');return}
   if(!act.length){fail('Équipe décimée','Plus personne pour mener le plan. La réunion de 18h se passera sans résistance. Rechargez la sauvegarde rapide ou recommencez.');return}
   if(ST.S.sel===c.id){ST.S.sel=act[0].id;ST.pend=null;const n=getC(ST.S.sel);ST.view=n.f;cam.free=false;buildActs()}}
-export function spotted(e: any,c: any){
+export function spotted(e: Enemy,c: Character){
   if(c.id==='kevin'){eliminate(c,e,(e.type==='camera'?'Une caméra':e.name)+' a repéré le stagiaire. Le pire, c\'est qu\'on l\'a reconnu tout de suite.');return}
   if(false){fail('Kévin est repéré !',(e.type==='camera'?'Une caméra':e.name)+' a vu un stagiaire là où il ne devait pas être. Le pire, c\'est qu\'on l\'a reconnu tout de suite : il n\'a jamais été aussi visible. Alerte immédiate. Rechargez la sauvegarde rapide ou recommencez.');return}
   e.state='chase';e.tgt=c.id;e.lose=0;say(e,['Hé ! Vous là !','Vous n\'avez pas de badge, c\'est ça ?','Stop ! Il y a un process pour être suspect !'][Math.floor(Math.random()*3)],2.4);snd(520,.25,'sawtooth',.05,-200);ST.S.alertT=3;
   for(const o of ST.S.enemies){if(o===e||o.f!==e.f||o.ko||o.type==='camera'||o.state==='chase'||o.talk>0)continue;
     if(Math.hypot(o.x-e.x,o.y-e.y)<7){o.state='chase';o.tgt=c.id;o.lose=0;say(o,'Alerte !',2)}}
 }
-export function updateEnemy(e: any,dt: any){
+export function updateEnemy(e: Enemy,dt: number){
   if(e.sayT>0)e.sayT-=dt;
   if(e.fovS&&e.state!=='break'){e.fov=e.fovS;e.range=e.rangeS;e.fovS=null}
   if(e.chat===undefined)e.chat=6+Math.random()*25;
@@ -107,7 +107,7 @@ export function updateEnemy(e: any,dt: any){
     e.path=p}
   stepEntity(e,dt,e.sp,false);
 }
-export function detect(dt: any){
+export function detect(dt: number){
   for(const e of ST.S.enemies){
     if(e.ko||(e.calm&&!e.tech)||e.state==='snitch'||e.type==='camera'&&e.off||e.state==='chase')continue;
     let seen=false;
@@ -134,8 +134,8 @@ export function detect(dt: any){
   }
 }
 
-export function snitch(e: any,c: any){const m=ST.S.enemies.filter(q=>q.type==='manager'&&q.f===e.f&&!q.ko).sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];e.det=0;
+export function snitch(e: Enemy,c: Character){const m=ST.S.enemies.filter(q=>q.type==='manager'&&q.f===e.f&&!q.ko).sort((a,b)=>Math.hypot(a.x-e.x,a.y-e.y)-Math.hypot(b.x-e.x,b.y-e.y))[0];e.det=0;
   if(!m){say(e,'J\'ai vu quelqu\'un, mais il n\'y a plus de chef pour s\'en occuper.',3);return}
   e.state='snitch';e.snt={mid:m.id,cid:c.id,t:0};e.path=[];e.look=null;e.talk=0;e.wait=0;say(e,'Il y a quelqu\'un qui ne devrait pas être là ! Je préviens le chef.',3.2);toast(e.name+' (support) file prévenir '+m.name,'w')}
-export function wakeUp(e: any){e.ko=false;e.hidden=false;e.koT=0;e.state='patrol';e.path=[];e.det=0;e.talk=0;e.look=null;e.wait=0;
+export function wakeUp(e: Enemy){e.ko=false;e.hidden=false;e.koT=0;e.state='patrol';e.path=[];e.det=0;e.talk=0;e.look=null;e.wait=0;
   say(e,e.uniformTaken?'Mon uniforme ?! Qui m\'a pris mon uniforme ?!':'Aïe. Ma tête. Je ne dormais pas, je méditais.',3.2);toast(e.name+' se réveille','w');snd(260,.15,'triangle',.05)}

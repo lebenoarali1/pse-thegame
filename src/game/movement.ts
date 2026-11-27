@@ -6,7 +6,7 @@ import type { Character } from './types';
 import type { Enemy } from './types';
 /* déplacement */
 export function doorOpenFor(e: Enemy){return true}
-export function stepEntity(e: any,dt: any,speed: any,isChar: boolean){
+export function stepEntity(e: Character | Enemy,dt: number,speed: number,isChar: boolean){
   e.moving=false;if(!e.path||!e.path.length)return;
   let rem=speed*dt;
   while(rem>0&&e.path.length){

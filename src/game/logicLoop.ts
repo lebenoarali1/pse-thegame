@@ -12,7 +12,7 @@ import { snd } from './sound';
 import { rnd } from './utils';
 import { hear, smokeBreak } from './noise';
 /* boucle logique */
-export function update(dt: any){
+export function update(dt: number){
   if(ST.S.over)return;
   ST.S.t+=dt;
   for(const ev of EVENTS)if(!ST.S.ev[ev.t]&&ST.S.t>=ev.t){ST.S.ev[ev.t]=1;ev.fn()}

@@ -2,10 +2,10 @@ import { ST } from './store';
 import { $ } from './utils';
 import { snd } from './sound';
 import { TL } from './state';
-import type { Enemy } from './types';
+import type { Character, Enemy } from './types';
 /* messages */
 export function toast(t: string,cls=''){const d=document.createElement('div');d.className='t '+cls;d.textContent=t;$('toast').appendChild(d);while($('toast').children.length>3)$('toast').firstChild.remove();setTimeout(()=>d.remove(),4200)}
-export function say(e: any,t: any,d=2.4){e.say=t;e.sayT=d}
+export function say(e: Character | Enemy,t: string,d=2.4){e.say=t;e.sayT=d}
 export function fail(title: string,text: string){if(ST.S.over)return;ST.S.over='fail';snd(160,.7,'sawtooth',.07,-90);$('eT').textContent=title;$('eP').textContent=text;$('bRetry').style.display=ST.lastSave?'':'none';$('end').classList.add('show')}
 export function win(){if(ST.S.over)return;ST.S.over='win';snd(660,.15,'triangle',.07);setTimeout(()=>snd(880,.3,'triangle',.07),150);
   const left=Math.max(0,Math.round(TL-ST.S.t));$('eT').textContent='Dehors, tous les quatre !';

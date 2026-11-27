@@ -13,9 +13,9 @@ import { pcEffect, pcOpen } from './pcMenu';
 import type { Enemy, Character } from './types';
 /* mise à jour persos */
 export function feed(who: string,txt: string,me: boolean){const f=$('bfeed');if(!f)return;const d=document.createElement('div');d.className=me?'':'n';d.innerHTML='<b>'+who+'</b> '+txt;f.appendChild(d);while(f.children.length>3)f.removeChild(f.firstChild)}
-export function releaseTalk(c: any){const e=getE(c.talking);c.talking=null;if(e&&!e.ko){e.talk=Math.min(e.talk,2.6);if(e.state==='call'){e.state='patrol';e.path=[]}else say(e,'Bon, je dois y aller, j\'ai un ticket.',2.6)}
+export function releaseTalk(c: Character){const e=getE(c.talking);c.talking=null;if(e&&!e.ko){e.talk=Math.min(e.talk,2.6);if(e.state==='call'){e.state='patrol';e.path=[]}else say(e,'Bon, je dois y aller, j\'ai un ticket.',2.6)}
   feed('Djibril','*file avant qu\'on lui pose une question*',true);setTimeout(()=>{if(!ST.S.chars.some(q=>q.talking)){const f=$('bfeed');if(f)f.innerHTML=''}},4500)}
-export function updateChar(c: any,dt: any){
+export function updateChar(c: Character,dt: number){
   if(c.out)return;
   if(!c.joined){if(c.sayT>0)c.sayT-=dt;return}
   if(c.sayT>0)c.sayT-=dt;c.cd.q=Math.max(0,c.cd.q-dt);c.cd.e=Math.max(0,c.cd.e-dt);c.cd.w=Math.max(0,(c.cd.w||0)-dt);
@@ -60,7 +60,7 @@ export function updateChar(c: any,dt: any){
   if(c.moving&&!c.hide&&Math.random()<dt*2.2&&c.id!=='kevin')ST.P.push({f:c.f,x:c.x,y:c.y,z:1,vx:0,vy:0,vz:6,life:.4,col:'rgba(255,255,255,.25)',sz:1.5});
   if(!c.path.length&&c.order)arrive(c,c.order);
 }
-export function arrive(c: any,o: any){
+export function arrive(c: Character,o: any){
   const kind=o.k;
   if(kind==='puddle'){c.order=null;if((c.cd.w||0)>0){toast('Pas encore prêt','w');return}c.cd.w=20;ST.S.puddles.push({f:c.f,x:o.x,y:o.y,t:0});
     say(c,['Attention, sol glissant. Panneau non fourni.','Je viens de passer la serpillère. Oups, trop mouillé.','Sécurité du travail : zéro.'][Math.floor(Math.random()*3)],2.8);snd(240,.18,'sine',.05,-90);
@@ -82,8 +82,8 @@ export function arrive(c: any,o: any){
 }
 export function transit(c: Character,to: { f: number; x: number; y: number; }){c.f=to.f;c.x=to.x;c.y=to.y;c.path=[];c.order=null;c.stall=0;snd(330,.12,'triangle',.04);
   if(ST.S.sel===c.id){ST.view=to.f;cam.free=false}}
-export function updateBusy(c: any,dt: any){
-  const b=c.busy;let rate=1;
+export function updateBusy(c: Character,dt: number){
+  const b=c.busy!;let rate=1;
   if(b.k==='hack'){const sees=nearestEnemy(c,(e: Enemy)=>e.type==='beaugosse'&&!e.ko&&Math.hypot(e.x-c.x,e.y-c.y)<9&&los(c.f,c.x,c.y,e.x,e.y),99);
     if(sees){rate=.35;if(Math.random()<dt*.5)say(c,['Oh là là, regarde-moi ces épaules. Il fait de la muscu ou du management ?','Mmh. Il est là, lui. Le RH fait de la gonflette.','Concentre-toi, Nadia. Ce n\'est qu\'un polo moulant.'][Math.floor(Math.random()*3)],2.2)}
     b.slow=!!sees}

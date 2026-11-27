@@ -10,7 +10,7 @@ export const SOLID=new Set(['#',' ','c','r','d','p','m','b','T','S','x']);
 export const TALL=new Set(['#','c','r']);
 export const ch=(f: number,x: number,y: number)=>(x<0||y<0||x>=W||y>=H)?' ':MAP[f][y][x];
 export const isPC=(f: number,x: number,y: number)=>{const c=ch(f,x,y);return c==='T'||(c==='d'&&x%3===0)};
-export const isDoor=(c: any)=>c==='1'||c==='2'||c==='3';
+export const isDoor=(c: string)=>c==='1'||c==='2'||c==='3';
 export const ZN: [number,number,number,number,string][][]=[
  [[6,1,16,12,'marble'],[1,1,4,12,'lino'],[18,1,22,12,'concrete']],
  [[1,1,5,5,'server'],[1,11,4,12,'lino'],[19,1,22,5,'lino'],[19,7,22,8,'marble'],[19,10,22,12,'wood']],

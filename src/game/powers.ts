@@ -10,7 +10,7 @@ import { angDiff } from './utils';
 import { SMK, VENTS } from './levelData';
 import type { Enemy, Character } from './types';
 /* ordres */
-export function gotoPos(c: any,x: any,y: any,order?: any){
+export function gotoPos(c: Character,x: number,y: number,order?: any){
   if(c.smoke){c.smoke=false;say(c,'*écrase sa clope*',2)}
   if(c.busy&&c.busy.lock){toast(c.name+' est occupé','w');return false}
   const p=findPath(c.f,Math.floor(c.x),Math.floor(c.y),Math.floor(x),Math.floor(y));
@@ -19,7 +19,7 @@ export function gotoPos(c: any,x: any,y: any,order?: any){
 export function startBusy(c: Character,k: string,max: number,extra?: any){c.busy=Object.assign({k,t:0,max,lock:true},extra||{});c.path=[];c.order=null}
 export function nearestEnemy(c: Character,pred: any,maxd=99){let b=null,bd=maxd;for(const e of ST.S.enemies){if(e.f!==c.f||!pred(e))continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<bd){bd=d;b=e}}return b}
 
-export function doAction(c: any,k: any,arg?: any){
+export function doAction(c: Character,k: string,arg?: any){
   if(ST.S.over||ST.paused&&!ST.S.over&&false)return;
   const slot=['q','e','w','x'][Math.max(0,ACT[c.id].findIndex(a=>a.k===k))];
   if((c.cd as any)[slot]>0&&k!=='flux'){toast('Pas encore prêt','w');return}
