@@ -11,6 +11,7 @@ Ce document explique comment faire vivre l'outil : où sont les sources, comment
 | Technologie | TypeScript strict, modules ES, Vite, canvas 2D, aucune dépendance d'exécution |
 | Déploiement | GitHub Actions (`.github/workflows/pages.yml`) à chaque push sur `main` |
 | Tests | 14 scénarios Python et Playwright pilotant Chrome, temps simulé |
+| Documentation en ligne | https://lebenoarali1.github.io/pse-thegame/docs/ (générée depuis les fichiers Markdown à chaque build) |
 | Page de partage | page Claude publiée en parallèle (lien direct pour les testeurs) |
 
 Ce qui est versionné : `src/`, `tests/`, `docs/`, `public/`, `index.html`, config Vite et TypeScript, workflow. Ce qui ne l'est pas : `dist/` (généré), `node_modules/`, `tests/out/`.
