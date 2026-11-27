@@ -6,10 +6,10 @@ import { say, toast } from './messages';
 import { startBusy } from './powers';
 import { MEET_SAY, goCoffee, smsServeur, spotNear } from './noise';
 import { snd } from './sound';
-import type { Enemy } from './types';
+import type { Enemy, Order, PcAction, PcMenu } from './types';
 import type { Character } from './types';
 /* menu de piratage d'un PC : Nadia choisit l'action */
-export let pcm: any=null;
+export let pcm: PcMenu | null=null;
 export const MEET=[null,{x:20.5,y:10.5},null];
 export const PRN=[{x:14.5,y:2.5},{x:14.5,y:2.5},{x:12.5,y:2.5}];
 export const PRN_SAY=['Qui imprime 400 pages à cette heure-ci ?','Encore bloquée, comme tous les vendredis.','C\'est mon CV, ne regardez pas.','Une imprimante qui marche. Il y a forcément un piège.'];
@@ -20,18 +20,18 @@ export const PCACT=[
  {k:'reu',i:'📅',n:'Réunion urgente',s:'Manager et support en salle de réunion (45 s)',t:5},
  {k:'cam',i:'📷',n:'Éteindre les caméras',s:'Caméras de l\'étage coupées 40 s',t:6},
  {k:'print',i:'🖨️',n:'Imprimer à distance',s:'Tout le personnel vient voir l\'imprimante (20 s)',t:4}];
-export function pcExtras(name: string){const E: any[]=[];
+export function pcExtras(name: string){const E: PcAction[]=[];
   if(name==='serveur'){if(!ST.S.team.code)E.push({k:'code',i:'🔐',n:'Pirater le code du coffre',s:'Indispensable pour ouvrir le coffre du DG',t:10});E.push({k:'cams2',i:'📷',n:'Couper les caméras de l\'étage 2',s:'70 s, vue sur le bureau du DG',t:6})}
   if(name==='accueil')E.push({k:'portillon',i:'🚧',n:'Ouvrir le portillon bleu',s:'Le portillon de l\'accueil reste ouvert 45 s',t:4});
   return E}
 export function pcAvail(a: { k: string; i: string; n: string; s: string; t: number; },f: number,px: number,py: number){if(a.k==='door')return DOORS.some(d=>d.f===f&&d.l<=2&&Math.hypot(d.x-px,d.y-py)<12);if(a.k==='notif')return f===1;if(a.k==='cafe')return !!CAFE[f];if(a.k==='reu')return !!MEET[f];if(a.k==='print')return !!PRN[f];return true}
-export function pcOpen(c: Character,o: any,name: string){pcm={f:o.f,x:o.x,y:o.y,extra:pcExtras(name)};pcRender();ST.paused=true}
+export function pcOpen(c: Character,o: Order,name: string){pcm={f:o.f!,x:o.x!,y:o.y!,extra:pcExtras(name)};pcRender();ST.paused=true}
 export function pcClose(){pcm=null;$('pcm').classList.remove('show');ST.paused=false}
 export function pcRender(){const b=$('pcm');b.innerHTML='<h4>Poste piraté : que faire ? <small style="font-weight:400;color:#8a93b8">(temps en pause)</small><span id="pcx">✕</span></h4>';
-  pcm.extra.concat(PCACT.filter((a: any)=>pcAvail(a,pcm.f,pcm.x,pcm.y))).forEach((a: any)=>{const bt=document.createElement('button');bt.className='pa';bt.innerHTML='<i>'+a.i+'</i><div>'+a.n+' <small>'+a.s+' · '+a.t+' s</small></div>';bt.onclick=()=>pcChoose(a.k);b.appendChild(bt)});
+  pcm!.extra.concat(PCACT.filter((a: PcAction)=>pcAvail(a,pcm!.f,pcm!.x,pcm!.y))).forEach((a: PcAction)=>{const bt=document.createElement('button');bt.className='pa';bt.innerHTML='<i>'+a.i+'</i><div>'+a.n+' <small>'+a.s+' · '+a.t+' s</small></div>';bt.onclick=()=>pcChoose(a.k);b.appendChild(bt)});
   $('pcx').onclick=pcClose;b.classList.add('show')}
-export function pcChoose(k: any){const c=getC('nadege');if(!pcm||c.out)return;const a=pcm.extra.concat(PCACT).find((q: any)=>q.k===k);if(!a)return;
-  if((ST.S.flags['pc_'+k]||0)>ST.S.t){toast('Déjà fait il y a peu, attendez un peu','w');return}
+export function pcChoose(k: string){const c=getC('nadege');if(!pcm||c.out)return;const a=pcm!.extra.concat(PCACT).find((q: PcAction)=>q.k===k);if(!a)return;
+  if((Number(ST.S.flags['pc_'+k])||0)>ST.S.t){toast('Déjà fait il y a peu, attendez un peu','w');return}
   pcClose();if(k==='code'){startBusy(c,'hack',a.t,{what:'code',f:c.f});return}if(k==='cams2'){startBusy(c,'hack',a.t,{what:'cams',f:c.f});return}if(k==='portillon'){startBusy(c,'hack',a.t,{what:'accueil',f:c.f});return}startBusy(c,'hack',a.t,{what:'pcact',act:k,f:c.f})}
 export function pcTick(){if(!pcm)return;const c=getC('nadege');if(c.out)pcClose()}
 export function sendTo(e: Enemy,pt: { x: number; y: number },dur: number,lines: string[],hello: string,n: number){const p=spotNear(e.f,pt.x,pt.y,n);e.state='coffee';e.cof={x:p[0],y:p[1],t:0,arrived:false,dur,sy:0,lines};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,hello,3.4)}

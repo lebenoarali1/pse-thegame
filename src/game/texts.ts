@@ -1,5 +1,5 @@
 import { ST } from './store';
-import type { Point } from './types';
+import type { DlgStep, Point } from './types';
 /* Textes du jeu : humour, dialogues, bavardages. Modifiable sans toucher aux règles */
 export const BRK_SAY=['Une clope ? Allez, cinq minutes. Mon burn-out attendra.','Chut, le DG ne doit pas savoir que je prends ma pause légale.','Ça fait du bien, un plan social, ça vide les bureaux.','Tu crois que je suis sur la liste ? Moi aussi, je suis un coût.','Sur mon contrat, il est écrit \"vigilance\". Pas \"loyauté\".'];
 
@@ -23,7 +23,7 @@ export function introSteps(){return [
  {w:'nadege',t:"Djibril s'est enfermé dans une salle de réunion du 1er pour pleurer, discrètement, en faisant semblant de répéter un pitch. Et Max, notre homme de ménage, est sûrement aux toilettes du 1er, téléphone en main, et pas pour la raison habituelle."},
  {w:'nadege',t:"Les vigiles ne doivent pas nous voir. Toi surtout : le moindre regard, et l'alerte est donnée. Toi, tu jettes un gobelet : un vigile qui nettoie ne surveille rien. Moi, je lance une clope au second : un vigile qui fume ne surveille presque rien, avec la fumée. Ensuite, je pirate le portillon bleu. Tu cours."}]}
 
-export const RECRUIT: Record<string, any>={
+export const RECRUIT: Record<string, () => DlgStep[]>={
  marc:()=>[
   {w:'marc',t:"*renifle* Non, ne regardez pas ! Je répétais mon discours de départ. Il est si beau que j'en pleure. Enfin, c'est surtout le mascara."},
   {w:'$',t:"On est virés à 18h, Djibril."},

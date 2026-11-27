@@ -32,7 +32,7 @@ export function pressAct(i: number){
 ST.lastUI=0;
 export function updateUI(){
   const t=ST.S.t,mins=15-t/(TL/15),cl=Math.min(15,t/(TL/15)),h=17,m=45+Math.floor(cl),s=Math.floor((cl%1)*60);
-  $('ck').firstChild.nodeValue=(m>=60?'18:'+String(m-60).padStart(2,'0'):'17:'+String(m).padStart(2,'0'));
+  $('ck').firstChild!.nodeValue=(m>=60?'18:'+String(m-60).padStart(2,'0'):'17:'+String(m).padStart(2,'0'));
   $('ck2').textContent=String(s).padStart(2,'0')+'s';$('barf').style.width=Math.min(100,t/TL*100)+'%';
   $('obj').innerHTML=objective();
   if(ST.dbg){const f=(n: number)=>Math.max(0,n).toFixed(1),L=[];L.push('T '+ST.S.t.toFixed(1)+' s  reste '+f(TL-ST.S.t)+' s');L.push('caméras coupées : '+(ST.S.team.camsUntil>ST.S.t?f(ST.S.team.camsUntil-ST.S.t)+' s':'non'));
@@ -40,13 +40,13 @@ export function updateUI(){
     const sc=getC(ST.S.sel);L.push(sc.name+' : q '+f(sc.cd.q)+' s, e '+f(sc.cd.e)+' s');
     for(const e of ST.S.enemies){if(e.f!==ST.view||e.type==='camera'||e.ko)continue;let t=e.state;if(e.state==='break'&&e.brk)t+=e.brk.arrived?' '+f(e.brk.dur-e.brk.t)+' s (vue '+e.range.toFixed(1)+')':' en route';else if(e.state==='clean'&&e.cln)t+=e.cln.arrived?' nettoie '+f(e.cln.dur-e.cln.t)+' s':' en route';else if(e.state==='coffee'&&e.cof)t+=e.cof.arrived?' café '+f(e.cof.dur-e.cof.t)+' s':' en route';else if(e.state==='look'&&e.look)t+=' '+f((e.lookDur||4.5)-e.look.t)+' s';else if(e.talk>0)t='baratin '+f(e.talk)+' s';L.push(e.name+' : '+t+'  alerte '+Math.round(e.det*100)+'%')}
     $('dbg').textContent=L.join('\n')}
-  ST.S.chars.forEach(c=>{const d=$('card_'+c.id);d.classList.toggle('sel',c.id===ST.S.sel);d.style.opacity=c.out?.3:c.joined?1:.4;d.querySelector('.nn').textContent=c.joined?c.name:'???';
-    if(c.out){d.querySelector('.st').textContent='Licencié';d.querySelector('.pb').style.width='0';return}
-    if(!c.joined){d.querySelector('.st').textContent='à retrouver';d.querySelector('.pb').style.width='0';return}
+  ST.S.chars.forEach(c=>{const d=$('card_'+c.id);d.classList.toggle('sel',c.id===ST.S.sel);d.style.opacity=String(c.out?.3:c.joined?1:.4);d.querySelector<HTMLElement>('.nn')!.textContent=c.joined?c.name:'???';
+    if(c.out){d.querySelector<HTMLElement>('.st')!.textContent='Licencié';d.querySelector<HTMLElement>('.pb')!.style.width='0';return}
+    if(!c.joined){d.querySelector<HTMLElement>('.st')!.textContent='à retrouver';d.querySelector<HTMLElement>('.pb')!.style.width='0';return}
     const st=c.talking?'baratine':c.hide?'dans la gaine':c.busy?({ko:'assomme',hide:'planque',uniform:'se change',talk:'baratine',hack:c.busy.slow?'distrait':'pirate',vent:'dans la gaine',safe:'ouvre le coffre',dist:'distrait'}[c.busy.k]||'occupé'):c.moving?(c.run?'court':'marche'):(c.disguise?'déguisé':'attend');
-    d.querySelector('.st').textContent=['RDC','Ét.1','Ét.2'][c.f]+' · '+st;d.querySelector('.pb').style.width=c.busy&&c.busy.max?(c.busy.t/c.busy.max*100)+'%':'0'});
+    d.querySelector<HTMLElement>('.st')!.textContent=['RDC','Ét.1','Ét.2'][c.f]+' · '+st;d.querySelector<HTMLElement>('.pb')!.style.width=c.busy&&c.busy.max?(c.busy.t/c.busy.max*100)+'%':'0'});
   const c=selC();ACT[c.id].forEach((a,i)=>{const b=$('ab'+i);if(!b)return;const cd=[c.cd.q,c.cd.e,c.cd.w||0,0][i];b.classList.toggle('act',!!(ST.pend&&ST.pend.k===a.k));b.classList.toggle('cd',cd>0);
-    if(a.k==='throw')b.querySelector('small:last-child').textContent='Il en reste '+ST.S.team.throws});
+    if(a.k==='throw')b.querySelector<HTMLElement>('small:last-child')!.textContent='Il en reste '+ST.S.team.throws});
   $('abRun')&&$('abRun').classList.toggle('on',c.run);
   for(let i=0;i<3;i++){$('fl'+i).classList.toggle('sel',ST.view===i);$('fl'+i).classList.toggle('has',ST.S.chars.some(q=>q.joined&&q.f===i))}
   $('alertfx').classList.toggle('on',ST.S.alertT>0||ST.S.enemies.some(e=>e.state==='chase'&&!e.ko));

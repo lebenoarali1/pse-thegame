@@ -2,7 +2,7 @@
 
 ## 1.3
 - Documentation publiée sur GitHub Pages (/docs/), générée depuis les fichiers Markdown par `npm run build`
-- Typage strict (strict et noImplicitAny) sur tous les modules ; paramètres typés (de 200 à une quarantaine de `any` explicites)
+- Typage strict (strict et noImplicitAny) sur tous les modules ; zéro `any` explicite (de 200 à 0) : ordres, actions, dialogues, menu de piratage, particules et état de jeu typés dans types.ts
 - Nouveau document docs/MCO.md : maintien en condition opérationnelle, paramétrage et mode opératoire du codage assisté
 - Passage à Vite et TypeScript : 30 modules ES dans src/game, types du modèle (types.ts), variables partagées dans store.ts, vérification `npm run typecheck`
 - Déploiement GitHub Pages automatique par GitHub Actions

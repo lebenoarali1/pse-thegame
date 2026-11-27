@@ -10,7 +10,7 @@ import { stepEntity } from './movement';
 import { goCoffee } from './noise';
 import type { Character, Enemy } from './types';
 /* ennemis */
-export function canSee(e: Enemy,c: Character,fovExtra?: any){
+export function canSee(e: Enemy,c: Character,fovExtra?: number){
   const dx=c.x-e.x,dy=c.y-e.y,d=Math.hypot(dx,dy);
   if(d>e.range)return 0;
   if(!los(e.f,e.x,e.y,c.x,c.y))return 0;
@@ -36,14 +36,14 @@ export function spotted(e: Enemy,c: Character){
 }
 export function updateEnemy(e: Enemy,dt: number){
   if(e.sayT>0)e.sayT-=dt;
-  if(e.fovS&&e.state!=='break'){e.fov=e.fovS;e.range=e.rangeS;e.fovS=null}
+  if(e.fovS&&e.state!=='break'){e.fov=e.fovS;e.range=e.rangeS!;e.fovS=null}
   if(e.chat===undefined)e.chat=6+Math.random()*25;
   if(!e.ko&&e.state==='patrol'&&e.talk<=0){e.chat-=dt;if(e.chat<=0){e.chat=22+Math.random()*30;const L=CHAT[e.type];if(L&&e.sayT<=0&&!(ST.S.over))say(e,L[Math.floor(Math.random()*L.length)],3.2)}}
   if(e.ko){if(!e.hidden){e.koT=(e.koT||0)+dt;if(e.koT>=(e.koDur||50)&&!ST.S.chars.some(c=>c.busy&&c.busy.eid===e.id))wakeUp(e)}return}
   if(e.freeze>0){e.freeze-=dt;e.moving=false;return}
   if(e.type==='camera'){
     const off=(ST.S.team.camsUntil>ST.S.t&&e.f===2)||((ST.S.team.camsOff||{})[e.f]||0)>ST.S.t;e.off=off;
-    e.face=e.scan.base+e.scan.amp*Math.sin(ST.S.t*6.283/e.scan.period);return}
+    e.face=e.scan!.base+e.scan!.amp*Math.sin(ST.S.t*6.283/e.scan!.period);return}
   if(e.talk>0&&!e.talkRed){e.talkRed=[e.fov,e.range];e.fov=Math.min(e.fov,56);e.range=Math.min(e.range,2.4)}
   else if(!(e.talk>0)&&e.talkRed){e.fov=e.talkRed[0];e.range=e.talkRed[1];e.talkRed=null}
   if(e.talk>0){e.talk-=dt;const c=getC(e.talkTo);if(c&&c.f===e.f){e.face=Math.atan2(c.y-e.y,c.x-e.x);if(Math.hypot(c.x-e.x,c.y-e.y)>8)e.talk=0}
@@ -59,7 +59,7 @@ export function updateEnemy(e: Enemy,dt: number){
   if(e.state==='clean'){const l=e.cln;if(!l){e.state='patrol';return}
     if(!l.arrived){if(!e.path.length){const p=findPath(e.f,Math.floor(e.x),Math.floor(e.y),Math.floor(l.x),Math.floor(l.y));e.path=p||[];if(!p||!p.length)l.arrived=true}
       stepEntity(e,dt,1.7,false);if(!e.path.length)l.arrived=true;if(l.arrived){l.f0=Math.atan2(l.y-e.y,l.x-e.x);say(e,CLEAN_SAY[Math.floor(Math.random()*CLEAN_SAY.length)],3.4)}}
-    else{l.t+=dt;e.moving=false;e.face=l.f0+Math.sin(l.t*3.2)*.6;
+    else{l.t+=dt;e.moving=false;e.face=l.f0!+Math.sin(l.t*3.2)*.6;
       if(l.t>=l.dur){e.cln=null;e.path=[];e.wait=0;if(!((e.type==='vigile'||e.type==='beaugosse'||e.type==='manager')&&goCoffee(e,20))){e.state='patrol';say(e,'Voilà, propre. Jusqu\'au prochain stagiaire.',2.6)}}}
     return}
   if(e.state==='coffee'){const b=e.cof;if(!b){e.state='patrol';return}
@@ -81,7 +81,7 @@ export function updateEnemy(e: Enemy,dt: number){
   if(e.state==='break'){const b=e.brk;if(!b){e.state='patrol';return}
     if(!b.arrived){if(!e.path.length){const p=findPath(e.f,Math.floor(e.x),Math.floor(e.y),Math.floor(b.x),Math.floor(b.y));e.path=p||[];if(!p||!p.length)b.arrived=true}
       stepEntity(e,dt,1.7,false);if(!e.path.length)b.arrived=true}
-    else{if(!b.red){b.red=1;e.fovS=e.fov;e.rangeS=e.range;e.fov=64;e.range=2.3;e.det=0}b.t+=dt;e.moving=false;e.face=b.face;if(b.t>b.dur){e.state='patrol';e.brk=null;e.path=[];e.wait=0;say(e,'Bon, retour au travail.',2.4)}
+    else{if(!b.red){b.red=1;e.fovS=e.fov;e.rangeS=e.range;e.fov=64;e.range=2.3;e.det=0}b.t+=dt;e.moving=false;e.face=b.face??e.face;if(b.t>b.dur){e.state='patrol';e.brk=null;e.path=[];e.wait=0;say(e,'Bon, retour au travail.',2.4)}
       else if(Math.floor(b.t/9)!==Math.floor((b.t-dt)/9)&&b.t>1)say(e,BRK_SAY[(b.sy+Math.floor(b.t/9))%BRK_SAY.length],3)}
     return}
   if(e.state==='look'){

@@ -24,5 +24,5 @@ export function smsServeur(){let n=0;
     const p=spotNear(1,SRV.x,SRV.y,n);e.state='coffee';e.cof={x:p[0],y:p[1],t:0,arrived:false,dur:45,sy:0,lines:SMS_SAY};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,'Un SMS : « Salle serveur, urgent ». Ça sent la panne.',3.4);n++}
   toast(n?'SMS envoyé : '+n+' manager'+(n>1?'s':'')+' et technicien'+(n>1?'s':'')+' filent en salle serveur (45 s)':'Personne à prévenir','g')}
 /* Gobelet : les PNJ proches vont nettoyer 10 s, puis (si l'étage a une cafétéria) prennent un café */
-export function hear(f: any,x: any,y: any,r: number){for(const e of ST.S.enemies){if(e.f!==f||e.ko||e.calm||e.type==='camera'||e.state==='chase'||e.state==='break'||e.state==='call'||e.talk>0)continue;
+export function hear(f: number,x: number,y: number,r: number){for(const e of ST.S.enemies){if(e.f!==f||e.ko||e.calm||e.type==='camera'||e.state==='chase'||e.state==='break'||e.state==='call'||e.talk>0)continue;
   if(Math.hypot(e.x-x,e.y-y)<=r){e.state='clean';e.cln={x,y,t:0,arrived:false,dur:10};e.look=null;e.cof=null;e.path=[];e.wait=0;say(e,'?',2.2)}}}

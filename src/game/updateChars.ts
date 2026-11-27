@@ -10,9 +10,9 @@ import { hear, smsServeur } from './noise';
 import { stepEntity } from './movement';
 import { snd } from './sound';
 import { pcEffect, pcOpen } from './pcMenu';
-import type { Enemy, Character } from './types';
+import type { Character, Enemy, Order } from './types';
 /* mise à jour persos */
-export function feed(who: string,txt: string,me: boolean){const f=$('bfeed');if(!f)return;const d=document.createElement('div');d.className=me?'':'n';d.innerHTML='<b>'+who+'</b> '+txt;f.appendChild(d);while(f.children.length>3)f.removeChild(f.firstChild)}
+export function feed(who: string,txt: string,me: boolean){const f=$('bfeed');if(!f)return;const d=document.createElement('div');d.className=me?'':'n';d.innerHTML='<b>'+who+'</b> '+txt;f.appendChild(d);while(f.children.length>3)f.removeChild(f.firstChild!)}
 export function releaseTalk(c: Character){const e=getE(c.talking);c.talking=null;if(e&&!e.ko){e.talk=Math.min(e.talk,2.6);if(e.state==='call'){e.state='patrol';e.path=[]}else say(e,'Bon, je dois y aller, j\'ai un ticket.',2.6)}
   feed('Djibril','*file avant qu\'on lui pose une question*',true);setTimeout(()=>{if(!ST.S.chars.some(q=>q.talking)){const f=$('bfeed');if(f)f.innerHTML=''}},4500)}
 export function updateChar(c: Character,dt: number){
@@ -36,7 +36,7 @@ export function updateChar(c: Character,dt: number){
         else if(o.k==='hide')startBusy(c,'hide',1.6,{eid:e.id});
         else startBusy(c,'uniform',2.2,{eid:e.id});return}
       c.repath-=dt;if(c.repath<=0||!c.path.length){c.repath=.35;const p=findPath(c.f,Math.floor(c.x),Math.floor(c.y),Math.floor(e.x),Math.floor(e.y));if(p)c.path=p}}}
-  if(o&&o.k==='hack'&&(o.kind==='door'&&Math.hypot(c.x-o.x-.5,c.y-o.y-.5)<=3.3)){c.path=[];arrive(c,o);if(c.busy)return}
+  if(o&&o.k==='hack'&&(o.kind==='door'&&Math.hypot(c.x-o.x!-.5,c.y-o.y!-.5)<=3.3)){c.path=[];arrive(c,o);if(c.busy)return}
   if(c.id==='jordan'&&c.moving&&!c.busy){
     for(let y=Math.floor(c.y)-1;y<=Math.floor(c.y)+1;y++)for(let x=Math.floor(c.x)-1;x<=Math.floor(c.x)+1;x++){
       const t=ch(c.f,x,y);if(t!=='m'&&t!=='b')continue;const k=c.f+','+x+','+y;
@@ -60,22 +60,22 @@ export function updateChar(c: Character,dt: number){
   if(c.moving&&!c.hide&&Math.random()<dt*2.2&&c.id!=='kevin')ST.P.push({f:c.f,x:c.x,y:c.y,z:1,vx:0,vy:0,vz:6,life:.4,col:'rgba(255,255,255,.25)',sz:1.5});
   if(!c.path.length&&c.order)arrive(c,c.order);
 }
-export function arrive(c: Character,o: any){
+export function arrive(c: Character,o: Order){
   const kind=o.k;
-  if(kind==='puddle'){c.order=null;if((c.cd.w||0)>0){toast('Pas encore prêt','w');return}c.cd.w=20;ST.S.puddles.push({f:c.f,x:o.x,y:o.y,t:0});
+  if(kind==='puddle'){c.order=null;if((c.cd.w||0)>0){toast('Pas encore prêt','w');return}c.cd.w=20;ST.S.puddles.push({f:c.f,x:o.x!,y:o.y!,t:0});
     say(c,['Attention, sol glissant. Panneau non fourni.','Je viens de passer la serpillère. Oups, trop mouillé.','Sécurité du travail : zéro.'][Math.floor(Math.random()*3)],2.8);snd(240,.18,'sine',.05,-90);
-    for(let i=0;i<10;i++)ST.P.push({f:c.f,x:o.x,y:o.y,z:2,vx:rnd(-1.5,1.5),vy:rnd(-1.5,1.5),vz:rnd(5,14),life:.6,col:'#8fd3ff',sz:2});return}
+    for(let i=0;i<10;i++)ST.P.push({f:c.f,x:o.x!,y:o.y!,z:2,vx:rnd(-1.5,1.5),vy:rnd(-1.5,1.5),vz:rnd(5,14),life:.6,col:'#8fd3ff',sz:2});return}
   if(kind==='stairs'){const s=STAIRS.find(s=>s.f===c.f&&s.x===o.sx&&s.y===o.sy);c.order=null;if(!s)return;transit(c,s.to)}
-  else if(kind==='vent'){c.order=null;if(Math.hypot(c.x-o.vx-.5,c.y-o.vy-.5)>.8)return;
+  else if(kind==='vent'){c.order=null;if(Math.hypot(c.x-o.vx!-.5,c.y-o.vy!-.5)>.8)return;
     if(c.id!=='kevin'){say(c,"C'est trop étroit pour moi.",2);return}
-    startBusy(c,'vent',2.6,{vx:o.vx,vy:o.vy});c.hide=true;snd(220,.4,'sine',.05,-60)}
+    startBusy(c,'vent',2.6,{vx:o.vx!,vy:o.vy!});c.hide=true;snd(220,.4,'sine',.05,-60)}
   else if(kind==='safe'){c.order=null;if(ST.S.team.key){say(c,'Déjà vidé.',1.5);return}
     if(!ST.S.team.code){say(c,'Verrouillé. Il faut le code.',2.4);toast('Le coffre demande un code : Nadia peut le trouver sur le serveur (étage 1)','w');return}
     startBusy(c,'safe',2.6)}
   else if(kind==='hack'){c.order=null;
-    const tx=o.x+.5,ty=o.y+.5,d=Math.hypot(c.x-tx,c.y-ty);
+    const tx=o.x!+.5,ty=o.y!+.5,d=Math.hypot(c.x-tx,c.y-ty);
     if(c.id!=='nadege'){say(c,"Je n'y connais rien.",2);return}
-    if(o.kind==='term'){const name=TERMS[o.f+','+o.x+','+o.y];if(d>2){say(c,'Je dois être devant le PC.',1.8);return}if(!name&&!isPC(o.f,o.x,o.y)){say(c,"Rien à pirater ici.",1.6);return}
+    if(o.kind==='term'){const name=TERMS[o.f+','+o.x+','+o.y]!;if(d>2){say(c,'Je dois être devant le PC.',1.8);return}if(!name&&!isPC(o.f!,o.x!,o.y!)){say(c,"Rien à pirater ici.",1.6);return}
       pcOpen(c,o,name)}
     else{if(d>3.6){say(c,'Trop loin de la serrure.',1.6);return}const dd=DOORS.find(q=>q.f===o.f&&q.x===o.x&&q.y===o.y);
       if(!dd||dd.l>2){say(c,"Cette serrure résiste, pas de réseau.",2.2);return}startBusy(c,'hack',dd.l===2?8:4,{what:'door',f:o.f,x:o.x,y:o.y})}}
@@ -102,7 +102,7 @@ export function updateBusy(c: Character,dt: number){
     if(b.what==='code'){ST.S.team.code=true;toast('Code du coffre récupéré : 6969. Original.','g');say(c,"6969. Ça ne s'invente pas.",3.2);snd(880,.15,'triangle',.06)}
     else if(b.what==='cams'){ST.S.team.camsUntil=ST.S.t+70;ST.S.flags.cams=true;toast("Caméras de l'étage 2 coupées 70 s",'g');say(c,'Redémarrage. Bonne nuit.',2.4);snd(600,.2,'triangle',.05)}
     else if(b.what==='sms'){smsServeur();say(c,'Message envoyé depuis la messagerie interne. Signé : la DSI.',3);snd(300,.25,'sawtooth',.05,-120)}
-    else if(b.what==='pcact'){pcEffect(b.act,c)}
+    else if(b.what==='pcact'){pcEffect(b.act!,c)}
     else if(b.what==='pc'){const L=PC_SAY;say(c,L[Math.floor(Math.random()*L.length)],3.4);snd(520,.1,'triangle',.04)}
     else if(b.what==='accueil'){ST.S.doorHack[b.f+',17,5']=ST.S.t+45;toast('Portillon de l\'accueil ouvert 45 s','g');snd(600,.2,'triangle',.05)}
     else if(b.what==='door'){ST.S.doorHack[b.f+','+b.x+','+b.y]=ST.S.t+30;toast('Porte ouverte 30 s','g');snd(600,.2,'triangle',.05)}}

@@ -67,7 +67,7 @@ export function render(dt: number){
       if(c.sayT>0&&c.say)bubble(ctx,fx,fy-(c.busy&&c.busy.max?68:62),c.say,CCOL[c.id])}})}
   /* particules et projectiles */
   for(const p of ST.P){if(p.f!==ST.view)continue;D.push({d:p.x+p.y+.1,fn:()=>{const[fx,fy]=iso(p.x,p.y,p.z);
-    if(p.ring){ctx.strokeStyle='rgba(255,224,138,'+(1-p.age/.7)+')';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(fx,fy,10+p.age*90,5+p.age*45,0,0,7);ctx.stroke()}
+    if(p.ring){ctx.strokeStyle='rgba(255,224,138,'+(1-p.age!/.7)+')';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(fx,fy,10+p.age!*90,5+p.age!*45,0,0,7);ctx.stroke()}
     else{ctx.globalAlpha=clamp(p.life*2,0,1);ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(fx,fy,p.sz,0,7);ctx.fill();ctx.globalAlpha=1}}})}
   for(const p of ST.PR){if(p.f!==ST.view)continue;const t=clamp(p.t/p.dur,0,1),x=lerp(p.x0,p.x1,t),y=lerp(p.y0,p.y1,t);D.push({d:x+y+.2,fn:()=>{const[fx,fy]=iso(x,y,10+Math.sin(t*Math.PI)*46);if(p.kind==='clope'){ctx.fillStyle='#f4f4f4';ctx.fillRect(fx-4,fy-1,8,2.4);ctx.fillStyle='#ff7a3a';ctx.fillRect(fx+3,fy-1,2,2.4)}else{ctx.fillStyle='#ffe08a';ctx.beginPath();ctx.arc(fx,fy,4,0,7);ctx.fill();ctx.strokeStyle='#8a6a1c';ctx.stroke()}}})}
   D.sort((a,b)=>a.d-b.d);for(const o of D)o.fn();
@@ -75,7 +75,7 @@ export function render(dt: number){
   for(const v of VENTS)if(v.f===ST.view){const[fx,fy]=iso(v.x+.5,v.y+.5);ctx.fillStyle='rgba(255,138,76,'+(.25+.15*Math.sin(ST.S.t*4))+')';ctx.beginPath();ctx.ellipse(fx,fy,20,10,0,0,7);ctx.fill()}
   if(ST.view===0){const[fx,fy]=iso(21.5,12.5,0);ctx.fillStyle='rgba(255,209,102,.9)';ctx.font='700 13px "Barlow Condensed",sans-serif';ctx.textAlign='center';ctx.fillText(ST.S.team.key?'SORTIE · ascenseur de service':'ascenseur de service',fx,fy-12)}
   /* cibles possibles */
-  if(ST.pend&&sc){const a=ACT[sc.id].find(q=>q.k===ST.pend.k)!;
+  if(ST.pend&&sc){const a=ACT[sc.id].find(q=>q.k===ST.pend!.k)!;
     if(a.mode==='enemy')for(const e of ST.S.enemies){if(e.f!==ST.view||e.ko||e.type==='camera'||!enemyVisible(e))continue;const[fx,fy]=iso(e.x,e.y);ctx.strokeStyle='#ff8a4c';ctx.lineWidth=2;ctx.setLineDash([4,3]);ctx.beginPath();ctx.ellipse(fx,fy,19,9,0,0,7);ctx.stroke();ctx.setLineDash([])}
     if(a.mode==='hack'){for(const k in TERMS){const[f,x,y]=k.split(',').map(Number);if(f!==ST.view)continue;const[fx,fy]=iso(x+.5,y+.5);ctx.strokeStyle='#4ee3f0';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(fx,fy,20,10,0,0,7);ctx.stroke()}}
           if(a.mode==='tile'){const[fx,fy]=iso(sc.x,sc.y);ctx.strokeStyle='rgba(255,224,138,.5)';ctx.lineWidth=1.5;ctx.setLineDash([5,5]);ctx.beginPath();ctx.ellipse(fx,fy+16,9.5*32,9.5*16,0,0,7);ctx.stroke();ctx.setLineDash([])}}

@@ -7,9 +7,10 @@ import { beginRun } from './dialogues';
 import { cam, newState, selC } from './state';
 import { buildActs, mkUI } from './ui';
 import { VW } from './renderLoop';
+import type { VideoState } from './types';
 /* vidéo d'introduction : vue à la première personne, avant le menu */
 export let vd=1;
-export const VID: any={t:0,run:false,cb:null,fired:{} as Record<string, number>,last:0,tick:0};
+export const VID: VideoState={t:0,run:false,cb:null,fired:{} as Record<string, number>,last:0,tick:0};
 export const VSLOW=.5;/* vitesse de la vidéo : 1 = normal, .5 = deux fois plus lent */
 export const vcv=document.getElementById('vc') as HTMLCanvasElement,vg=vcv.getContext('2d') as CanvasRenderingContext2D;
 export function vonce(k: string,t: number,fn: () => void){if(VID.t>=t&&!VID.fired[k]){VID.fired[k]=1;fn()}}
@@ -162,9 +163,9 @@ export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(n
   requestAnimationFrame(vidLoop)}
 export function playVid(cb: () => void){VID.t=0;VID.tick=0;VID.fired={};VID.cb=cb;VID.run=true;VID.last=performance.now();$('vid').classList.add('show');$('vGo').style.display='none';requestAnimationFrame(vidLoop)}
 export function endVid(){if(!VID.run)return;VID.run=false;$('vid').classList.remove('show');const f=VID.cb;VID.cb=null;if(f)f()}
-export const realStart=()=>{$('intro').classList.remove('show');ST.started=true;ST.paused=false;try{if(!ST.AC)ST.AC=new(window.AudioContext||(window as any).webkitAudioContext)()}catch(e){};beginRun()};
-$('bStart').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||(window as any).webkitAudioContext)()}catch(e){};realStart()};
+export const realStart=()=>{$('intro').classList.remove('show');ST.started=true;ST.paused=false;try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};beginRun()};
+$('bStart').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};realStart()};
 $('vSkip').onclick=endVid;$('vGo').onclick=endVid;
-window.addEventListener('pointerdown',()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||(window as any).webkitAudioContext)()}catch(e){}},{once:true});
+window.addEventListener('pointerdown',()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}},{once:true});
 
 export function startGame(){ST.S=newState();ST.lastSave=null;ST.pend=null;ST.P=[];ST.PR=[];ST.view=0;mkUI();buildActs();const c=selC(),p=iso(c.x,c.y);cam.x=p[0];cam.y=p[1];cam.free=false;$('end').classList.remove('show');$('ban').style.display='none';ST.paused=false;ST.zoom=VW<620?.8:1;ST.started=true;ST.dlg=null;$('dlg').classList.remove('show');document.body.classList.remove('indlg');beginRun()}

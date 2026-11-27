@@ -2,9 +2,9 @@ import { ST } from './store';
 import { APP } from './castData';
 import { clamp, iso } from './utils';
 import { rr } from './renderShapes';
-import type { Enemy } from './types';
+import type { Enemy, PersonOpts } from './types';
 /* rendu : personnages */
-export function drawPerson(g: CanvasRenderingContext2D,fx: number,fy: number,o: any){
+export function drawPerson(g: CanvasRenderingContext2D,fx: number,fy: number,o: PersonOpts){
   const a=APP[o.look],s=o.s||1,mv=o.moving,t=ST.S.t+(o.ph||0),sw=mv?Math.sin(t*10)*4:0,bob=mv?Math.abs(Math.sin(t*10))*1.6:0;
   const sdx=Math.cos(o.dir)-Math.sin(o.dir),sdy=Math.cos(o.dir)+Math.sin(o.dir),away=sdy<-.35,ex=clamp(sdx,-1,1);
   let body=a.body,legs=a.legs,skin=a.skin;
@@ -68,4 +68,4 @@ export function bubble(g: CanvasRenderingContext2D,x: number,y: number,text: str
   g.translate(x,y);g.fillStyle='rgba(255,255,255,.94)';rr(g,-w/2,-18,w,18,6);g.fill();g.beginPath();g.moveTo(-3,0);g.lineTo(3,0);g.lineTo(0,5);g.closePath();g.fill();
   g.fillStyle=col||'#1a1d26';g.textAlign='center';g.fillText(text,0,-5);g.restore();
 }
-export function drawBar(g: CanvasRenderingContext2D,x: number,y: number,w: number,v: number,col: string,bg?: any){g.fillStyle=bg||'rgba(0,0,0,.55)';g.fillRect(x-w/2,y,w,4);g.fillStyle=col;g.fillRect(x-w/2,y,w*v,4)}
+export function drawBar(g: CanvasRenderingContext2D,x: number,y: number,w: number,v: number,col: string,bg?: string){g.fillStyle=bg||'rgba(0,0,0,.55)';g.fillRect(x-w/2,y,w,4);g.fillStyle=col;g.fillRect(x-w/2,y,w*v,4)}

@@ -21,7 +21,7 @@ export function buildFloor(f: number){
   FLOORC[f]=cv;
 }
 /* éclairage */
-export const LIGHTS: any[][]=[[],[],[]];
-for(let f=0;f<3;f++)for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){if(x%4!==2||y%4!==2)continue;const c=ch(f,x,y);if(c==='#'||c===' ')continue;const z=zoneOf(f,x,y);LIGHTS[f].push([x+.5,y+.5,z==='server'?'#4ee3f0':z==='wood'?'#ffb866':z==='lino'?'#ffe2b0':null as any])}
+export const LIGHTS: [number,number,string|null][][]=[[],[],[]];
+for(let f=0;f<3;f++)for(let y=1;y<H-1;y++)for(let x=1;x<W-1;x++){if(x%4!==2||y%4!==2)continue;const c=ch(f,x,y);if(c==='#'||c===' ')continue;const z=zoneOf(f,x,y);LIGHTS[f].push([x+.5,y+.5,z==='server'?'#4ee3f0':z==='wood'?'#ffb866':z==='lino'?'#ffe2b0':null])}
 export const lightSpr=(()=>{const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d') as CanvasRenderingContext2D,r=g.createRadialGradient(128,128,0,128,128,128);r.addColorStop(0,'rgba(255,255,255,1)');r.addColorStop(.45,'rgba(255,255,255,.7)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,256,256);return c})();
 export const glowSpr=(()=>{const c=document.createElement('canvas');c.width=c.height=128;const g=c.getContext('2d') as CanvasRenderingContext2D,r=g.createRadialGradient(64,64,0,64,64,64);r.addColorStop(0,'rgba(255,255,255,.55)');r.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=r;g.fillRect(0,0,128,128);return c})();

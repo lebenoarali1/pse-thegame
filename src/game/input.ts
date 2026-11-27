@@ -14,20 +14,20 @@ import { snd } from './sound';
 import { startGame } from './video';
 /* saisie */
 export function toWorld(px: number,py: number){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
-export function tapAt(px: any,py: any){
+export function tapAt(px: number,py: number){
   if(!ST.started||ST.S.over||ST.dlg)return;
   const w=toWorld(px,py),sc=selC();
   /* personnage */
   let hit=null,hd=34;
-  const test=(x: number,y: number,arr?: any)=>{const[fx,fy]=iso(x,y);const d=Math.hypot(w.sx-fx,w.sy-(fy-20));return d};
+  const test=(x: number,y: number)=>{const[fx,fy]=iso(x,y);const d=Math.hypot(w.sx-fx,w.sy-(fy-20));return d};
   if(!ST.pend)for(const c of ST.S.chars){if(c.f!==ST.view||c.hide)continue;const d=test(c.x,c.y);if(d<hd*Math.max(.7,1/ST.zoom*.7)){hd=d;hit=c}}
   if(hit&&hit.joined){selectChar(hit.id);return}
   if(hit&&!hit.joined&&!ST.pend){if(sc.f===ST.view&&gotoPos(sc,hit.x,hit.y))toast('Approchez-vous pour lui parler','w');return}
   const tx=Math.floor(w.x),ty=Math.floor(w.y);
-  if(ST.pend){const a=ACT[sc.id].find(q=>q.k===ST.pend.k)!;
+  if(ST.pend){const a=ACT[sc.id].find(q=>q.k===ST.pend!.k)!;
     if(a.mode==='enemy'){let be=null,bd=1e9;for(const e of ST.S.enemies){if(e.f!==ST.view||e.ko||e.type==='camera'||!enemyVisible(e))continue;const[fx,fy]=iso(e.x,e.y),d=Math.hypot(w.sx-fx,w.sy-(fy-20));if(d<bd){bd=d;be=e}}
       if(!be||bd>=60){let wd=1.7;for(const e of ST.S.enemies){if(e.f!==ST.view||e.ko||e.type==='camera'||!enemyVisible(e))continue;const d=Math.hypot(w.x-e.x,w.y-e.y);if(d<wd){wd=d;be=e;bd=0}}}
-      if(be&&bd<60){const k=ST.pend.k;ST.pend=null;$('ban').style.display='none';doAction(sc,k,{eid:be.id})}else toast('Touchez un garde visible','w')}
+      if(be&&bd<60){const k=ST.pend.k;ST.pend=null;$('ban').style.display='none';doAction(sc,k,{x:be.x,y:be.y,eid:be.id})}else toast('Touchez un garde visible','w')}
     else if(a.mode==='hack'){let best=null,bd=3;for(const k in TERMS){const[f,x,y]=k.split(',').map(Number);if(f!==ST.view)continue;const d=Math.hypot(w.x-x-.5,w.y-y-.5);if(d<bd){bd=d;best={kind:'term',x,y}}}
       for(let yy=Math.floor(w.y)-2;yy<=Math.floor(w.y)+2;yy++)for(let xx=Math.floor(w.x)-2;xx<=Math.floor(w.x)+2;xx++){if(!isPC(ST.view,xx,yy))continue;const d=Math.hypot(w.x-xx-.5,w.y-yy-.5);if(d<bd){bd=d;best={kind:'term',x:xx,y:yy}}}
       for(const d of DOORS)if(d.f===ST.view){const dd=Math.hypot(w.x-d.x-.5,w.y-d.y-.5);if(dd<bd){bd=dd;best={kind:'door',x:d.x,y:d.y}}}
