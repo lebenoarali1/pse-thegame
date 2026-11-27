@@ -17,7 +17,7 @@ import { findPath } from './pathing';
 resize();for(let f=0;f<3;f++){ST.S=ST.S||newState();buildFloor(f)}
 ST.S=newState();mkUI();buildActs();ST.zoom=VW<620?.8:1;{const c=selC(),p=iso(c.x,c.y);cam.x=p[0];cam.y=p[1]}
 export let last=performance.now(),acc=0;
-export function frame(now: any){
+export function frame(now: number){
   let dt=Math.min(.05,(now-last)/1000);last=now;
   fxTick(dt);
   if(ST.dlg&&ST.dlg.cur&&ST.dlg.pos<ST.dlg.cur.length){ST.dlg.pos=Math.min(ST.dlg.cur.length,ST.dlg.pos+dt*75);$('dTxt').textContent=ST.dlg.cur.slice(0,Math.floor(ST.dlg.pos))}

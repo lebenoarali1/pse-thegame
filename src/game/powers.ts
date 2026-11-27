@@ -16,10 +16,10 @@ export function gotoPos(c: any,x: any,y: any,order?: any){
   const p=findPath(c.f,Math.floor(c.x),Math.floor(c.y),Math.floor(x),Math.floor(y));
   if(!p){say(c,"Impossible d'y aller",1.8);return false}
   c.busy=null;c.path=p;c.order=order||null;c.stall=0;return true}
-export function startBusy(c: any,k: string,max: any,extra?: any){c.busy=Object.assign({k,t:0,max,lock:true},extra||{});c.path=[];c.order=null}
-export function nearestEnemy(c: any,pred: any,maxd=99){let b=null,bd=maxd;for(const e of ST.S.enemies){if(e.f!==c.f||!pred(e))continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<bd){bd=d;b=e}}return b}
+export function startBusy(c: Character,k: string,max: number,extra?: any){c.busy=Object.assign({k,t:0,max,lock:true},extra||{});c.path=[];c.order=null}
+export function nearestEnemy(c: Character,pred: any,maxd=99){let b=null,bd=maxd;for(const e of ST.S.enemies){if(e.f!==c.f||!pred(e))continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<bd){bd=d;b=e}}return b}
 
-export function doAction(c: Character,k: any,arg?: any){
+export function doAction(c: any,k: any,arg?: any){
   if(ST.S.over||ST.paused&&!ST.S.over&&false)return;
   const slot=['q','e','w','x'][Math.max(0,ACT[c.id].findIndex(a=>a.k===k))];
   if((c.cd as any)[slot]>0&&k!=='flux'){toast('Pas encore prêt','w');return}

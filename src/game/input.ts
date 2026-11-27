@@ -13,7 +13,7 @@ import { advDlg } from './dialogues';
 import { snd } from './sound';
 import { startGame } from './video';
 /* saisie */
-export function toWorld(px: any,py: any){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
+export function toWorld(px: number,py: number){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
 export function tapAt(px: any,py: any){
   if(!ST.started||ST.S.over||ST.dlg)return;
   const w=toWorld(px,py),sc=selC();

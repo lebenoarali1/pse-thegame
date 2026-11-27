@@ -2,7 +2,7 @@ import { H, OFFX, OFFY, W, iso } from './utils';
 import { STY, ch, zoneOf } from './levelData';
 /* rendu : floors pré-rendus */
 export const FLOORC: HTMLCanvasElement[]=[];
-export function diamond(g: CanvasRenderingContext2D,x: number,y: number,fill: any){const [sx,sy]=iso(x,y);g.beginPath();g.moveTo(sx,sy);g.lineTo(sx+32,sy+16);g.lineTo(sx,sy+32);g.lineTo(sx-32,sy+16);g.closePath();g.fillStyle=fill;g.fill()}
+export function diamond(g: CanvasRenderingContext2D,x: number,y: number,fill: string){const [sx,sy]=iso(x,y);g.beginPath();g.moveTo(sx,sy);g.lineTo(sx+32,sy+16);g.lineTo(sx,sy+32);g.lineTo(sx-32,sy+16);g.closePath();g.fillStyle=fill;g.fill()}
 export function buildFloor(f: number){
   const cv=document.createElement('canvas');cv.width=(W+H)*32+140;cv.height=(W+H)*16+OFFY+90;const g=cv.getContext('2d') as CanvasRenderingContext2D;g.translate(OFFX,OFFY);
   for(let y=0;y<H;y++)for(let x=0;x<W;x++){

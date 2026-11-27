@@ -22,7 +22,7 @@ export function buildActs(){
   const r=document.createElement('button');r.className='ab run';r.id='abRun';r.innerHTML='<span class="ic">🏃</span><div><b>Courir <small class="kh">R</small></b><small>Rapide mais bruyant</small></div>';r.onclick=toggleRun;box.appendChild(r)
 }
 export function toggleRun(){const c=selC();c.run=!c.run;snd(c.run?500:380,.05,'triangle',.03)}
-export function pressAct(i: any){
+export function pressAct(i: number){
   if(ST.S.over||!ST.started)return;const c=selC(),a=ACT[c.id][i];
   if(a.k==='talk'&&c.talking){releaseTalk(c);return}
   if(ST.pend&&ST.pend.k===a.k){ST.pend=null;$('ban').style.display='none';return}
@@ -35,7 +35,7 @@ export function updateUI(){
   $('ck').firstChild.nodeValue=(m>=60?'18:'+String(m-60).padStart(2,'0'):'17:'+String(m).padStart(2,'0'));
   $('ck2').textContent=String(s).padStart(2,'0')+'s';$('barf').style.width=Math.min(100,t/TL*100)+'%';
   $('obj').innerHTML=objective();
-  if(ST.dbg){const f=(n: any)=>Math.max(0,n).toFixed(1),L=[];L.push('T '+ST.S.t.toFixed(1)+' s  reste '+f(TL-ST.S.t)+' s');L.push('caméras coupées : '+(ST.S.team.camsUntil>ST.S.t?f(ST.S.team.camsUntil-ST.S.t)+' s':'non'));
+  if(ST.dbg){const f=(n: number)=>Math.max(0,n).toFixed(1),L=[];L.push('T '+ST.S.t.toFixed(1)+' s  reste '+f(TL-ST.S.t)+' s');L.push('caméras coupées : '+(ST.S.team.camsUntil>ST.S.t?f(ST.S.team.camsUntil-ST.S.t)+' s':'non'));
     const dd=Object.entries(ST.S.doorHack as Record<string,number>).filter(q=>q[1]>ST.S.t).map(q=>q[0]+' '+f(q[1]-ST.S.t)+'s');if(dd.length)L.push('portes ouvertes : '+dd.join(' | '));
     const sc=getC(ST.S.sel);L.push(sc.name+' : q '+f(sc.cd.q)+' s, e '+f(sc.cd.e)+' s');
     for(const e of ST.S.enemies){if(e.f!==ST.view||e.type==='camera'||e.ko)continue;let t=e.state;if(e.state==='break'&&e.brk)t+=e.brk.arrived?' '+f(e.brk.dur-e.brk.t)+' s (vue '+e.range.toFixed(1)+')':' en route';else if(e.state==='clean'&&e.cln)t+=e.cln.arrived?' nettoie '+f(e.cln.dur-e.cln.t)+' s':' en route';else if(e.state==='coffee'&&e.cof)t+=e.cof.arrived?' café '+f(e.cof.dur-e.cof.t)+' s':' en route';else if(e.state==='look'&&e.look)t+=' '+f((e.lookDur||4.5)-e.look.t)+' s';else if(e.talk>0)t='baratin '+f(e.talk)+' s';L.push(e.name+' : '+t+'  alerte '+Math.round(e.det*100)+'%')}

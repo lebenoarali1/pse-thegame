@@ -2,6 +2,7 @@ import { ST } from './store';
 import { $ } from './utils';
 import { snd } from './sound';
 import { TL } from './state';
+import type { Enemy } from './types';
 /* messages */
 export function toast(t: string,cls=''){const d=document.createElement('div');d.className='t '+cls;d.textContent=t;$('toast').appendChild(d);while($('toast').children.length>3)$('toast').firstChild.remove();setTimeout(()=>d.remove(),4200)}
 export function say(e: any,t: any,d=2.4){e.say=t;e.sayT=d}

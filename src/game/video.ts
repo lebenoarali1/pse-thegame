@@ -13,18 +13,18 @@ export const VID: any={t:0,run:false,cb:null,fired:{} as Record<string, number>,
 export const VSLOW=.5;/* vitesse de la vidéo : 1 = normal, .5 = deux fois plus lent */
 export const vcv=document.getElementById('vc') as HTMLCanvasElement,vg=vcv.getContext('2d') as CanvasRenderingContext2D;
 export function vonce(k: string,t: number,fn: () => void){if(VID.t>=t&&!VID.fired[k]){VID.fired[k]=1;fn()}}
-export function vwrap(g: any,txt: string,x: number,y: number,mw: number,lh: number){const w=txt.split(' ');let l='';for(const a of w){const tt=l?l+' '+a:a;if(g.measureText(tt).width>mw&&l){g.fillText(l,x,y);y+=lh;l=a}else l=tt}if(l){g.fillText(l,x,y);y+=lh}return y}
+export function vwrap(g: CanvasRenderingContext2D,txt: string,x: number,y: number,mw: number,lh: number){const w=txt.split(' ');let l='';for(const a of w){const tt=l?l+' '+a:a;if(g.measureText(tt).width>mw&&l){g.fillText(l,x,y);y+=lh;l=a}else l=tt}if(l){g.fillText(l,x,y);y+=lh}return y}
 export const vease=(k: number)=>k<0?0:k>1?1:k*k*(3-2*k);
-export function vrr(g: any,x: number,y: number,w: number,h: number,r: number){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
+export function vrr(g: CanvasRenderingContext2D,x: number,y: number,w: number,h: number,r: number){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 /* sous-titre en bas, fondu */
-export function vsub(g: CanvasRenderingContext2D,W: any,H: any,txt: string,t0: number,t1: number,t: any,col?: string){if(t<t0||t>t1)return;const a=Math.min(1,(t-t0)/.25,(t1-t)/.25),sz=Math.round(clamp(W*.042,14,26));
+export function vsub(g: CanvasRenderingContext2D,W: number,H: number,txt: string,t0: number,t1: number,t: number,col?: string){if(t<t0||t>t1)return;const a=Math.min(1,(t-t0)/.25,(t1-t)/.25),sz=Math.round(clamp(W*.042,14,26));
   g.save();g.globalAlpha=a;g.font='italic 600 '+sz+'px Arial, sans-serif';g.textAlign='center';g.textBaseline='top';const mw=W*.86;
   const words=txt.split(' ');let lines=[],l='';for(const w of words){const tt=l?l+' '+w:w;if(g.measureText(tt).width>mw&&l){lines.push(l);l=w}else l=tt}lines.push(l);
   const bh=lines.length*sz*1.3+16,y=H*.84-bh/2;g.fillStyle='rgba(0,0,0,.55)';g.fillRect(W*.05,y,W*.9,bh);g.fillStyle=col||'#fff';lines.forEach((s,i)=>g.fillText(s,W/2,y+8+i*sz*1.3));g.restore()}
 /* vignette + paupières */
-export function vvign(g: CanvasRenderingContext2D,W: any,H: any,k: number){const r=g.createRadialGradient(W/2,H*.5,Math.min(W,H)*.25,W/2,H*.5,Math.max(W,H)*.78);r.addColorStop(0,'rgba(0,0,0,0)');r.addColorStop(1,'rgba(0,0,0,'+(.55*k)+')');g.fillStyle=r;g.fillRect(0,0,W,H)}
-export function vlid(g: CanvasRenderingContext2D,W: any,H: any,o: number){if(o<=0)return;g.fillStyle='#000';g.fillRect(0,0,W,H*.5*o);g.fillRect(0,H-H*.5*o,W,H*.5*o)}
-export function vcup(g: any,x: number,y: number,s: number,t: any,shake: boolean){g.save();g.translate(x+(shake?Math.sin(t*38)*1.6*s:0),y);g.scale(s,s);
+export function vvign(g: CanvasRenderingContext2D,W: number,H: number,k: number){const r=g.createRadialGradient(W/2,H*.5,Math.min(W,H)*.25,W/2,H*.5,Math.max(W,H)*.78);r.addColorStop(0,'rgba(0,0,0,0)');r.addColorStop(1,'rgba(0,0,0,'+(.55*k)+')');g.fillStyle=r;g.fillRect(0,0,W,H)}
+export function vlid(g: CanvasRenderingContext2D,W: number,H: number,o: number){if(o<=0)return;g.fillStyle='#000';g.fillRect(0,0,W,H*.5*o);g.fillRect(0,H-H*.5*o,W,H*.5*o)}
+export function vcup(g: CanvasRenderingContext2D,x: number,y: number,s: number,t: number,shake: boolean){g.save();g.translate(x+(shake?Math.sin(t*38)*1.6*s:0),y);g.scale(s,s);
   g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(0,2,46,12,0,0,7);g.fill();
   g.fillStyle='#f4f4f4';g.beginPath();g.moveTo(-34,-70);g.lineTo(34,-70);g.lineTo(26,0);g.lineTo(-26,0);g.closePath();g.fill();
   g.fillStyle='#dadada';g.beginPath();g.moveTo(34,-70);g.lineTo(26,0);g.lineTo(10,0);g.lineTo(18,-70);g.closePath();g.fill();
@@ -33,13 +33,13 @@ export function vcup(g: any,x: number,y: number,s: number,t: any,shake: boolean)
   g.strokeStyle='rgba(255,255,255,.35)';g.lineWidth=3;for(let i=0;i<3;i++){g.beginPath();const bx=-12+i*12;g.moveTo(bx,-78);for(let k=1;k<=6;k++)g.lineTo(bx+Math.sin(t*2+i+k*.9)*5,-78-k*9);g.stroke()}
   g.restore()}
 /* mains : peau, manchette */
-export function vhand(g: any,x: number,y: number,s: number,rot: number,type: string,t: any){g.save();g.translate(x,y);g.rotate(rot);g.scale(s,s);
+export function vhand(g: CanvasRenderingContext2D,x: number,y: number,s: number,rot: number,type: string,t: number){g.save();g.translate(x,y);g.rotate(rot);g.scale(s,s);
   g.fillStyle='#f2f2f2';vrr(g,-44,26,88,70,10);g.fill();g.strokeStyle='rgba(0,0,0,.15)';g.stroke();
   g.fillStyle='#e8b896';vrr(g,-36,-30,72,66,22);g.fill();
   for(let i=0;i<4;i++){const dy=type==='type'?Math.max(0,Math.sin(t*14+i*1.9))*7:0;g.fillStyle='#e8b896';vrr(g,-36+i*18.5,-68-dy,15,50,7);g.fill();g.strokeStyle='rgba(120,70,40,.25)';g.stroke()}
   g.fillStyle='#dca884';vrr(g,-52,-18,18,40,8);g.fill();g.restore()}
 /* scène 1 : mon bureau, 17h45 */
-export function vDesk(g: CanvasRenderingContext2D,W: any,H: any,t: any){
+export function vDesk(g: CanvasRenderingContext2D,W: number,H: number,t: number){
   const bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#1a2036');bg.addColorStop(.6,'#2b3350');bg.addColorStop(1,'#3b2f26');g.fillStyle=bg;g.fillRect(0,0,W,H);
   const bx=Math.sin(t*1.3)*3,by=Math.sin(t*2.6)*2;g.save();g.translate(bx,by);
   g.fillStyle='rgba(255,255,255,.05)';for(let i=0;i<6;i++)g.fillRect(i*W/5-W*.05,0,W*.09,H*.08);
@@ -65,7 +65,7 @@ export function vDesk(g: CanvasRenderingContext2D,W: any,H: any,t: any){
   vcup(g,W*.86,H*.7,Math.min(W,H)*.0038,t,t>4.3);
   g.fillStyle='#fff';g.font='bold '+Math.round(W*.05)+'px monospace';g.textAlign='left';g.textBaseline='top';const mm=Math.min(59,45+Math.floor(t*.15));g.fillStyle='#ff9a5a';g.fillText('17:'+mm+' VENDREDI',14,14)}
 /* scène 2 : je tourne la tête, les autres */
-export function vPan(g: CanvasRenderingContext2D,W: any,H: any,t: any,T0: number,GAP: number){
+export function vPan(g: CanvasRenderingContext2D,W: number,H: number,t: number,T0: number,GAP: number){
   const bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#171d33');bg.addColorStop(.45,'#2a3350');bg.addColorStop(.46,'#4b4a52');bg.addColorStop(1,'#2a2a31');g.fillStyle=bg;g.fillRect(0,0,W,H);
   const u=(t-T0)/GAP,i0=Math.floor(clamp(u,0,3.999)),fr=clamp(u,0,3.999)-i0,th=i0+vease((fr-.55)/.45)+(u>=4?0:0),span=W*.95;
   const bx=Math.sin(t*1.6)*4,by=Math.sin(t*3.1)*3;g.save();g.translate(bx,by);
@@ -89,7 +89,7 @@ export function vPan(g: CanvasRenderingContext2D,W: any,H: any,t: any,T0: number
     g.fillStyle='#aab3d0';g.font='bold '+f2+'px Arial';g.fillText(ch.r.toUpperCase(),bxx+24+nw,byy+8+f1*.3);g.fillStyle='#e8ecff';g.font='italic '+f2+'px Arial';vwrap(g,ch.q,bxx+16,byy+f1+14,bw-32,f2*1.3);g.restore()}
   g.fillStyle='rgba(255,255,255,.75)';g.font='bold '+Math.round(clamp(W*.035,12,18))+'px Arial';g.textAlign='left';g.textBaseline='top';g.fillText('● REC  17:'+Math.min(55,47+Math.floor((t-T0)/3))+'  ÉQUIPE '+(Math.min(4,Math.max(1,Math.round(th)+1)))+'/4',14,14)}
 /* scène 3 : le téléphone */
-export function vPhone(g: CanvasRenderingContext2D,W: any,H: any,t: number){
+export function vPhone(g: CanvasRenderingContext2D,W: number,H: number,t: number){
   const bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#10131f');bg.addColorStop(1,'#222a40');g.fillStyle=bg;g.fillRect(0,0,W,H);
   const sh=t<.6?(Math.random()-.5)*(.6-t)*30:0,pw=W*.68,ph=pw*1.9,px=(W-pw)/2+sh,py=H*.12+Math.sin(t*1.4)*3+sh*.5;
   g.fillStyle='#e8b896';vrr(g,px-W*.1,py+ph*.55,W*.14,ph*.5,30);g.fill();vrr(g,px+pw-W*.04,py+ph*.5,W*.14,ph*.6,30);g.fill();vrr(g,px+pw-W*.02,py+ph*.2,W*.09,ph*.1,16);g.fill();
@@ -100,7 +100,7 @@ export function vPhone(g: CanvasRenderingContext2D,W: any,H: any,t: number){
     const bh=lines.length*f*1.3+14;g.fillStyle='#2d5f9e';vrr(g,px+16,yy+(1-k)*10,bw,bh,12);g.fill();g.fillStyle='#fff';lines.forEach((s,i)=>g.fillText(s,px+26,yy+(1-k)*10+7+i*f*1.3));g.restore();yy+=bh+10});
   const ph2=t<.4?(.4-t)*2:0;if(ph2>0){g.fillStyle='rgba(255,255,255,'+ph2+')';g.fillRect(0,0,W,H)}}
 /* scène 4 : course dans le couloir */
-export function vRun(g: CanvasRenderingContext2D,W: any,H: any,t: number){
+export function vRun(g: CanvasRenderingContext2D,W: number,H: number,t: number){
   const vx=W/2+Math.sin(t*3)*6,vy=H*.45+Math.abs(Math.sin(t*9))*7,sp=t*1.9,sw=Math.sin(t*4.5)*4;
   g.fillStyle='#0a0d18';g.fillRect(0,0,W,H);
   const cl=g.createLinearGradient(0,0,0,H);cl.addColorStop(0,'#1b2038');cl.addColorStop(.5,'#2d3454');cl.addColorStop(1,'#16192b');g.fillStyle=cl;g.fillRect(0,0,W,H);
@@ -122,7 +122,7 @@ export function vRun(g: CanvasRenderingContext2D,W: any,H: any,t: number){
   const sec=Math.floor(t*1.6),s=Math.max(0,60-Math.floor(t*10));g.fillStyle=t>3.5?'#ff4b4b':'#ffb36b';g.font='900 '+Math.round(clamp(W*.11,30,60))+'px monospace';g.textAlign='center';g.textBaseline='top';g.fillText('17:'+(58+(t>4?1:0))+':'+String(Math.max(0,59-Math.floor(t*6)%60)).padStart(2,'0'),W/2,H*.05);
   /* bras et souffle */
   vhand(g,W*.14,H*.96+Math.sin(t*9)*10,Math.min(W,H)*.0022,.5,'rest',t);vhand(g,W*.86,H*.96-Math.sin(t*9)*10,Math.min(W,H)*.0022,-.5,'rest',t)}
-export function vTitle(g: CanvasRenderingContext2D,W: any,H: any,t: number){
+export function vTitle(g: CanvasRenderingContext2D,W: number,H: number,t: number){
   const bg=g.createRadialGradient(W/2,H*.4,10,W/2,H*.45,Math.max(W,H)*.8);bg.addColorStop(0,'#1c2440');bg.addColorStop(1,'#060912');g.fillStyle=bg;g.fillRect(0,0,W,H);
   g.strokeStyle='rgba(120,140,200,.08)';g.lineWidth=1;for(let i=-20;i<40;i++){g.beginPath();g.moveTo(i*60-((t*10)%60),0);g.lineTo(i*60-((t*10)%60)+H*1.7,H);g.stroke();g.beginPath();g.moveTo(i*60+((t*10)%60),0);g.lineTo(i*60+((t*10)%60)-H*1.7,H);g.stroke()}
   const k=1-Math.pow(1-clamp(t/.35,0,1),3),sh=t<.5?(.5-t)*18:0;
@@ -130,10 +130,10 @@ export function vTitle(g: CanvasRenderingContext2D,W: any,H: any,t: number){
   const fs=Math.round(Math.min(W/5.5,120));g.font='900 '+fs+'px Impact, Arial Black, sans-serif';g.lineJoin='round';g.lineWidth=fs*.1;g.strokeStyle='#000';g.strokeText('PLAN',0,-fs*.55);g.strokeText('SOCIAL',0,fs*.55);g.fillStyle='#fff';g.fillText('PLAN',0,-fs*.55);g.fillStyle='#ff8a3d';g.fillText('SOCIAL',0,fs*.55);
   g.font='bold '+Math.round(Math.max(13,fs*.16))+'px Arial';g.lineWidth=0;g.fillStyle='#aab3d0';g.fillText("Licenciés à 18h. Pas avant d'avoir fini de nuire.",0,fs*1.3);g.restore();
   vflash(g,W,H,t<.2?.9*(1-t/.2):0)}
-export function vflash(g: any,W: any,H: any,a: number){if(a>0){g.fillStyle='rgba(255,255,255,'+Math.min(1,a)+')';g.fillRect(0,0,W,H)}}
+export function vflash(g: CanvasRenderingContext2D,W: number,H: number,a: number){if(a>0){g.fillStyle='rgba(255,255,255,'+Math.min(1,a)+')';g.fillRect(0,0,W,H)}}
 /* montage : bureau 0-7, panorama 7-17, téléphone 17-22, course 22-28, titre */
 export const VT={desk:7,pan:7,gap:2.5,phone:17,run:22,title:28};
-export function drawVid(W: number,H: number,t: any){
+export function drawVid(W: number,H: number,t: number){
   const g=vg;g.setTransform(vd,0,0,vd,0,0);g.globalAlpha=1;g.textAlign='left';
   let lid=0,dip=0;
   if(t<VT.desk){vDesk(g,W,H,t);lid=t<.9?1-vease(t/.9):0;
@@ -149,7 +149,7 @@ export function drawVid(W: number,H: number,t: any){
     if(t>1.5&&t<VT.title){g.fillStyle='rgba(255,255,255,.04)';for(let i=0;i<4;i++)g.fillRect(0,(t*90+i*H/4)%H,W,2)}}}
 export function vidFrame(t: number){const r=$('vid').getBoundingClientRect(),W=Math.max(2,Math.round(r.width)),H=Math.max(2,Math.round(r.height)),d=Math.min(2,devicePixelRatio||1);vd=d;
   if(vcv.width!==Math.round(W*d)||vcv.height!==Math.round(H*d)){vcv.width=Math.round(W*d);vcv.height=Math.round(H*d)}drawVid(W,H,t)}
-export function vidLoop(now: any){if(!VID.run)return;const dt=Math.min(.05,(now-VID.last)/1000);VID.last=now;VID.t+=dt*VSLOW;const t=VID.t;
+export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(now-VID.last)/1000);VID.last=now;VID.t+=dt*VSLOW;const t=VID.t;
   vidFrame(t);
   if(t<VT.desk){while(VID.tick<t&&t<3.2){VID.tick+=.13;snd(900+Math.random()*300,.025,'square',.012)}}
   vonce('ping',3,()=>{snd(880,.18,'triangle',.06);setTimeout(()=>snd(660,.3,'triangle',.06),160)});

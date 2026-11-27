@@ -15,7 +15,7 @@ import type { Enemy, Character } from './types';
 export function feed(who: string,txt: string,me: boolean){const f=$('bfeed');if(!f)return;const d=document.createElement('div');d.className=me?'':'n';d.innerHTML='<b>'+who+'</b> '+txt;f.appendChild(d);while(f.children.length>3)f.removeChild(f.firstChild)}
 export function releaseTalk(c: any){const e=getE(c.talking);c.talking=null;if(e&&!e.ko){e.talk=Math.min(e.talk,2.6);if(e.state==='call'){e.state='patrol';e.path=[]}else say(e,'Bon, je dois y aller, j\'ai un ticket.',2.6)}
   feed('Djibril','*file avant qu\'on lui pose une question*',true);setTimeout(()=>{if(!ST.S.chars.some(q=>q.talking)){const f=$('bfeed');if(f)f.innerHTML=''}},4500)}
-export function updateChar(c: Character,dt: any){
+export function updateChar(c: any,dt: any){
   if(c.out)return;
   if(!c.joined){if(c.sayT>0)c.sayT-=dt;return}
   if(c.sayT>0)c.sayT-=dt;c.cd.q=Math.max(0,c.cd.q-dt);c.cd.e=Math.max(0,c.cd.e-dt);c.cd.w=Math.max(0,(c.cd.w||0)-dt);
@@ -48,7 +48,7 @@ export function updateChar(c: Character,dt: any){
     const n=Math.hypot(vx,vy);
     if(n>0){c.path=[];c.order=null;if(c.smoke){c.smoke=false}cam.free=false;ST.view=c.f;
       const sp=c.sp*(c.run?1.75:1)*dt,dx=vx/n*sp,dy=vy/n*sp;
-      const ok=(x: any,y: any)=>{const i=Math.floor(x),j=Math.floor(y);if(!passable(c.f,i,j))return false;const t=ch(c.f,i,j);
+      const ok=(x: number,y: number)=>{const i=Math.floor(x),j=Math.floor(y);if(!passable(c.f,i,j))return false;const t=ch(c.f,i,j);
         if(isDoor(t)&&!ST.S.dOpen[c.f+','+i+','+j]&&!(Math.floor(c.x)===i&&Math.floor(c.y)===j))return false;return true};
       let m=false;if(ok(c.x+dx,c.y+dy)){c.x+=dx;c.y+=dy;m=true}else{if(ok(c.x+dx,c.y)){c.x+=dx;m=true}if(ok(c.x,c.y+dy)){c.y+=dy;m=true}}
       c.moving=m;c.face=Math.atan2(dy,dx);
@@ -80,7 +80,7 @@ export function arrive(c: any,o: any){
     else{if(d>3.6){say(c,'Trop loin de la serrure.',1.6);return}const dd=DOORS.find(q=>q.f===o.f&&q.x===o.x&&q.y===o.y);
       if(!dd||dd.l>2){say(c,"Cette serrure résiste, pas de réseau.",2.2);return}startBusy(c,'hack',dd.l===2?8:4,{what:'door',f:o.f,x:o.x,y:o.y})}}
 }
-export function transit(c: any,to: { f: number; x: number; y: number; }){c.f=to.f;c.x=to.x;c.y=to.y;c.path=[];c.order=null;c.stall=0;snd(330,.12,'triangle',.04);
+export function transit(c: Character,to: { f: number; x: number; y: number; }){c.f=to.f;c.x=to.x;c.y=to.y;c.path=[];c.order=null;c.stall=0;snd(330,.12,'triangle',.04);
   if(ST.S.sel===c.id){ST.view=to.f;cam.free=false}}
 export function updateBusy(c: any,dt: any){
   const b=c.busy;let rate=1;

@@ -3,8 +3,9 @@ import { ch, isDoor } from './levelData';
 import { say } from './messages';
 import { DOORS } from './state';
 import type { Character } from './types';
+import type { Enemy } from './types';
 /* déplacement */
-export function doorOpenFor(e: any){return true}
+export function doorOpenFor(e: Enemy){return true}
 export function stepEntity(e: any,dt: any,speed: any,isChar: boolean){
   e.moving=false;if(!e.path||!e.path.length)return;
   let rem=speed*dt;
