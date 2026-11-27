@@ -8,6 +8,8 @@ import { cam, newState, selC } from './state';
 import { buildActs, mkUI } from './ui';
 import { VW } from './renderLoop';
 import type { VideoState } from './types';
+import { readSave } from './persist';
+import { quickLoad } from './input';
 /* vidéo d'introduction : vue à la première personne, avant le menu */
 export let vd=1;
 export const VID: VideoState={t:0,run:false,cb:null,fired:{} as Record<string, number>,last:0,tick:0};
@@ -20,6 +22,7 @@ export function vrr(g: CanvasRenderingContext2D,x: number,y: number,w: number,h:
 /* sous-titre en bas, fondu */
 export function vsub(g: CanvasRenderingContext2D,W: number,H: number,txt: string,t0: number,t1: number,t: number,col?: string){if(t<t0||t>t1)return;const a=Math.min(1,(t-t0)/.25,(t1-t)/.25),sz=Math.round(clamp(W*.042,14,26));
   g.save();g.globalAlpha=a;g.font='italic 600 '+sz+'px Arial, sans-serif';g.textAlign='center';g.textBaseline='top';const mw=W*.86;
+/* eslint-disable-next-line prefer-const */
   const words=txt.split(' ');let lines=[],l='';for(const w of words){const tt=l?l+' '+w:w;if(g.measureText(tt).width>mw&&l){lines.push(l);l=w}else l=tt}lines.push(l);
   const bh=lines.length*sz*1.3+16,y=H*.84-bh/2;g.fillStyle='rgba(0,0,0,.55)';g.fillRect(W*.05,y,W*.9,bh);g.fillStyle=col||'#fff';lines.forEach((s,i)=>g.fillText(s,W/2,y+8+i*sz*1.3));g.restore()}
 /* vignette + paupières */
@@ -165,6 +168,9 @@ export function playVid(cb: () => void){VID.t=0;VID.tick=0;VID.fired={};VID.cb=c
 export function endVid(){if(!VID.run)return;VID.run=false;$('vid').classList.remove('show');const f=VID.cb;VID.cb=null;if(f)f()}
 export const realStart=()=>{$('intro').classList.remove('show');ST.started=true;ST.paused=false;try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};beginRun()};
 $('bStart').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};realStart()};
+$('ver').textContent='Version '+__APP_VERSION__+' · '+__BUILD_DATE__;
+if(readSave())$('bResume').style.display='';
+$('bResume').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};realStart();ST.lastSave=readSave()?.json??null;quickLoad()};
 $('vSkip').onclick=endVid;$('vGo').onclick=endVid;
 window.addEventListener('pointerdown',()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){}},{once:true});
 

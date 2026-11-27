@@ -6,7 +6,7 @@ import { MAP, isDoor } from './levelData';
 /* état */
 export const TL=480;/* durée de la partie en secondes de jeu (15 min d'horloge) */
 ST.showCones=true;ST.noLimit=false;ST.dbg=false;ST.S=null as unknown as GameState;ST.view=0;ST.pend=null;ST.assist=false;ST.paused=true;ST.started=false;ST.muted=false;ST.spd=1;
-export let cam={x:0,y:0,free:false};ST.zoom=1;ST.P=[];ST.PR=[];ST.lastSave=null;ST.fCount=0;
+export const cam={x:0,y:0,free:false};ST.zoom=1;ST.P=[];ST.PR=[];ST.lastSave=null;ST.fCount=0;
 
 export function newState(): GameState {
   const C=(id: string,name: string,x: number,y: number,sp: number,o?: Partial<Character>)=>Object.assign({id,name,f:0,x,y,face:.78,path:[],order:null,busy:null,hide:false,disguise:null,run:false,cd:{q:0,e:0},sp,moving:false,say:'',sayT:0,stall:0,repath:0,runN:0,talking:null,chatT:0,chatN:0},o||{});

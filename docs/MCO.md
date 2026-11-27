@@ -10,7 +10,7 @@ Ce document explique comment faire vivre l'outil : où sont les sources, comment
 | Site en ligne | https://lebenoarali1.github.io/pse-thegame/ |
 | Technologie | TypeScript strict, modules ES, Vite, canvas 2D, aucune dépendance d'exécution |
 | Déploiement | GitHub Actions (`.github/workflows/pages.yml`) à chaque push sur `main` |
-| Tests | 14 scénarios Python et Playwright pilotant Chrome, temps simulé |
+| Tests | 15 scénarios Python et Playwright pilotant Chrome, temps simulé |
 | Documentation en ligne | https://lebenoarali1.github.io/pse-thegame/docs/ (générée depuis les fichiers Markdown à chaque build) |
 | Page de partage | page Claude publiée en parallèle (lien direct pour les testeurs) |
 
@@ -34,8 +34,9 @@ Cloner : VS Code, **Git: Clone**, adresse du dépôt. Puis `npm install`.
 |---|---|
 | `npm run dev` | jeu sur localhost, rechargement automatique |
 | `npm run typecheck` | vérifie les types (mode strict) |
+| `npm run lint` | ESLint : `any` interdit, erreurs de style bloquantes |
 | `npm run build` | construit `dist/` |
-| `python tests/run_all.py` | lance les 14 scénarios (après un build) |
+| `python tests/run_all.py` | lance les 15 scénarios (après un build) |
 | `python tests/run_all.py chaine` | un seul scénario (filtre sur le nom) |
 
 Adresse de debug : ajouter `#novid` pour sauter la vidéo d'intro. En jeu : bouton 🐞 ou touche D (timers), bouton ∞ (temps illimité), bouton 📋 (export ou import de l'état exact de la partie).
@@ -44,7 +45,7 @@ Adresse de debug : ajouter `#novid` pour sauter la vidéo d'intro. En jeu : bout
 
 1. `git pull` pour récupérer la dernière version.
 2. Modifier dans `src/game/`.
-3. `npm run typecheck`, `npm run build`, puis les tests.
+3. `npm run typecheck`, `npm run lint`, `npm run build`, puis les tests.
 4. Mettre à jour `CHANGELOG.md` (nouvelle ligne de version) et, si une règle change, `docs/GAME_DESIGN.md`.
 5. Commit puis push (`git add -A`, `git commit -m "..."`, `git push`). Messages courts, au présent.
 6. Vérifier dans l'onglet **Actions** de GitHub : coche verte en 30 secondes environ, puis `Ctrl+F5` sur le site.
@@ -84,7 +85,7 @@ Principe : Claude écrit, teste et pousse ; la personne qui maintient décide, r
 **Déroulé d'une demande**
 1. **Décrire le besoin** en une ou deux phrases, avec le comportement attendu en jeu et, si possible, le personnage ou l'étage concerné. Exemple : « Les imprimantes attirent le personnel de l'étage pendant 20 s ».
 2. **Claude analyse** le code concerné, propose si besoin des choix (une question à la fois), puis modifie `src/game/`.
-3. **Claude vérifie** : `npm run typecheck`, `npm run build`, les 14 scénarios, plus un scénario ajouté pour la nouveauté.
+3. **Claude vérifie** : `npm run typecheck`, `npm run build`, les 15 scénarios, plus un scénario ajouté pour la nouveauté.
 4. **Claude livre** : met à jour `CHANGELOG.md`, commit, push sur `main`, publie la page Claude si demandé, et résume en quelques lignes ce qui change et les choix d'interprétation.
 5. **La personne valide** : onglet Actions vert, essai du jeu en ligne, puis retour (« ça ne marche pas, voici ce que je vois »).
 
@@ -115,7 +116,7 @@ Principe : Claude écrit, teste et pousse ; la personne qui maintient décide, r
 
 ## 8. Checklist de livraison
 
-- [ ] `npm run typecheck` sans erreur
+- [ ] `npm run typecheck` et `npm run lint` sans erreur
 - [ ] `npm run build` réussi
 - [ ] 14 scénarios et plus au vert
 - [ ] `CHANGELOG.md` mis à jour (et `GAME_DESIGN.md` si une règle change)
@@ -127,3 +128,10 @@ Principe : Claude écrit, teste et pousse ; la personne qui maintient décide, r
 - Typage : mode strict actif et zéro `any` explicite dans src ; tout nouveau champ dynamique doit être déclaré dans `types.ts` (pas d'index signature). Un `any` ajouté est une régression à refuser en revue
 - Tests : ils dépendent de Python et Playwright ; un portage en TypeScript permettrait un simple `npm test`.
 - Furtivité de bout en bout non démontrée sans debug : à valider en jeu (voir le backlog).
+
+## 10. Intégration continue et sauvegarde
+
+- Le workflow `.github/workflows/pages.yml` exécute typecheck, lint, build puis les 15 scénarios (Chrome présent sur l'image GitHub) ; le déploiement n'a lieu que si tout passe
+- En cas d'échec, ouvrir l'onglet Actions du dépôt, lire l'étape en rouge ; un échec de scénario affiche le message d'assertion
+- Format de sauvegarde : `SAVE_FORMAT` dans `src/game/persist.ts` ; l'incrémenter à chaque changement incompatible de `GameState` (les anciennes sauvegardes sont alors ignorées sans erreur)
+- La version affichée vient de `package.json` (champ `version`) ; la mettre à jour avec le changelog

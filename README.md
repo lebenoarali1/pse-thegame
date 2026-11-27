@@ -9,6 +9,7 @@ npm install       # une seule fois
 npm run dev       # jeu sur localhost, rechargement automatique
 npm run build     # construit dist/
 npm run typecheck # vérification TypeScript
+npm run lint      # ESLint
 npm test          # lance tous les scénarios (npm run build avant ; Chrome + Playwright Python requis)
 python3 tests/run_all.py chaine   # un seul scénario (filtre sur le nom)
 ```

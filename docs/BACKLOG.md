@@ -1,6 +1,6 @@
 # PLAN SOCIAL : backlog produit
 
-Dernière mise à jour : version 1.3. Ce document remplace la liste courte de GAME_DESIGN.md.
+Dernière mise à jour : version 1.4. Ce document remplace la liste courte de GAME_DESIGN.md.
 
 ## Comment lire ce backlog
 
@@ -19,15 +19,15 @@ Dernière mise à jour : version 1.3. Ce document remplace la liste courte de GA
 | Contenu | Étages 0 et 1 riches, étage 2 mince (DRH, Brigitte, DG) | Le final est moins drôle que le milieu |
 | Mobile | Le jeu s'utilise au toucher, mais la lisibilité (petits sprites, menus) et l'ergonomie n'ont pas été éprouvées sur plusieurs écrans | Public principal probable : le téléphone |
 | Accessibilité | Aucun attribut ARIA, information portée par la couleur (cônes), texte de dialogue sans taille réglable, son sans alternative visuelle | Exclut une partie des joueurs, facile à améliorer tôt |
-| Persistance | Sauvegarde rapide en mémoire seulement, perdue au rechargement | Frustrant sur une partie longue, surtout sur mobile |
-| Qualité | 14 scénarios de bout en bout, typage strict sans `any` ; mais les tests ne tournent pas dans la CI et dépendent de Python | Une régression peut être publiée sans alerte |
-| Livraison | Déploiement Pages automatique ; pas de typecheck ni de tests avant déploiement, pas de licence, pas de version affichée dans le jeu | Risque de publier du cassé, flou juridique sur la réutilisation |
+| Persistance | Sauvegarde rapide persistante (stockage du navigateur) avec bouton Reprendre ; réglages non conservés (E5-4), pas d'autosauvegarde (E5-3) | Reprise possible, confort à compléter |
+| Qualité | 15 scénarios de bout en bout, typage strict sans `any`, lint, le tout dans la CI avant déploiement ; les tests dépendent encore de Python | Une régression est bloquée avant publication (portage TypeScript : E8-5) |
+| Livraison | Déploiement Pages automatique après typecheck, lint et tests ; licence MIT ; version affichée sur l'écran d'accueil | Reste : étiquettes de version (E8-10), PWA (E9-2) |
 | Performance | Rendu canvas sur 1 500 lignes de logique, aucune mesure | À surveiller sur mobile d'entrée de gamme, pas de problème connu |
 | Données et vie privée | Aucune donnée collectée, aucun service tiers | Point fort à conserver (pas de télémétrie sans décision explicite) |
 | Observabilité | Pas de retour joueur structuré | On ne sait pas où les gens échouent |
 | Maintenabilité | MCO documentée, modules ES, types complets | Bonne base ; la dette est dans l'outillage de test |
 
-**Les cinq priorités recommandées** : valider la solvabilité (E1), brancher typecheck et tests dans la CI (E8), un tutoriel intégré (E2), la sauvegarde persistante (E5), un premier passage accessibilité (E6).
+**Les cinq priorités recommandées** : valider la solvabilité (E1), un tutoriel intégré (E2), un premier passage accessibilité (E6), l'étage 2 (E7-3), la lisibilité mobile (E6-4, E6-5). Le lot 1 (CI, lint, version affichée, licence, sauvegarde persistante) est livré en 1.4.
 
 ## E1. Équilibrage et solvabilité
 
@@ -81,10 +81,10 @@ Dernière mise à jour : version 1.3. Ce document remplace la liste courte de GA
 | ID | Story | Statut | Prio | Taille |
 |---|---|---|---|---|
 | E5-1 | En tant que joueur, je veux une sauvegarde rapide et un import/export d'état en JSON | DONE 0.8 | Should | S |
-| E5-2 | En tant que joueur, je veux que la sauvegarde rapide survive au rechargement de la page (stockage du navigateur), afin de reprendre plus tard, surtout sur mobile | TODO | Must | S |
+| E5-2 | En tant que joueur, je veux que la sauvegarde rapide survive au rechargement de la page (stockage du navigateur), afin de reprendre plus tard, surtout sur mobile | DONE 1.4 | Must | S |
 | E5-3 | En tant que joueur, je veux une sauvegarde automatique à chaque étage franchi, afin de ne pas tout perdre | TODO | Should | S |
 | E5-4 | En tant que joueur, je veux retrouver mes réglages (son, cônes visibles, vitesse) au prochain lancement | TODO | Should | S |
-| E5-5 | En tant que concepteur, je veux versionner le format de sauvegarde, afin qu'une ancienne sauvegarde ne casse pas une nouvelle version | TODO | Should | S |
+| E5-5 | En tant que concepteur, je veux versionner le format de sauvegarde, afin qu'une ancienne sauvegarde ne casse pas une nouvelle version | DONE 1.4 | Should | S |
 
 ## E6. Interface, mobile et accessibilité
 
@@ -121,12 +121,12 @@ Dernière mise à jour : version 1.3. Ce document remplace la liste courte de GA
 | E8-1 | En tant que développeur, je veux 14 scénarios de bout en bout (Playwright) couvrant la chaîne complète | DONE 0.x à 1.2 | Must | L |
 | E8-2 | En tant que développeur, je veux un modèle de données entièrement typé, strict et sans `any` | DONE 1.3 | Should | L |
 | E8-3 | En tant que développeur, je veux un déploiement automatique sur GitHub Pages à chaque push | DONE 1.3 | Must | M |
-| E8-4 | En tant que développeur, je veux que la CI exécute `typecheck` et les 14 scénarios avant le déploiement, afin de bloquer une régression | TODO | Must | M |
+| E8-4 | En tant que développeur, je veux que la CI exécute `typecheck` et les 14 scénarios avant le déploiement, afin de bloquer une régression | DONE 1.4 | Must | M |
 | E8-5 | En tant que développeur, je veux porter les tests en TypeScript (Playwright Test) pour un simple `npm test` sans Python | TODO | Should | L |
-| E8-6 | En tant que développeur, je veux un linter et un formateur (ESLint, Prettier) interdisant `any`, afin de garder le niveau de typage | TODO | Should | S |
+| E8-6 | En tant que développeur, je veux un linter et un formateur (ESLint, Prettier) interdisant `any`, afin de garder le niveau de typage | DONE 1.4 | Should | S |
 | E8-7 | En tant que développeur, je veux des tests unitaires sur la logique pure (pathing, visibilité, détection), plus rapides que les scénarios | TODO | Should | M |
 | E8-8 | En tant que développeur, je veux mettre à jour automatiquement les dépendances (Dependabot) avec alerte de sécurité | TODO | Could | S |
-| E8-9 | En tant que joueur, je veux voir le numéro de version et la date de build dans le jeu, afin de savoir quelle version j'ai | TODO | Should | S |
+| E8-9 | En tant que joueur, je veux voir le numéro de version et la date de build dans le jeu, afin de savoir quelle version j'ai | DONE 1.4 | Should | S |
 | E8-10 | En tant que mainteneur, je veux publier des versions étiquetées (tags, notes de version générées depuis le changelog) | TODO | Could | S |
 | E8-11 | En tant que développeur, je veux une documentation publiée automatiquement (architecture, MCO, conception, historique) | DONE 1.3 | Should | M |
 
@@ -134,7 +134,7 @@ Dernière mise à jour : version 1.3. Ce document remplace la liste courte de GA
 
 | ID | Story | Statut | Prio | Taille |
 |---|---|---|---|---|
-| E9-1 | En tant que mainteneur, je veux une licence explicite (code et contenus) dans le dépôt, afin de clarifier la réutilisation | TODO | Must | S |
+| E9-1 | En tant que mainteneur, je veux une licence explicite (code et contenus) dans le dépôt, afin de clarifier la réutilisation | DONE 1.4 | Must | S |
 | E9-2 | En tant que joueur, je veux installer le jeu comme une application (PWA) et jouer hors connexion | TODO | Should | M |
 | E9-3 | En tant que joueur, je veux une carte de partage (aperçu réseaux sociaux) et un titre de page soignés, afin de diffuser le jeu | TODO | Could | S |
 | E9-4 | En tant que concepteur, je veux un bouton « envoyer un retour » (formulaire ou export de l'état de la partie), afin de comprendre où les joueurs échouent | TODO | Should | M |
@@ -154,7 +154,7 @@ Dernière mise à jour : version 1.3. Ce document remplace la liste courte de GA
 
 | Lot | Contenu | Pourquoi dans cet ordre |
 |---|---|---|
-| 1. Fiabilité | E8-4, E8-6, E8-9, E9-1, E5-2 | Petits, rapides, et ils sécurisent tout le reste |
+| 1. Fiabilité (livré en 1.4) | E8-4, E8-6, E8-9, E9-1, E5-2, E5-5 | Petits, rapides, et ils sécurisent tout le reste |
 | 2. Première partie réussie | E1-1, E1-2, E2-1, E2-2, E2-5, E6-4 | Rend le jeu jouable et gagnable par un inconnu |
 | 3. Confort et accessibilité | E5-3, E5-4, E6-5, E6-6, E6-7, E6-8 | Élargit le public, surtout sur mobile |
 | 4. Contenu final | E7-3, E7-4, E3-8, E4-4 | Donne un vrai final et adoucit l'échec |

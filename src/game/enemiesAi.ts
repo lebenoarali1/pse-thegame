@@ -29,6 +29,7 @@ export function eliminate(c: Character,e: Enemy,why: string){if(c.out||c.disguis
   if(ST.S.sel===c.id){ST.S.sel=act[0].id;ST.pend=null;const n=getC(ST.S.sel);ST.view=n.f;cam.free=false;buildActs()}}
 export function spotted(e: Enemy,c: Character){
   if(c.id==='kevin'){eliminate(c,e,(e.type==='camera'?'Une caméra':e.name)+' a repéré le stagiaire. Le pire, c\'est qu\'on l\'a reconnu tout de suite.');return}
+/* eslint-disable-next-line no-constant-condition */
   if(false){fail('Kévin est repéré !',(e.type==='camera'?'Une caméra':e.name)+' a vu un stagiaire là où il ne devait pas être. Le pire, c\'est qu\'on l\'a reconnu tout de suite : il n\'a jamais été aussi visible. Alerte immédiate. Rechargez la sauvegarde rapide ou recommencez.');return}
   e.state='chase';e.tgt=c.id;e.lose=0;say(e,['Hé ! Vous là !','Vous n\'avez pas de badge, c\'est ça ?','Stop ! Il y a un process pour être suspect !'][Math.floor(Math.random()*3)],2.4);snd(520,.25,'sawtooth',.05,-200);ST.S.alertT=3;
   for(const o of ST.S.enemies){if(o===e||o.f!==e.f||o.ko||o.type==='camera'||o.state==='chase'||o.talk>0)continue;

@@ -48,7 +48,7 @@ export function doAction(c: Character,k: string,arg: ActionArg={x:0,y:0}){
     else{e.talk=1e9;e.talkTo=c.id;e.state='patrol';say(e,'Ah ? Oui, je vous écoute.',3)}
     c.cd.e=1;startBusy(c,'talk',.8);snd(520,.1,'triangle',.05)}
   else if(k==='hack'){if(!arg){toast('Touchez un terminal ou une porte bleue','w');return}
-    const kind=arg.kind;let tx=arg.x+.5,ty=arg.y+.5;gotoPos(c,tx,ty,{k:'hack',f:c.f,x:arg.x,y:arg.y,kind})}
+    const kind=arg.kind;const tx=arg.x+.5,ty=arg.y+.5;gotoPos(c,tx,ty,{k:'hack',f:c.f,x:arg.x,y:arg.y,kind})}
   else if(k==='clope'){const e=arg&&getE(arg.eid);
     if(!e||e.ko||e.f!==c.f||(e.type!=='vigile'&&e.type!=='beaugosse')){toast('Touchez un vigile ou un agent de sécurité','w');return}
     if(!SMK[c.f]){toast('Pas de fumoir à cet étage','w');return}

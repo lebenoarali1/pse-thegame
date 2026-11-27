@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.4
+- Sauvegarde rapide persistante (localStorage, format versionné) et bouton « Reprendre la sauvegarde » sur l'écran d'accueil
+- Version et date de build affichées sur l'écran d'accueil
+- CI : typecheck, lint et 15 scénarios de bout en bout avant tout déploiement
+- ESLint (typescript-eslint) : `any` interdit
+- Licence MIT
+- Test 15 (sauvegarde persistante)
+
 ## 1.3
 - Nouvelle page Backlog (docs/BACKLOG.md) : analyse 360, 10 épopées, user stories avec statut et priorité, ordre de travail proposé
 - Documentation publiée sur GitHub Pages (/docs/), générée depuis les fichiers Markdown par `npm run build`

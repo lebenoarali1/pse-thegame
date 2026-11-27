@@ -12,6 +12,7 @@ import { passable } from './pathing';
 import { advDlg } from './dialogues';
 import { snd } from './sound';
 import { startGame } from './video';
+import { readSave, writeSave } from './persist';
 /* saisie */
 export function toWorld(px: number,py: number){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
 export function tapAt(px: number,py: number){
@@ -77,7 +78,7 @@ $('stCopy').onclick=()=>{const t=$('stTxt');t.select();try{navigator.clipboard.w
 $('stLoad').onclick=()=>{try{const o=JSON.parse($('stTxt').value);if(!o||!o.chars||!o.enemies)throw 0;ST.lastSave=$('stTxt').value;$('stBox').classList.remove('show');ST.started=true;$('intro').classList.remove('show');ST.paused=false;quickLoad()}catch(e){toast("État illisible",'r')}};
 $('bSnd').onclick=()=>{ST.muted=!ST.muted};$('bDbg').onclick=()=>{ST.dbg=!ST.dbg;document.body.classList.toggle('dbgon',ST.dbg);$('bDbg').classList.toggle('on',ST.dbg);$('dbg').style.display=ST.dbg?'block':'none'};$('bZi').onclick=()=>setZoom(ST.zoom*1.2);$('bZo').onclick=()=>setZoom(ST.zoom/1.2);
 $('bSave').onclick=quickSave;$('bLoad').onclick=quickLoad;
-export function quickSave(){if(ST.S.over)return;ST.lastSave=JSON.stringify(ST.S);toast('Sauvegarde rapide effectuée','g');snd(900,.08,'triangle',.04)}
-export function quickLoad(){if(!ST.lastSave){toast('Aucune sauvegarde','w');return}ST.S=JSON.parse(ST.lastSave);ST.dlg=null;$('dlg').classList.remove('show');document.body.classList.remove('indlg');ST.pend=null;ST.P=[];ST.PR=[];$('end').classList.remove('show');$('ban').style.display='none';const c=selC();ST.view=c.f;cam.free=false;buildActs();toast('Sauvegarde chargée','g')}
+export function quickSave(){if(ST.S.over)return;ST.lastSave=JSON.stringify(ST.S);writeSave(ST.lastSave);toast('Sauvegarde rapide effectuée','g');snd(900,.08,'triangle',.04)}
+export function quickLoad(){if(!ST.lastSave)ST.lastSave=readSave()?.json??null;if(!ST.lastSave){toast('Aucune sauvegarde','w');return}ST.S=JSON.parse(ST.lastSave);ST.dlg=null;$('dlg').classList.remove('show');document.body.classList.remove('indlg');ST.pend=null;ST.P=[];ST.PR=[];$('end').classList.remove('show');$('ban').style.display='none';const c=selC();ST.view=c.f;cam.free=false;buildActs();toast('Sauvegarde chargée','g')}
 $('bRetry').onclick=()=>{quickLoad()};
 $('bRestart').onclick=()=>{startGame()};
