@@ -12,7 +12,7 @@ import { passable } from './pathing';
 import { advDlg } from './dialogues';
 import { snd } from './sound';
 import { startGame } from './video';
-import { readSave, writeSave } from './persist';
+import { readSave, resetHints, writeSave } from './persist';
 /* saisie */
 export function toWorld(px: number,py: number){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
 export function tapAt(px: number,py: number){
@@ -54,7 +54,7 @@ let lpTimer=0,lpFired=false;
 const lpClear=()=>{clearTimeout(lpTimer);lpTimer=0};
 let wasPaused=false;
 export function toggleHelp(){const b=$('helpBox'),open=!b.classList.contains('show');if(open){wasPaused=ST.paused;ST.paused=true}else ST.paused=wasPaused;b.classList.toggle('show',open)}
-$('bHelp').onclick=toggleHelp;$('helpClose').onclick=toggleHelp;$('bCones').onclick=toggleCones;$('bCones').classList.add('on');
+$('helpHints').onclick=()=>{resetHints();toggleHelp();toast('Les astuces réapparaîtront au prochain usage','g')};$('bHelp').onclick=toggleHelp;$('helpClose').onclick=toggleHelp;$('bCones').onclick=toggleCones;$('bCones').classList.add('on');
 cv.addEventListener('contextmenu',e=>{e.preventDefault();toggleCones()});
 cv.addEventListener('pointerdown',e=>{if(e.button===2)return;lpFired=false;lpClear();if(e.pointerType==='touch')lpTimer=window.setTimeout(()=>{if(ST.ptr&&!ST.ptr.drag){lpFired=true;toggleCones()}},550);ST.ptr={x:e.clientX,y:e.clientY,cx:cam.x,cy:cam.y,drag:false,id:e.pointerId};try{cv.setPointerCapture(e.pointerId)}catch(_){}});
 cv.addEventListener('pointermove',e=>{if(!ST.ptr)return;const dx=e.clientX-ST.ptr.x,dy=e.clientY-ST.ptr.y;if(!ST.ptr.drag&&Math.hypot(dx,dy)>9){ST.ptr.drag=true;lpClear()}if(ST.ptr.drag){cam.free=true;cam.x=ST.ptr.cx-dx/ST.zoom;cam.y=ST.ptr.cy-dy/ST.zoom}});

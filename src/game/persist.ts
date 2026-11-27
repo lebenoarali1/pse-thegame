@@ -22,3 +22,16 @@ export function readSave(): Saved | null {
 export function clearSave(): void {
   try { localStorage.removeItem(KEY) } catch { /* sans effet */ }
 }
+
+const HKEY = 'plansocial.hints';
+function readHints(): string[] {
+  try { const a = JSON.parse(localStorage.getItem(HKEY) || '[]') as unknown; return Array.isArray(a) ? a.filter((x): x is string => typeof x === 'string') : [] } catch { return [] }
+}
+/** Vrai si l'astuce a déjà été montrée à ce joueur. */
+export const hintSeen = (id: string): boolean => readHints().includes(id);
+export function markHint(id: string): void {
+  try { localStorage.setItem(HKEY, JSON.stringify([...new Set([...readHints(), id])])) } catch { /* sans effet */ }
+}
+export function resetHints(): void {
+  try { localStorage.removeItem(HKEY) } catch { /* sans effet */ }
+}

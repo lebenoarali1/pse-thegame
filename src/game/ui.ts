@@ -2,7 +2,7 @@ import { ST } from './store';
 import { $, iso } from './utils';
 import { ACT, CCOL } from './castData';
 import { TL, cam, getC, selC } from './state';
-import { toast } from './messages';
+import { hintOnce, toast } from './messages';
 import { snd } from './sound';
 import { releaseTalk } from './updateChars';
 import { doAction } from './powers';
@@ -23,7 +23,7 @@ export function buildActs(){
 }
 export function toggleRun(){const c=selC();c.run=!c.run;snd(c.run?500:380,.05,'triangle',.03)}
 export function pressAct(i: number){
-  if(ST.S.over||!ST.started)return;const c=selC(),a=ACT[c.id][i];
+  if(ST.S.over||!ST.started)return;const c=selC(),a=ACT[c.id][i];hintOnce(a.k);
   if(a.k==='talk'&&c.talking){releaseTalk(c);return}
   if(ST.pend&&ST.pend.k===a.k){ST.pend=null;$('ban').style.display='none';return}
   if(a.mode==='auto'||a.mode==='none'){ST.pend=null;$('ban').style.display='none';doAction(c,a.k)}

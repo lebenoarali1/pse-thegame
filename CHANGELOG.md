@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.6
+- Astuces au premier usage : une bulle explique chaque pouvoir (Max, Djibril, Nadia, Kévin) et le déplacement ; chacune n'apparaît qu'une fois, mémorisée dans le navigateur
+- Bouton « Revoir les astuces » dans l'écran des commandes
+- Test 17 (astuces)
+
 ## 1.5
 - Écran des commandes (bouton ❓ ou touche H) : tableau tactile et clavier, met le jeu en pause
 - Bouton ◔ pour afficher ou masquer les cônes, et appui long sur la carte au toucher (équivalent du clic droit)

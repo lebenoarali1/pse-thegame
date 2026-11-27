@@ -61,3 +61,17 @@ export const TALK: Record<string, string[]>={
  karim:['Mon PC met 12 minutes à démarrer. Je l\'allume en arrivant et je déjeune.','Vous avez un badge ? Moi, plus pour longtemps, apparemment.','Je ne dirai rien, mais je note tout. Pour mes prud\'hommes.']};
 export const TALK_R: Record<string, string[]>={kevin:['Euh, bonjour. Je suis le stagiaire.','Vous avez déjà vu un stagiaire embauché ?','Je cherche mon tuteur. Il est parti en 2019.'],nadege:['Joli écran. Dommage pour le mot de passe.','Je ne suis pas de la DSI, je suis de la bonne DSI.','Votre WiFi est pourri, je dis ça pour vous.'],marc:['Écoutez, j\'ai une offre irrésistible.','Entre nous, vous méritez mieux que cette entreprise.','Je vous vends du rêve, à crédit.'],jordan:['Ouais. Je passe nettoyer. Enfin, je passe.','Pas de souci, je n\'ai rien vu.','Je suis là pour le ménage. Les corbeilles, c\'est mon pouvoir.']};
 export const PC_SAY=['Mot de passe : Azerty123. Le DG est un visionnaire.','Quarante mails non lus, dont « Plan social : rien à signaler ».','Dossier « Stratégie 2026 » : un tableau Excel de trois cellules.','Historique : « comment se faire licencier avec la prime ». Pas le premier.','Fond d\'écran : le DG au ski. Casque de ski, sourire de requin.'];
+
+/** Astuces affichées une seule fois, au premier usage (clé = id de pouvoir ou événement). */
+export const HINTS: Record<string, string>={
+  move:"Touchez le sol pour déplacer le perso choisi. Les boutons du bas lancent ses pouvoirs, ❓ rappelle les commandes.",
+  ko:"Max : touchez un garde pour l'assommer, de près. Un corps vu par quelqu'un, c'est perdu : planquez-le.",
+  hide:"Max : le corps assommé le plus proche va dans le chariot (2 au maximum) et ne se réveille plus.",
+  puddle:"Max : touchez une case, il y va et pose une flaque. Le premier qui glisse dort 20 s.",
+  uniform:"Djibril : près d'un corps assommé, il prend la tenue. Déguisé, il passe presque partout. Ne le faites pas courir.",
+  talk:"Djibril : déguisé, touchez un PNJ en vue pour l'attirer et le retenir. Rappuyez sur le bouton pour le relâcher.",
+  hack:"Nadia : touchez un PC ou une porte bleue. Elle doit être tout près et le piratage prend quelques secondes.",
+  clope:"Nadia : touchez un vigile, il part fumer 1 minute. Le pouvoir recharge en 90 s.",
+  vent:"Kévin : la gaine d'aération est à l'étage 2. Lui seul peut s'y glisser.",
+  throw:"Kévin : touchez un point. Le gobelet fait du bruit, les gardes vont voir. Stock limité.",
+};

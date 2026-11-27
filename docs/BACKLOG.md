@@ -1,6 +1,6 @@
 # PLAN SOCIAL : backlog produit
 
-Dernière mise à jour : version 1.5. Ce document remplace la liste courte de GAME_DESIGN.md.
+Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GAME_DESIGN.md.
 
 ## Comment lire ce backlog
 
@@ -43,7 +43,7 @@ Dernière mise à jour : version 1.5. Ce document remplace la liste courte de GA
 
 | ID | Story | Statut | Prio | Taille |
 |---|---|---|---|---|
-| E2-1 | En tant que nouveau joueur, je veux des bulles d'aide contextuelles lors de la première utilisation de chaque pouvoir, afin de comprendre sans lire un manuel | TODO | Must | M |
+| E2-1 | En tant que nouveau joueur, je veux des bulles d'aide contextuelles lors de la première utilisation de chaque pouvoir, afin de comprendre sans lire un manuel | DONE 1.6 | Must | M |
 | E2-2 | En tant que nouveau joueur, je veux un écran de commandes (tactile et clavier) accessible depuis le menu et en pause, afin de retrouver les raccourcis | DONE 1.5 | Must | S |
 | E2-3 | En tant que nouveau joueur, je veux une première minute guidée au RDC (déplacer, se cacher, voir un cône), afin de ne pas échouer sur une règle ignorée | TODO | Should | M |
 | E2-4 | En tant que joueur, je veux que le jeu explique pourquoi j'ai perdu (qui m'a vu, où, quel corps trouvé) et propose de reprendre à la dernière sauvegarde, afin d'apprendre de l'échec | TODO | Should | M |
@@ -155,7 +155,7 @@ Dernière mise à jour : version 1.5. Ce document remplace la liste courte de GA
 | Lot | Contenu | Pourquoi dans cet ordre |
 |---|---|---|
 | 1. Fiabilité (livré en 1.4) | E8-4, E8-6, E8-9, E9-1, E5-2, E5-5 | Petits, rapides, et ils sécurisent tout le reste |
-| 2. Première partie réussie (E2-2, E2-5, E6-4 livrés en 1.5) | E1-1, E1-2, E2-1, E2-2, E2-5, E6-4 | Rend le jeu jouable et gagnable par un inconnu |
+| 2. Première partie réussie (E2-1, E2-2, E2-5, E6-4 livrés en 1.5 et 1.6) | E1-1, E1-2, E2-1, E2-2, E2-5, E6-4 | Rend le jeu jouable et gagnable par un inconnu |
 | 3. Confort et accessibilité | E5-3, E5-4, E6-5, E6-6, E6-7, E6-8 | Élargit le public, surtout sur mobile |
 | 4. Contenu final | E7-3, E7-4, E3-8, E4-4 | Donne un vrai final et adoucit l'échec |
 | 5. Ambiance | E7-6, E3-6, E9-2 | Polish et installation en application |

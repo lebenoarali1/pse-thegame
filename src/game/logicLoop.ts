@@ -1,7 +1,7 @@
 import { ST } from './store';
 import { EVENTS } from './events';
 import { TL, getE } from './state';
-import { fail, say, toast, win } from './messages';
+import { fail, hintOnce, say, toast, win } from './messages';
 import { updateDoors } from './movement';
 import { los } from './pathing';
 import { recruit } from './dialogues';
@@ -15,6 +15,7 @@ import { hear, smokeBreak } from './noise';
 export function update(dt: number){
   if(ST.S.over)return;
   ST.S.t+=dt;
+  if(ST.S.t>2&&!ST.dlg)hintOnce('move');
   for(const ev of EVENTS)if(!ST.S.ev[ev.t]&&ST.S.t>=ev.t){ST.S.ev[ev.t]=1;ev.fn()}
   if(ST.S.t>=TL&&!ST.noLimit){fail('18h00. Trop tard.',"Les portes se verrouillent, les badges sont coupés. L'équipe est officiellement licenciée, avec la reconnaissance chaleureuse de la direction et un pot de départ sans alcool.");return}
   updateDoors();
