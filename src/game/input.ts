@@ -49,15 +49,23 @@ export function tapAt(px: number,py: number){
 export function marker(x: number,y: number){ST.P.push({f:ST.view,x:x+.5,y:y+.5,z:0,vx:0,vy:0,vz:0,life:.6,col:'#fff',sz:0,ring:true,age:0})}
 /* pointeur : tap ou glisser */
 ST.ptr=null;
-cv.addEventListener('contextmenu',e=>{e.preventDefault();ST.showCones=!ST.showCones;toast(ST.showCones?'Cônes de vision affichés':'Cônes de vision masqués','g')});
-cv.addEventListener('pointerdown',e=>{if(e.button===2)return;ST.ptr={x:e.clientX,y:e.clientY,cx:cam.x,cy:cam.y,drag:false,id:e.pointerId};try{cv.setPointerCapture(e.pointerId)}catch(_){}});
-cv.addEventListener('pointermove',e=>{if(!ST.ptr)return;const dx=e.clientX-ST.ptr.x,dy=e.clientY-ST.ptr.y;if(!ST.ptr.drag&&Math.hypot(dx,dy)>9)ST.ptr.drag=true;if(ST.ptr.drag){cam.free=true;cam.x=ST.ptr.cx-dx/ST.zoom;cam.y=ST.ptr.cy-dy/ST.zoom}});
-cv.addEventListener('pointerup',e=>{if(ST.ptr&&!ST.ptr.drag)tapAt(e.clientX,e.clientY);ST.ptr=null});
-cv.addEventListener('pointercancel',()=>{ST.ptr=null});
+export function toggleCones(){ST.showCones=!ST.showCones;$('bCones').classList.toggle('on',ST.showCones);toast(ST.showCones?'Cônes de vision affichés':'Cônes de vision masqués','g')}
+let lpTimer=0,lpFired=false;
+const lpClear=()=>{clearTimeout(lpTimer);lpTimer=0};
+let wasPaused=false;
+export function toggleHelp(){const b=$('helpBox'),open=!b.classList.contains('show');if(open){wasPaused=ST.paused;ST.paused=true}else ST.paused=wasPaused;b.classList.toggle('show',open)}
+$('bHelp').onclick=toggleHelp;$('helpClose').onclick=toggleHelp;$('bCones').onclick=toggleCones;$('bCones').classList.add('on');
+cv.addEventListener('contextmenu',e=>{e.preventDefault();toggleCones()});
+cv.addEventListener('pointerdown',e=>{if(e.button===2)return;lpFired=false;lpClear();if(e.pointerType==='touch')lpTimer=window.setTimeout(()=>{if(ST.ptr&&!ST.ptr.drag){lpFired=true;toggleCones()}},550);ST.ptr={x:e.clientX,y:e.clientY,cx:cam.x,cy:cam.y,drag:false,id:e.pointerId};try{cv.setPointerCapture(e.pointerId)}catch(_){}});
+cv.addEventListener('pointermove',e=>{if(!ST.ptr)return;const dx=e.clientX-ST.ptr.x,dy=e.clientY-ST.ptr.y;if(!ST.ptr.drag&&Math.hypot(dx,dy)>9){ST.ptr.drag=true;lpClear()}if(ST.ptr.drag){cam.free=true;cam.x=ST.ptr.cx-dx/ST.zoom;cam.y=ST.ptr.cy-dy/ST.zoom}});
+cv.addEventListener('pointerup',e=>{lpClear();if(ST.ptr&&!ST.ptr.drag&&!lpFired)tapAt(e.clientX,e.clientY);ST.ptr=null});
+cv.addEventListener('pointercancel',()=>{lpClear();ST.ptr=null});
 cv.addEventListener('wheel',e=>{e.preventDefault();setZoom(ST.zoom*(e.deltaY<0?1.1:.9))},{passive:false});
 export function setZoom(z: number){ST.zoom=clamp(z,.45,1.7)}
 window.addEventListener('keydown',e=>{
   if(!ST.started)return;const k=e.key.toLowerCase();
+  if(k==='h'||(k==='escape'&&$('helpBox').classList.contains('show'))){toggleHelp();return}
+  if($('helpBox').classList.contains('show'))return;
   if(ST.dlg){if(k===' '||k==='enter'){e.preventDefault();advDlg()}return}
   if('1234'.includes(k)&&k.length===1){const c=ST.S.chars[+k-1];if(c&&c.joined&&!c.out)selectChar(c.id)}
   else if(k==='q')pressAct(0);else if(k==='e')pressAct(1);else if(k==='w'&&ACT[selC().id].length>2)pressAct(2);else if(k==='x'&&ACT[selC().id].length>3)pressAct(3);else if(k==='r')toggleRun();

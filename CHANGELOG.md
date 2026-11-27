@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.5
+- Écran des commandes (bouton ❓ ou touche H) : tableau tactile et clavier, met le jeu en pause
+- Bouton ◔ pour afficher ou masquer les cônes, et appui long sur la carte au toucher (équivalent du clic droit)
+- Test 16 (aide et cônes)
+
 ## 1.4
 - Sauvegarde rapide persistante (localStorage, format versionné) et bouton « Reprendre la sauvegarde » sur l'écran d'accueil
 - Version et date de build affichées sur l'écran d'accueil

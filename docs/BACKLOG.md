@@ -1,6 +1,6 @@
 # PLAN SOCIAL : backlog produit
 
-Dernière mise à jour : version 1.4. Ce document remplace la liste courte de GAME_DESIGN.md.
+Dernière mise à jour : version 1.5. Ce document remplace la liste courte de GAME_DESIGN.md.
 
 ## Comment lire ce backlog
 
@@ -44,10 +44,10 @@ Dernière mise à jour : version 1.4. Ce document remplace la liste courte de GA
 | ID | Story | Statut | Prio | Taille |
 |---|---|---|---|---|
 | E2-1 | En tant que nouveau joueur, je veux des bulles d'aide contextuelles lors de la première utilisation de chaque pouvoir, afin de comprendre sans lire un manuel | TODO | Must | M |
-| E2-2 | En tant que nouveau joueur, je veux un écran de commandes (tactile et clavier) accessible depuis le menu et en pause, afin de retrouver les raccourcis | TODO | Must | S |
+| E2-2 | En tant que nouveau joueur, je veux un écran de commandes (tactile et clavier) accessible depuis le menu et en pause, afin de retrouver les raccourcis | DONE 1.5 | Must | S |
 | E2-3 | En tant que nouveau joueur, je veux une première minute guidée au RDC (déplacer, se cacher, voir un cône), afin de ne pas échouer sur une règle ignorée | TODO | Should | M |
 | E2-4 | En tant que joueur, je veux que le jeu explique pourquoi j'ai perdu (qui m'a vu, où, quel corps trouvé) et propose de reprendre à la dernière sauvegarde, afin d'apprendre de l'échec | TODO | Should | M |
-| E2-5 | En tant que joueur, je veux un objectif courant affiché en haut (« Trouver le code du coffre ») qui évolue, afin de ne jamais me demander quoi faire | TODO | Should | S |
+| E2-5 | En tant que joueur, je veux un objectif courant affiché en haut (« Trouver le code du coffre ») qui évolue, afin de ne jamais me demander quoi faire | DONE 1.2 (objectif évolutif en haut à gauche) | Should | S |
 
 ## E3. Mécaniques et personnages
 
@@ -93,7 +93,7 @@ Dernière mise à jour : version 1.4. Ce document remplace la liste courte de GA
 | E6-1 | En tant que joueur, je veux une horloge plus lente (8 min de jeu pour 15 affichées) | DONE 1.2 | Must | S |
 | E6-2 | En tant que joueur, je veux un menu de piratage filtré par étage, qui met le temps en pause | DONE 1.0, 1.1, 1.2 | Must | M |
 | E6-3 | En tant que joueur, je veux le clic droit pour afficher ou masquer les cônes (et un bouton équivalent au toucher) | DONE 1.2 (clic droit) | Should | S |
-| E6-4 | En tant que joueur sur téléphone, je veux un bouton pour afficher ou masquer les cônes et un appui long pour le clic droit, afin de ne rien perdre en tactile | TODO | Must | S |
+| E6-4 | En tant que joueur sur téléphone, je veux un bouton pour afficher ou masquer les cônes et un appui long pour le clic droit, afin de ne rien perdre en tactile | DONE 1.5 | Must | S |
 | E6-5 | En tant que joueur sur téléphone, je veux une mise en page testée en portrait et paysage (petits écrans, encoche), avec des cibles tactiles d'au moins 44 px | TODO | Must | M |
 | E6-6 | En tant que joueur, je veux régler la taille du texte des dialogues et un contraste élevé, afin de lire confortablement | TODO | Should | S |
 | E6-7 | En tant que joueur daltonien, je veux que la menace se lise sans la couleur (forme ou motif des cônes, icône de statut) | TODO | Should | M |
@@ -155,7 +155,7 @@ Dernière mise à jour : version 1.4. Ce document remplace la liste courte de GA
 | Lot | Contenu | Pourquoi dans cet ordre |
 |---|---|---|
 | 1. Fiabilité (livré en 1.4) | E8-4, E8-6, E8-9, E9-1, E5-2, E5-5 | Petits, rapides, et ils sécurisent tout le reste |
-| 2. Première partie réussie | E1-1, E1-2, E2-1, E2-2, E2-5, E6-4 | Rend le jeu jouable et gagnable par un inconnu |
+| 2. Première partie réussie (E2-2, E2-5, E6-4 livrés en 1.5) | E1-1, E1-2, E2-1, E2-2, E2-5, E6-4 | Rend le jeu jouable et gagnable par un inconnu |
 | 3. Confort et accessibilité | E5-3, E5-4, E6-5, E6-6, E6-7, E6-8 | Élargit le public, surtout sur mobile |
 | 4. Contenu final | E7-3, E7-4, E3-8, E4-4 | Donne un vrai final et adoucit l'échec |
 | 5. Ambiance | E7-6, E3-6, E9-2 | Polish et installation en application |

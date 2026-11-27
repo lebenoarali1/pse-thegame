@@ -16,6 +16,8 @@
 <div id="tr">
   <button class="ib" id="bPause" title="Pause (Espace)">⏸</button>
   <button class="ib" id="bSpeed" title="Vitesse x2">⏩</button>
+  <button class="ib" id="bCones" title="Afficher ou masquer les cônes de vision (clic droit, appui long)">◔</button>
+  <button class="ib" id="bHelp" title="Commandes (H)">❓</button>
   <button class="ib" id="bAssist" title="Vue tactique : tous les gardes visibles">👁</button>
   <button class="ib" id="bSnd" title="Son">🔊</button>
   <button class="ib" id="bDbg" title="Mode debug (D)">🐞</button>
@@ -54,6 +56,25 @@
 
 <div id="dbg"></div><div id="bfeed"></div>
 <div id="vid"><canvas id="vc"></canvas><button id="vSkip">Passer ▶▶</button><button id="vGo">Commencer</button></div>
+
+<div class="ov" id="helpBox"><div class="box">
+  <h2>Commandes</h2>
+  <table class="hk">
+    <tr><th></th><th>Toucher</th><th>Clavier et souris</th></tr>
+    <tr><td>Choisir un perso</td><td>Toucher son portrait ou le perso</td><td><kbd>1</kbd> à <kbd>4</kbd>, <kbd>Tab</kbd></td></tr>
+    <tr><td>Déplacer</td><td>Toucher le sol</td><td>Clic, flèches</td></tr>
+    <tr><td>Courir</td><td>Bouton Courir</td><td><kbd>R</kbd></td></tr>
+    <tr><td>Pouvoirs</td><td>Boutons d'action, puis toucher la cible</td><td><kbd>Q</kbd> <kbd>E</kbd> <kbd>W</kbd> <kbd>X</kbd></td></tr>
+    <tr><td>Annuler une cible</td><td>Rappuyer sur le bouton</td><td><kbd>Échap</kbd></td></tr>
+    <tr><td>Cônes de vision</td><td>Bouton ◔ ou appui long</td><td>Clic droit</td></tr>
+    <tr><td>Vue</td><td>Glisser, boutons ＋ －</td><td>Molette, <kbd>+</kbd> <kbd>-</kbd>, <kbd>V</kbd> tactique</td></tr>
+    <tr><td>Pause</td><td>Bouton ⏸</td><td><kbd>Espace</kbd></td></tr>
+    <tr><td>Sauver, charger</td><td>Boutons 💾 📂</td><td><kbd>F5</kbd> <kbd>F9</kbd></td></tr>
+    <tr><td>Aide</td><td>Bouton ❓</td><td><kbd>H</kbd></td></tr>
+  </table>
+  <p style="font-size:13px;color:#9aa3c7">Nadia pirate un PC de près : elle ouvre alors un menu (porte, notification, café, réunion, caméras, imprimante). L'objectif du moment est affiché en haut à gauche.</p>
+  <button class="btn" id="helpClose">Fermer</button>
+</div></div>
 
 <div class="ov" id="stBox"><div class="box">
   <h2>État de la partie</h2><p>Copiez ce texte pour l'envoyer à Claude (il rejouera exactement votre situation), ou collez un état pour le charger.</p>
