@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.19
+- Vidéo : pause de 3 s sur la dernière image de chaque personnage avant le suivant ; la course finale montre les 7 actions réelles du jeu en mode action (disco ajouté)
 - Pouvoir inutile de Nadia : 🪩 Disco, tout l'étage danse dans les 10 s pendant 25 s ; animations de repos plus marquées
 - Bouton ☰ Menu en jeu : reprendre, sauvegarder, charger, commandes, retour à l'écran titre
 - Interrupteur : si l'employé parti rallumer est assommé ou lance une poursuite, un autre prend le relais

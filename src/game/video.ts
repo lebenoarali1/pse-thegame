@@ -115,7 +115,7 @@ export function vLetter(g: CanvasRenderingContext2D,W: number,H: number,t: numbe
   g.restore()}
 /** Faux éléments de gameplay pendant la course finale : actions, cônes, alertes, minicarte */
 export function vFake(g: CanvasRenderingContext2D,W: number,H: number,t: number){
-  const acts:[number,string,string][]=[[.6,'🥤','Gobelet lancé : le garde file nettoyer'],[2.0,'🚬','Clope offerte : fumoir pour 60 s'],[3.4,'🗣️','Baratin : « disruptons votre verticale »'],[4.8,'💻','Porte piratée en 8 s'],[6.2,'💡','Lumière coupée : 60 s de répit'],[7.6,'📷','Caméra hors service']];
+  const acts:[number,string,string][]=[[.6,'🥤','Gobelet lancé : le garde file nettoyer'],[1.7,'🚬','Clope offerte : fumoir pour 60 s'],[2.8,'🗣️','Baratin : « disruptons votre verticale »'],[3.9,'💻','Porte piratée en 8 s'],[5.0,'💡','Lumière coupée : 60 s de répit'],[6.1,'📷','Caméras coupées par le PC'],[7.2,'🪩','Disco : tout l\'étage danse']];
   const f=clamp(W*.04,13,20);
   /* barre d'actions en haut à droite */
   const bs=clamp(W*.085,30,48);acts.forEach((a,i)=>{const x=W-8-(acts.length-i)*(bs+5),on=t>=a[0]&&t<a[0]+1.2;g.fillStyle=on?'#ffb36b':'rgba(10,14,30,.75)';vrr(g,x,H*.2,bs,bs,8);g.fill();g.strokeStyle='rgba(255,255,255,.4)';g.stroke();g.font=Math.round(bs*.55)+'px Arial';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#fff';g.fillText(a[1],x+bs/2,H*.2+bs/2+1)});
@@ -203,7 +203,7 @@ function vidSize(force: boolean){if(force||!vSz.w){const r=$('vid').getBoundingC
 addEventListener('resize',()=>{vSz.w=0});
 export function vidFrame(t: number){const z=vidSize(false);vd=z.k;drawVid(z.w,z.h,t)}
 /* Temps d'arrêt (instant de la vidéo, durée réelle en secondes) : le texte reste lisible avant chaque changement de scène */
-export const HOLDS: [number,number][]=[[3.0,2.6],[10.8,3.6],[11.9,1.6],[14.4,1.6],[16.9,1.6],[19.4,1.6],[24.5,2.6],[26.1,2.4],[35.0,2.2]];
+export const HOLDS: [number,number][]=[[3.0,2.6],[10.8,3.6],[12.77,3],[15.27,3],[17.77,3],[20.27,3],[24.5,2.6],[26.1,2.4],[35.0,2.2]];
 export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(now-VID.last)/1000);VID.last=now;
   if(VID.hold&&VID.hold>0){if(!VID.drawn){vidFrame(VID.t);VID.drawn=true}VID.hold-=dt;if(VID.hold<=0)VID.drawn=false;requestAnimationFrame(vidLoop);return}
   VID.t+=dt*VSLOW;const t=VID.t;

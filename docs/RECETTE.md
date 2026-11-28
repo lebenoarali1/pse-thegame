@@ -19,8 +19,8 @@ Pour chaque ligne, touchez le bouton de la colonne Résultat : — (non testé),
 |---|---|
 | 2.1 | La vidéo est fluide sur mobile |
 | 2.2 | L'écran de mail s'ouvre sur une grande convocation DRH, lisible, avec un texte développé tapé progressivement, puis une pause pour la lire |
-| 2.3 | Chaque personnage a un bandeau punchy : nom géant, rôle, citation, pouvoirs, faiblesse, avec une pause pour le lire |
-| 2.4 | La course finale montre de faux éléments de jeu : barre d'actions, bandeaux d'action, garde avec cône et jauge, gobelet lancé, minicarte |
+| 2.3 | Chaque personnage a un bandeau punchy : nom géant, rôle, citation, pouvoirs, faiblesse, avec une pause de 3 s sur la dernière image avant de passer au personnage suivant |
+| 2.4 | La course finale montre, en mode action, de vrais éléments de gameplay mis en scène (gobelet, clope, baratin, piratage, lumière, caméras, disco, garde avec cône et jauge, minicarte), tous existants dans le jeu |
 | 2.5 | Le texte de fin (« Licenciés à 18h... » et la mission) est bien lisible sur un bandeau opaque |
 | 2.6 | Le bouton « Passer » fonctionne à tout moment |
 

@@ -40,7 +40,7 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 
 ### Fait récemment (1.18 et 1.19)
 - Écran de démarrage allégé, bouton ☰ Menu en jeu (reprendre, sauvegarder, charger, commandes, écran titre)
-- Vidéo d'intro refaite : convocation DRH longue et lisible, bandeaux de personnages plus percutants, faux gameplay pendant la course, texte de fin lisible, vidéo plus fluide
+- Vidéo d'intro refaite : convocation DRH longue et lisible, bandeaux de personnages plus percutants, extraits de vrai gameplay en mode action pendant la course (7 pouvoirs réels), 3 s de pause sur chaque bandeau de personnage, texte de fin lisible, vidéo plus fluide
 - Interrupteur utilisable par tous ; si le préposé est pris, un autre rallume
 - Course : un appui revient à la marche ; animation de repos ; Max nettoie au repos
 - Caméras coupées 120 s, garde appelé à pied, caméra R+2 adoucie
