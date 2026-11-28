@@ -67,7 +67,8 @@ export function render(dt: number){
       if(c.sayT>0&&c.say)bubble(ctx,fx,fy-(c.busy&&c.busy.max?68:62),c.say,CCOL[c.id])}})}
   /* particules et projectiles */
   for(const p of ST.P){if(p.f!==ST.view)continue;D.push({d:p.x+p.y+.1,fn:()=>{const[fx,fy]=iso(p.x,p.y,p.z);
-    if(p.ring){ctx.strokeStyle='rgba(255,224,138,'+(1-p.age!/.7)+')';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(fx,fy,10+p.age!*90,5+p.age!*45,0,0,7);ctx.stroke()}
+    if(p.ring&&p.sz>0){const k=p.age!/(p.age!+p.life);ctx.strokeStyle='rgba(255,170,90,'+(.85*(1-k))+')';ctx.lineWidth=3-2*k;ctx.beginPath();ctx.ellipse(fx,fy,p.sz*45*k,p.sz*22.6*k,0,0,7);ctx.stroke()}
+    else if(p.ring){ctx.strokeStyle='rgba(255,224,138,'+(1-p.age!/.7)+')';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(fx,fy,10+p.age!*90,5+p.age!*45,0,0,7);ctx.stroke()}
     else{ctx.globalAlpha=clamp(p.life*2,0,1);ctx.fillStyle=p.col;ctx.beginPath();ctx.arc(fx,fy,p.sz,0,7);ctx.fill();ctx.globalAlpha=1}}})}
   for(const p of ST.PR){if(p.f!==ST.view)continue;const t=clamp(p.t/p.dur,0,1),x=lerp(p.x0,p.x1,t),y=lerp(p.y0,p.y1,t);D.push({d:x+y+.2,fn:()=>{const[fx,fy]=iso(x,y,10+Math.sin(t*Math.PI)*46);if(p.kind==='clope'){ctx.fillStyle='#f4f4f4';ctx.fillRect(fx-4,fy-1,8,2.4);ctx.fillStyle='#ff7a3a';ctx.fillRect(fx+3,fy-1,2,2.4)}else{ctx.fillStyle='#ffe08a';ctx.beginPath();ctx.arc(fx,fy,4,0,7);ctx.fill();ctx.strokeStyle='#8a6a1c';ctx.stroke()}}})}
   D.sort((a,b)=>a.d-b.d);for(const o of D)o.fn();

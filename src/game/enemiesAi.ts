@@ -5,7 +5,7 @@ import { snd } from './sound';
 import { fail, say, toast, where } from './messages';
 import { cam, getC, getE } from './state';
 import { buildActs } from './ui';
-import { BRK_SAY, CHAT, CLEAN_SAY, COF_SAY } from './texts';
+import { BRK_SAY, CHAT, CHAT_DEBUT, CHAT_NOIR, CHAT_PLAN, CHAT_SOIR, CLEAN_SAY, COF_SAY } from './texts';
 import { stepEntity } from './movement';
 import { goCoffee } from './noise';
 import { curDiff } from './settings';
@@ -40,7 +40,7 @@ export function updateEnemy(e: Enemy,dt: number){
   if(e.sayT>0)e.sayT-=dt;
   if(e.fovS&&e.state!=='break'){e.fov=e.fovS;e.range=e.rangeS!;e.fovS=null}
   if(e.chat===undefined)e.chat=6+Math.random()*25;
-  if(!e.ko&&e.state==='patrol'&&e.talk<=0){e.chat-=dt;if(e.chat<=0){e.chat=22+Math.random()*30;const L=CHAT[e.type];if(L&&e.sayT<=0&&!(ST.S.over))say(e,L[Math.floor(Math.random()*L.length)],3.2)}}
+  if(!e.ko&&e.state==='patrol'&&e.talk<=0){e.chat-=dt;if(e.chat<=0){e.chat=22+Math.random()*30;const dark=((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t;const L=dark?CHAT_NOIR:Math.random()<.5?(ST.S.t>330?CHAT_PLAN:ST.S.t>150?CHAT_SOIR:CHAT_DEBUT):CHAT[e.type];if(L&&e.sayT<=0&&!(ST.S.over))say(e,L[Math.floor(Math.random()*L.length)],3.2)}}
   if(e.ko){if(!e.hidden){e.koT=(e.koT||0)+dt;if(e.koT>=(e.koDur||50)&&!ST.S.chars.some(c=>c.busy&&c.busy.eid===e.id))wakeUp(e)}return}
   if(e.freeze>0){e.freeze-=dt;e.moving=false;return}
   if(e.type==='camera'){

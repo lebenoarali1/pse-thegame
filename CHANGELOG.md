@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.12
+- Bruits visualisés : un cercle orange s'étend autour de chaque bruit (course, gobelet) à la taille de sa portée
+- Répliques d'ambiance selon l'avancement de la soirée (début, soirée, plan social qui approche) et lors d'une coupure de lumière ; test 25
+
 ## 1.11
 - Première minute guidée : bulles contextuelles « cône », « jauge » et « se cacher », affichées une seule fois quand un garde est proche ; test 24
 - Fins de partie mises en scène : courte séquence d'icônes animées (désactivée si l'animation est réduite) et réplique de clôture propres à la victoire et à chaque défaite

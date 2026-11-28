@@ -7,6 +7,11 @@ export const BAR=['Nous allons disrupter votre verticale pour activer un levier 
 
 export const BAR_R=['Hum. Oui. Je note.','Je ne comprends rien, mais c\'est passionnant.','Vous avez un support de présentation ?','Mmh. Mmh. Mmh.','Je dois en parler à mon manager. Qui ne m\'écoute pas.','Vous pouvez répéter, mais en français ?','D\'accord. Et concrètement ?','Je vais faire semblant de réfléchir.'];
 
+/** Répliques d'ambiance selon l'avancement de la soirée et les événements (E7-5) */
+export const CHAT_DEBUT=['17h50, la journée est presque finie.','Encore dix minutes et je pars. Ou pas.','On dirait qu\'il y a une annonce, ce soir.','Le café est froid et le Wi-Fi aussi.'];
+export const CHAT_SOIR=['Tu as vu l\'invitation de 18h ? Sans ordre du jour.','Les RH sont dans les couloirs. Mauvais signe.','Je range mon bureau, au cas où.','On parle de réorganisation. Ça veut dire quoi, déjà ?'];
+export const CHAT_PLAN=['18h approche. Personne ne regarde son téléphone, tout le monde le regarde.','Les cartons arrivent demain, paraît-il.','Si je suis dans la liste, je veux au moins mon pot de départ.','Respire, c\'est juste un plan social.'];
+export const CHAT_NOIR=['Encore une coupure de courant. Ça sent le plan social.','Qui a éteint ? Les économies d\'énergie, déjà ?','Je n\'y vois rien. C\'est nouveau, ce management.'];
 export const CHAT: Record<string, string[]>={vigile:['Rien à signaler. Comme toujours.','On m\'a dit \"sécurité renforcée\". Pas \"effectifs\".','Mon badge fonctionne encore. Pour combien de temps ?'],manager:['On va réorganiser tout ça.','Pas de budget, mais beaucoup d\'attentes.','Je ne vous mets pas la pression, je vous l\'explique.','Ce n\'est pas un licenciement, c\'est une opportunité.'],beaugosse:['Je ne suis pas payé pour réfléchir.','Je fais de la sécurité. Et du sport.'],drh:['Je ne licencie pas, j\'accompagne.','Le bien-être au travail, c\'est ma priorité. Après le chiffre.'],assistante:['Tout est sous contrôle. Et sous mon bureau.','Le DG n\'est pas là. Il est en réunion, comme toujours.'],dg:['Les effectifs sont ma variable d\'ajustement.','Mon coffre est un coffre. Il n\'y a rien dedans.']};
 
 export function introSteps(){return [
