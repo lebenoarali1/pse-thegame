@@ -37,7 +37,7 @@ export interface Character {
   run: boolean; cd: { q: number; e: number; w?: number; x?: number };
   sp: number; moving: boolean; say: string; sayT: number;
   joined?: boolean; out?: boolean;
-  talking: string | null; smoke?: boolean; chatT: number; chatN: number; stall: number; repath: number; runN: number; small?: boolean;
+  talking: string | null; runOnce?: boolean; smoke?: boolean; chatT: number; chatN: number; stall: number; repath: number; runN: number; small?: boolean;
 }
 
 export interface Enemy {
@@ -73,7 +73,7 @@ export interface GameState {
 
 /** Variables partagées entre modules (vue courante, pause, zoom...). */
 export interface Store {
-  S: GameState; view: number; paused: boolean; started: boolean; muted: boolean; spd: number; ffAction?: boolean;
+  S: GameState; view: number; paused: boolean; started: boolean; muted: boolean; spd: number;
   showCones: boolean; noLimit: boolean; dbg: boolean; assist: boolean; zoom: number; fCount: number;
   pend: { k: string } | null; dlg: Dialog | null; ptr: Pointer | null; AC: AudioContext | null; lastUI: number; lastSave: string | null;
   P: Particle[]; PR: Projectile[];
@@ -99,7 +99,7 @@ export type EnemyFactory = (id: string, name: string, type: string, f: number, x
 /** Étape de dialogue : réplique, choix, effet. */
 export interface DlgStep { w?: string; t?: string; fx?: () => void; ch?: DlgChoice[]; r?: DlgStep[] }
 export interface DlgChoice { t: string; r?: DlgStep[]; fx?: () => void }
-export interface Dialog { q: DlgStep[]; done: () => void; trig: string; cur: string | null; pos: number }
+export interface Dialog { hist: DlgStep[][]; q: DlgStep[]; done: () => void; trig: string; cur: string | null; pos: number }
 
 /** Menu affiché quand Nadia pirate un PC. */
 export interface PcAction { k: string; i: string; n: string; s: string; t: number }

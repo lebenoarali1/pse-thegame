@@ -61,10 +61,10 @@ cv.addEventListener('contextmenu',e=>{e.preventDefault();toggleCones()});
 cv.addEventListener('pointerdown',e=>{if(e.button===2)return;lpFired=false;lpClear();if(e.pointerType==='touch')lpTimer=window.setTimeout(()=>{if(ST.ptr&&!ST.ptr.drag){lpFired=true;toggleCones()}},550);ST.ptr={x:e.clientX,y:e.clientY,cx:cam.x,cy:cam.y,drag:false,id:e.pointerId};try{cv.setPointerCapture(e.pointerId)}catch(_){}});
 cv.addEventListener('pointermove',e=>{if(!ST.ptr)return;const dx=e.clientX-ST.ptr.x,dy=e.clientY-ST.ptr.y;if(!ST.ptr.drag&&Math.hypot(dx,dy)>9){ST.ptr.drag=true;lpClear()}if(ST.ptr.drag){cam.free=true;cam.x=ST.ptr.cx-dx/ST.zoom;cam.y=ST.ptr.cy-dy/ST.zoom}});
 let lastTap={t:0,x:0,y:0};
-/** Double appui : le temps de l'action en cours file à vitesse x4 jusqu'à sa fin, ou jusqu'à ce qu'un garde s'en mêle (E2-5b). */
+/** Double appui : le personnage court jusqu'à destination, puis reprend la marche (E2-5b). */
 cv.addEventListener('pointerup',e=>{lpClear();
   if(ST.ptr&&!ST.ptr.drag&&!lpFired){const now=performance.now(),dbl=now-lastTap.t<350&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<40;lastTap={t:now,x:e.clientX,y:e.clientY};
-    if(dbl){const sc=selC();if(sc&&(sc.busy||sc.path.length||sc.order)){ST.ffAction=true;toast('Action accélérée (x4) jusqu\'à sa fin','g')}lastTap.t=0}
+    if(dbl){const sc=selC();if(sc&&(sc.path.length||sc.order)&&!sc.run){if(sc.disguise)toast('Déguisé, Djibril ne court pas','w');else{sc.run=true;sc.runOnce=true}}lastTap.t=0}
     else tapAt(e.clientX,e.clientY)}
   ST.ptr=null});
 cv.addEventListener('pointercancel',()=>{lpClear();ST.ptr=null});

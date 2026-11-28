@@ -19,6 +19,7 @@ export function updateChar(c: Character,dt: number){
   if(c.out)return;
   if(!c.joined){if(c.sayT>0)c.sayT-=dt;return}
   if(c.sayT>0)c.sayT-=dt;c.cd.q=Math.max(0,c.cd.q-dt);c.cd.e=Math.max(0,c.cd.e-dt);c.cd.w=Math.max(0,(c.cd.w||0)-dt);
+  if(c.runOnce&&!c.path.length&&!c.order&&!c.busy){c.run=false;c.runOnce=false}
   if(c.disguise&&c.run&&c.moving){c.disguise=null;toast('Djibril a couru : son déguisement est fichu','r');say(c,'Zut, la cravate.',2)}
   if(c.busy){updateBusy(c,dt);return}
   if(c.talking){const e=getE(c.talking);

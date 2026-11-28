@@ -78,7 +78,7 @@ body.indlg #bt{visibility:hidden}
 .dh{display:flex;align-items:center;gap:9px;margin-bottom:5px}
 #dAv{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:20px;color:#14101c}
 #dWho{font-size:19px;color:var(--c,#fff);letter-spacing:.5px}
-#dSkip{margin-left:auto;background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--mu);border-radius:8px;font-family:inherit;font-size:13px;padding:3px 9px;cursor:pointer}
+#dSkip,#dBack{margin-left:8px;background:transparent;border:1px solid rgba(255,255,255,.2);color:var(--mu);border-radius:8px;font-family:inherit;font-size:13px;padding:3px 9px;cursor:pointer}
 #dTxt{font-size:18px;line-height:1.22;color:#eef2f8;min-height:46px}
 #dCh{display:flex;flex-direction:column;gap:6px;margin-top:8px}
 #dCh button{font-family:inherit;font-size:17px;font-weight:600;text-align:left;padding:8px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:#eef2f8;cursor:pointer}
@@ -116,3 +116,5 @@ body.indlg #bt{visibility:hidden}
 
 .gl{padding:6px 0;line-height:1.35;color:#9fb0d0}.gl.ok{color:#7fd69a}.gl.now{color:#fff;font-weight:600}
 #obj{cursor:pointer}#obj::after{content:' ⓘ';opacity:.6}
+#dBack{margin-left:auto}
+@media (pointer:coarse),(max-width:620px),(max-height:500px){#dBack,#dSkip{min-height:44px;min-width:44px}}

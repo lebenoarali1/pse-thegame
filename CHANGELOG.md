@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.17
+- Double appui : le personnage choisi court jusqu'à sa destination puis reprend la marche (remplace l'accélération du temps de la 1.15) ; Djibril déguisé ne court pas
+- Dialogues : retour à la réplique précédente par clic droit, touche flèche gauche ou retour arrière, ou bouton ◀ Retour (mobile)
+
 ## 1.16
 - Vidéo d'introduction : musique de suspense puis d'action, et six temps d'arrêt (2,6 à 2,8 s) avant les changements de scène pour laisser lire les sous-titres
 - Guidage : le dialogue d'introduction énonce le plan en quatre temps ; Djibril et Max annoncent leur rôle pour le code
