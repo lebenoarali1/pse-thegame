@@ -57,7 +57,7 @@ export function objective(){
   const steps=[
    [tm.some(c=>c.f>=1),"Rez-de-chaussée : <b>Kévin</b> jette un gobelet (Roger nettoie 10 s), <b>Nadia</b> lance une clope à Dédé (fumoir, 1 min), puis pirate le portillon bleu"],
    [dj.joined&&mx.joined,"Étage 1 : <b>Djibril</b> pleure en salle de réunion (est), <b>Max</b> est aux toilettes (ouest) : <b>Kévin</b> jette un gobelet près de la plante, Dylan nettoie puis file à la cafétéria"],
-   [F.manager||tm.some(c=>c.f===2),"Porte rouge de l'escalier : <b>Nadia</b> la pirate de près (8 s), ou <b>Max</b> assomme le manager et <b>Djibril</b> prend son costume. <b>Nadia</b>, devant n'importe quel PC, choisit : porte, notification, pause café, réunion, caméras ou imprimante"],
+   [F.manager||tm.some(c=>c.f===2),"Porte rouge de l'escalier : <b>Nadia</b> la pirate de près (8 s), ou <b>Max</b> assomme le manager et <b>Djibril</b> prend son costume. <b>Nadia</b>, devant n'importe quel PC, choisit : porte, notification, pause café, réunion, lumière ou imprimante"],
    [T.code,"<b>Nadia</b> pirate le serveur (étage 1, nord-ouest) pour le code du coffre"],
    [F.cams&&tm.some(c=>c.f===2),"Couper les caméras et monter à l'étage 2 (Djibril ouvre, les autres collent derrière)"],
    [T.key,"<b>Kévin</b> : gaine du couloir, puis coffre du DG, une fois son bureau libre"],

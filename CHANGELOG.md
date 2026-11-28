@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.15
+- Hiérarchie des ordres donnés au personnel : serveur (SMS) avant réunion, lumière, imprimante, gobelet puis café ; un gobelet ou un café ne détourne plus quelqu'un parti en salle serveur
+- Interrupteur de chaque étage dessiné sur la carte (il s'éclaire quand la lumière est coupée)
+- Double appui : l'action en cours (piratage, déplacement) passe à vitesse x4 jusqu'à sa fin, ou s'arrête si un garde s'en mêle ; test 27
+- Texte d'objectif de l'étage 1 corrigé (plus de caméras)
+
 ## 1.14.1
 - RDC : le menu du PC ne propose plus « Ouvrir la porte » (doublon du portillon bleu) ; les actions de porte ne s'affichent qu'aux étages 1 et 2
 - Musique : notes remontées de deux octaves (la basse était inaudible sur un téléphone), reprise du son au premier appui

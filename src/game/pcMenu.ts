@@ -5,7 +5,7 @@ import { EVENTS } from './events';
 import { $ } from './utils';
 import { say, toast } from './messages';
 import { startBusy } from './powers';
-import { MEET_SAY, goCoffee, smsServeur, spotNear } from './noise';
+import { MEET_SAY, PRI, busyWith, goCoffee, smsServeur, spotNear } from './noise';
 import { snd } from './sound';
 import type { Enemy, Order, PcAction, PcMenu } from './types';
 import type { Character } from './types';
@@ -44,21 +44,21 @@ export function pcChoose(k: string){const c=getC('nadege');if(!pcm||c.out)return
 export function lightsTick(){const L=ST.S.team.lightsOff;if(!L)return;for(const k of Object.keys(L)){const f=Number(k);if(!L[f])continue;const id=(ST.S.team.lightsWho||{})[f]||'';const e=id?ST.S.enemies.find(q=>q.id===id):undefined;
   const done=L[f]<=ST.S.t||(e&&e.state==='coffee'&&e.cof&&e.cof.arrived);if(done&&L[f]>ST.S.t){L[f]=0;toast('La lumière revient','g');if(e)say(e,'Voilà, un disjoncteur de remis.',2.4)}else if(done)L[f]=0}}
 export function pcTick(){lightsTick();if(!pcm)return;const c=getC('nadege');if(c.out)pcClose()}
-export function sendTo(e: Enemy,pt: { x: number; y: number },dur: number,lines: string[],hello: string,n: number){const p=spotNear(e.f,pt.x,pt.y,n);e.state='coffee';e.cof={x:p[0],y:p[1],t:0,arrived:false,dur,sy:0,lines};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,hello,3.4)}
+export function sendTo(e: Enemy,pt: { x: number; y: number },dur: number,lines: string[],hello: string,n: number,pri: number=PRI.reu){if(busyWith(e,pri))return false;e.pri=pri;const p=spotNear(e.f,pt.x,pt.y,n);e.state='coffee';e.cof={x:p[0],y:p[1],t:0,arrived:false,dur,sy:0,lines};e.path=[];e.look=null;e.cln=null;e.wait=0;e.talk=0;say(e,hello,3.4);return true}
 export function pcEffect(k: string,c: Character){const f=c.f;ST.S.flags['pc_'+k]=ST.S.t+45;let n=0;
   const staff=ST.S.enemies.filter(e=>e.f===f&&!e.ko&&e.state!=='chase'&&(e.type==='manager'||e.tech));
   if(k==='door'){for(const d of DOORS){if(d.f===f&&d.l<=2&&Math.hypot(d.x-c.x,d.y-c.y)<12){ST.S.doorHack[f+','+d.x+','+d.y]=ST.S.t+30;n++}}
     toast(n?n+' porte'+(n>1?'s':'')+' déverrouillée'+(n>1?'s':'')+', elle'+(n>1?'s restent':' reste')+' ouverte'+(n>1?'s':''):'Aucune porte à portée','g');say(c,'Porte ouverte. Ticket clôturé.',2.2)}
   else if(k==='notif'){if(f!==1){toast('Pas de salle serveur à cet étage','w');return}smsServeur();say(c,'Notification envoyée. Signé : la DSI.',2.6)}
   else if(k==='cafe'){if(!CAFE[f]){toast('Pas de cafétéria à cet étage','w');return}staff.forEach(e=>{if(goCoffee(e,45))n++});toast(n?n+' personne'+(n>1?'s':'')+' invitée'+(n>1?'s':'')+' à la pause café':'Personne à inviter','g');say(c,'Invitation : « Café offert, présence obligatoire ».',2.6)}
-  else if(k==='reu'){if(!MEET[f]){toast('Pas de salle de réunion à cet étage','w');return}staff.forEach((e,i)=>{sendTo(e,MEET[f]!,45,MEET_SAY,'Réunion urgente ? À cette heure-ci ?',i);n++});toast(n?n+' personne'+(n>1?'s':'')+' filent en réunion (45 s)':'Personne à convoquer','g');say(c,'Réunion : ordre du jour, « point sur le point ».',2.6)}
+  else if(k==='reu'){if(!MEET[f]){toast('Pas de salle de réunion à cet étage','w');return}staff.forEach((e,i)=>{if(sendTo(e,MEET[f]!,45,MEET_SAY,'Réunion urgente ? À cette heure-ci ?',i,PRI.reu))n++});toast(n?n+' personne'+(n>1?'s':'')+' filent en réunion (45 s)':'Personne à convoquer','g');say(c,'Réunion : ordre du jour, « point sur le point ».',2.6)}
   else if(k==='eval'){const e=getE('drh');if(e.ko||e.state==='chase'){toast('Mme Lambert est indisponible','w');return}sendTo(e,{x:12.5,y:11.5},25,['Tiens, un entretien ? Je ne l\'avais pas prévu.','Évaluation à 360 degrés, sans angle mort.'],'Un entretien ? À cette heure-ci ?',0);toast('Mme Lambert file en entretien d\'évaluation (25 s)','g');say(c,'Invitation : « Entretien annuel, durée indéterminée ».',2.6)}
   else if(k==='copies'){const e=getE('brigitte');if(e.ko||e.state==='chase'){toast('Brigitte est indisponible','w');return}sendTo(e,PRN[2],25,PRN_SAY,'Le DG veut douze copies. Pour hier.',0);toast('Brigitte part à l\'imprimante (25 s)','g');say(c,'Demande du DG : « 12 copies, recto verso, couleur ».',2.6)}
   else if(k==='meeting'){if(ST.S.ev[320]){toast('Le DG est déjà parti','w');return}const e=getE('dg');if(e.ko){toast('Le DG est hors service','w');return}ST.S.ev[320]=1;EVENTS[0].fn();say(c,'Agenda modifié : « Comité stratégique, tout de suite ».',2.8)}
   else if(k==='lights'){ST.S.team.lightsOff=ST.S.team.lightsOff||{};ST.S.team.lightsOff[f]=ST.S.t+60;ST.S.flags['pc_lights']=ST.S.t+80;
     let best: Enemy|undefined,bd=1e9;for(const e of ST.S.enemies){if(e.f!==f||e.ko||e.type==='camera'||e.state==='chase'||e.state==='break'||e.type==='dg'||e.type==='drh')continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<bd){bd=d;best=e}}
-    if(best){ST.S.team.lightsWho=ST.S.team.lightsWho||{};ST.S.team.lightsWho[f]=best.id;sendTo(best,SWITCH[f],4,['Disjoncteur...','Encore une coupure.'],'Qui a coupé la lumière ?!',0)}
+    if(best){ST.S.team.lightsWho=ST.S.team.lightsWho||{};ST.S.team.lightsWho[f]=best.id;sendTo(best,SWITCH[f],4,['Disjoncteur...','Encore une coupure.'],'Qui a coupé la lumière ?!',0,PRI.lumiere)}
     toast('Lumière coupée 60 s : un employé va la rallumer','g');say(c,'Disjoncteur. Pas de panique, c\'est volontaire.',2.4)}
   else if(k==='cam'){ST.S.team.camsOff=ST.S.team.camsOff||{};ST.S.team.camsOff[f]=ST.S.t+40;toast('Caméras de l\'étage coupées 40 s','g');say(c,'Écran noir. Les caméras font la sieste.',2.4)}
-  else if(k==='print'){const p=PRN[f];ST.S.enemies.forEach((e,i)=>{if(e.f!==f||e.ko||e.type==='camera'||e.state==='chase'||e.state==='break')return;sendTo(e,p,20,PRN_SAY,'L\'imprimante sonne !',n);n++});toast(n?'L\'imprimante hurle : '+n+' personne'+(n>1?'s':'')+' accourent (20 s)':'Personne à l\'étage','g');say(c,'Impression de 400 pages en recto simple.',2.6);snd(180,.6,'sawtooth',.06,40)}
+  else if(k==='print'){const p=PRN[f];ST.S.enemies.forEach((e,i)=>{if(e.f!==f||e.ko||e.type==='camera'||e.state==='chase'||e.state==='break')return;if(sendTo(e,p,20,PRN_SAY,'L\'imprimante sonne !',n,PRI.print))n++});toast(n?'L\'imprimante hurle : '+n+' personne'+(n>1?'s':'')+' accourent (20 s)':'Personne à l\'étage','g');say(c,'Impression de 400 pages en recto simple.',2.6);snd(180,.6,'sawtooth',.06,40)}
   snd(600,.2,'triangle',.05)}

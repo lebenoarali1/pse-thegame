@@ -1,6 +1,6 @@
 # Backlog
 
-Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalités attendues. La version courante est la 1.14.
+Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalités attendues. La version courante est la 1.15.
 
 ## 1. Bilan : ce qui est en place
 
@@ -23,6 +23,9 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Étage 1 : café, réunion, notification, salle serveur (code du coffre, caméras de l'étage 2)
 - Étage 2 : entretien d'évaluation de la DRH, « 12 copies » pour Brigitte, avancer la réunion du DG
 - Le menu n'affiche que les actions utiles à l'étage
+- Hiérarchie des ordres : serveur, puis réunion, lumière, imprimante, gobelet, café ; un ordre moins prioritaire n'écrase pas un ordre en cours
+- Interrupteur de chaque étage visible sur la carte
+- Double appui : l'action en cours passe à vitesse x4 jusqu'à sa fin ou jusqu'à ce qu'un garde s'en mêle
 
 ### Interface
 - Écran d'accueil avec choix de la difficulté
@@ -37,7 +40,7 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Installation comme application et mode hors connexion
 
 ### Qualité et livraison
-- TypeScript strict sans `any`, lint, 8 tests unitaires, 26 scénarios de bout en bout
+- TypeScript strict sans `any`, lint, 8 tests unitaires, 27 scénarios de bout en bout
 - Publication automatique sur GitHub Pages après vérifications
 - Documentation en ligne : MCO, architecture, conception, changelog
 - Releases GitHub à chaque tag de version, mises à jour automatiques des dépendances

@@ -62,7 +62,7 @@ export function updateEnemy(e: Enemy,dt: number){
     if(!l.arrived){if(!e.path.length){const p=findPath(e.f,Math.floor(e.x),Math.floor(e.y),Math.floor(l.x),Math.floor(l.y));e.path=p||[];if(!p||!p.length)l.arrived=true}
       stepEntity(e,dt,1.7,false);if(!e.path.length)l.arrived=true;if(l.arrived){l.f0=Math.atan2(l.y-e.y,l.x-e.x);say(e,CLEAN_SAY[Math.floor(Math.random()*CLEAN_SAY.length)],3.4)}}
     else{l.t+=dt;e.moving=false;e.face=l.f0!+Math.sin(l.t*3.2)*.6;
-      if(l.t>=l.dur){e.cln=null;e.path=[];e.wait=0;if(!((e.type==='vigile'||e.type==='beaugosse'||e.type==='manager')&&goCoffee(e,20))){e.state='patrol';say(e,'Voilà, propre. Jusqu\'au prochain stagiaire.',2.6)}}}
+      if(l.t>=l.dur){e.cln=null;e.path=[];e.wait=0;e.pri=0;if(!((e.type==='vigile'||e.type==='beaugosse'||e.type==='manager')&&goCoffee(e,20))){e.state='patrol';say(e,'Voilà, propre. Jusqu\'au prochain stagiaire.',2.6)}}}
     return}
   if(e.state==='coffee'){const b=e.cof;if(!b){e.state='patrol';return}
     if(!b.arrived){if(!e.path.length){const p=findPath(e.f,Math.floor(e.x),Math.floor(e.y),Math.floor(b.x),Math.floor(b.y));e.path=p||[];if(!p||!p.length)b.arrived=true}

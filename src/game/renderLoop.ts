@@ -7,6 +7,7 @@ import { CAFE, SMK, VENTS, ch } from './levelData';
 import { WH, drawTile, tallH } from './renderShapes';
 import { ACT, CCOL, ROLE } from './castData';
 import { conePoly } from './pathing';
+import { SWITCH } from './pcMenu';
 import { bubble, drawBar, drawBody, drawCamera, drawPerson } from './renderPeople';
 /* boucle de rendu */
 export const cv: HTMLCanvasElement=$('cv'),ctx=cv.getContext('2d') as CanvasRenderingContext2D,lc=document.createElement('canvas'),lctx=lc.getContext('2d') as CanvasRenderingContext2D;
@@ -65,6 +66,12 @@ export function render(dt: number){
       if(c.busy&&c.busy.max){const col=c.busy.k==='hack'?(c.busy.slow?'#ff8ad8':'#4ee3f0'):'#ffd166';drawBar(ctx,fx,fy-62,28,c.busy.t/c.busy.max,col)}
       if(c.run&&c.moving){ctx.fillStyle='#ff8a4c';ctx.font='700 11px sans-serif';ctx.fillText('»',fx+16,fy-20)}
       if(c.sayT>0&&c.say)bubble(ctx,fx,fy-(c.busy&&c.busy.max?68:62),c.say,CCOL[c.id])}})}
+  /* interrupteur de l'étage (E3-10) */
+  {const sw=SWITCH[ST.view];if(sw)D.push({d:sw.x+sw.y+3,fn:()=>{const[fx,fy]=iso(sw.x,sw.y,0);const off=((ST.S.team.lightsOff||{})[ST.view]||0)>ST.S.t;
+    ctx.fillStyle='rgba(0,0,0,.35)';ctx.beginPath();ctx.ellipse(fx,fy+2,12,6,0,0,7);ctx.fill();
+    ctx.fillStyle=off?'#ffd166':'#3a4560';ctx.strokeStyle='#9fb0d0';ctx.lineWidth=1.5;ctx.beginPath();ctx.roundRect(fx-9,fy-30,18,26,3);ctx.fill();ctx.stroke();
+    ctx.fillStyle=off?'#1a1020':'#ffd166';ctx.font='700 14px sans-serif';ctx.textAlign='center';ctx.fillText('⚡',fx,fy-12);
+    if(off||ST.S.t%6<3){ctx.fillStyle='#e8eefc';ctx.font='700 11px "Barlow Condensed",sans-serif';ctx.fillText('Interrupteur',fx,fy-35)}}})}
   /* particules et projectiles */
   for(const p of ST.P){if(p.f!==ST.view)continue;D.push({d:p.x+p.y+.1,fn:()=>{const[fx,fy]=iso(p.x,p.y,p.z);
     if(p.ring&&p.sz>0){const k=p.age!/(p.age!+p.life);ctx.strokeStyle='rgba(255,170,90,'+(.85*(1-k))+')';ctx.lineWidth=3-2*k;ctx.beginPath();ctx.ellipse(fx,fy,p.sz*45*k,p.sz*22.6*k,0,0,7);ctx.stroke()}

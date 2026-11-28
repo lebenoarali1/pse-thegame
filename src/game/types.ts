@@ -41,6 +41,8 @@ export interface Character {
 }
 
 export interface Enemy {
+  /** Priorité de l'ordre en cours (serveur > réunion > lumière > imprimante > gobelet > café) */
+  pri?: number;
   id: string; name: string; type: EnemyType;
   f: number; x: number; y: number; hx: number; hy: number; face: number;
   fov: number; range: number; sp: number;
@@ -71,7 +73,7 @@ export interface GameState {
 
 /** Variables partagées entre modules (vue courante, pause, zoom...). */
 export interface Store {
-  S: GameState; view: number; paused: boolean; started: boolean; muted: boolean; spd: number;
+  S: GameState; view: number; paused: boolean; started: boolean; muted: boolean; spd: number; ffAction?: boolean;
   showCones: boolean; noLimit: boolean; dbg: boolean; assist: boolean; zoom: number; fCount: number;
   pend: { k: string } | null; dlg: Dialog | null; ptr: Pointer | null; AC: AudioContext | null; lastUI: number; lastSave: string | null;
   P: Particle[]; PR: Projectile[];
