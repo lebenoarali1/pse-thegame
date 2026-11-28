@@ -11,4 +11,5 @@ async def main():
         t = await g.ev("document.getElementById('eP').textContent")
         assert "étage 1" in t and ("côté" in t or "au centre" in t), t
         assert await g.pg.is_visible('#bRetry'), 'reprise attendue'
+        assert await g.ev("document.querySelectorAll('#eS span').length")==4 and await g.ev("document.getElementById('eQ').textContent.length")>10, 'séquence de fin attendue'
         assert not g.errs, g.errs

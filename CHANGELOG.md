@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.11
+- Première minute guidée : bulles contextuelles « cône », « jauge » et « se cacher », affichées une seule fois quand un garde est proche ; test 24
+- Fins de partie mises en scène : courte séquence d'icônes animées (désactivée si l'animation est réduite) et réplique de clôture propres à la victoire et à chaque défaite
+
 ## 1.10
 - Correctif : un appui tactile qui ouvre le menu du PC ne valide plus le premier bouton (l'imprimante se déclenchait seule) ; les boutons du menu ignorent les clics des 0,5 premières secondes
 - Mobile : cibles tactiles d'au moins 44 px en portrait et en paysage, boutons rares (assistance, debug, état, sauvegarde, chargement) derrière « ⋯ » ; test 22

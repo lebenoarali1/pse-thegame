@@ -104,3 +104,10 @@ body.indlg #bt{visibility:hidden}
   #tr{max-width:210px}
   .ab{min-height:44px}
 }
+
+/* Fin de partie mise en scène (E7-4) */
+#eS{font-size:34px;letter-spacing:6px;text-align:center;margin-bottom:6px;min-height:44px}
+#eS span{display:inline-block;opacity:0;transform:translateY(8px);animation:eIn .5s ease forwards}
+#eQ{font-style:italic;color:var(--or);margin-top:10px}
+@keyframes eIn{to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#eS span{animation:none;opacity:1;transform:none}}

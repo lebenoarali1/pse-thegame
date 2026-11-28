@@ -45,7 +45,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 |---|---|---|---|---|
 | E2-1 | En tant que nouveau joueur, je veux des bulles d'aide contextuelles lors de la première utilisation de chaque pouvoir, afin de comprendre sans lire un manuel | DONE 1.6 | Must | M |
 | E2-2 | En tant que nouveau joueur, je veux un écran de commandes (tactile et clavier) accessible depuis le menu et en pause, afin de retrouver les raccourcis | DONE 1.5 | Must | S |
-| E2-3 | En tant que nouveau joueur, je veux une première minute guidée au RDC (déplacer, se cacher, voir un cône), afin de ne pas échouer sur une règle ignorée | TODO | Should | M |
+| E2-3 | En tant que nouveau joueur, je veux une première minute guidée au RDC (déplacer, se cacher, voir un cône), afin de ne pas échouer sur une règle ignorée | DONE (1.11) | Should | M |
 | E2-4 | En tant que joueur, je veux que le jeu explique pourquoi j'ai perdu (qui m'a vu, où, quel corps trouvé) et propose de reprendre à la dernière sauvegarde, afin d'apprendre de l'échec | DONE (1.9) | Should | M |
 | E2-5 | En tant que joueur, je veux un objectif courant affiché en haut (« Trouver le code du coffre ») qui évolue, afin de ne jamais me demander quoi faire | DONE 1.2 (objectif évolutif en haut à gauche) | Should | S |
 
@@ -108,7 +108,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | E7-1 | En tant que joueur, je veux une vidéo d'intro en vue à la première personne avec option de la sauter | DONE 0.9, 0.9.1 | Should | L |
 | E7-2 | En tant que joueur, je veux des dialogues de recrutement propres à chaque personnage, avec le choix d'âge de Kévin | DONE 0.x | Must | M |
 | E7-3 | En tant que joueur, je veux un étage 2 plus riche : situations et gags autour de la DRH, de Brigitte et du DG (au moins trois interactions nouvelles) | DONE (1.10) | Must | L |
-| E7-4 | En tant que joueur, je veux une fin de partie mise en scène (victoire et chaque défaite) avec une réplique et une courte séquence, afin de conclure sur un rire | TODO | Should | M |
+| E7-4 | En tant que joueur, je veux une fin de partie mise en scène (victoire et chaque défaite) avec une réplique et une courte séquence, afin de conclure sur un rire | DONE (1.11) | Should | M |
 | E7-5 | En tant que joueur, je veux des répliques d'ambiance variées pour les employés selon l'heure et les événements (réunion, plan social qui approche) | TODO | Could | S |
 | E7-6 | En tant que joueur, je veux une musique d'ambiance adaptative (calme, tension, poursuite) et un mixage des effets, avec un réglage du volume | TODO | Should | L |
 | E7-7 | En tant que joueur, je veux des sprites et animations plus soignés (marche, KO, déguisement) et un éclairage par étage | TODO | Could | L |

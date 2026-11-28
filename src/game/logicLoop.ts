@@ -19,6 +19,12 @@ export function update(dt: number){
   if(ST.S.over)return;
   ST.S.t+=dt;
   if(ST.S.t>2&&!ST.dlg)hintOnce('move');
+  if(ST.S.t>6&&!ST.dlg&&ST.S.t<240){
+    const sel=ST.S.chars.find(c=>c.id===ST.S.sel);
+    if(sel){const near=ST.S.enemies.filter(e=>e.f===sel.f&&!e.ko&&e.type!=='camera'&&Math.hypot(e.x-sel.x,e.y-sel.y)<9);
+      if(near.length)hintOnce('cone');
+      if(near.some(e=>e.det>.03))hintOnce('jauge');
+      if(near.some(e=>e.det>.3))hintOnce('cacher')}}
   const top=Math.max(0,...ST.S.chars.filter(c=>c.joined&&!c.out).map(c=>c.f));
   if(top>(Number(ST.S.flags.maxF)||0)){ST.S.flags.maxF=top;autoSave(top)}
   for(const ev of EVENTS)if(!ST.S.ev[ev.t]&&ST.S.t>=ev.t){ST.S.ev[ev.t]=1;ev.fn()}

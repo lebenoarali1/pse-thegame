@@ -64,6 +64,9 @@ export const PC_SAY=['Mot de passe : Azerty123. Le DG est un visionnaire.','Quar
 
 /** Astuces affichées une seule fois, au premier usage (clé = id de pouvoir ou événement). */
 export const HINTS: Record<string, string>={
+  cone:"Le cône coloré est le champ de vision d'un garde. Restez hors du cône, ou derrière un mur : le jaune devient orange puis rouge quand il vous remarque.",
+  jauge:"La jauge au-dessus d'un garde monte quand il vous voit. Reculez ou mettez un obstacle entre vous avant qu'elle soit pleine.",
+  cacher:"Pas de cachette ici : le mur et les angles sont vos abris. Kévin passe par la gaine, Max cache les corps dans son chariot.",
   move:"Touchez le sol pour déplacer le perso choisi. Les boutons du bas lancent ses pouvoirs, ❓ rappelle les commandes.",
   ko:"Max : touchez un garde pour l'assommer, de près. Un corps vu par quelqu'un, c'est perdu : planquez-le.",
   hide:"Max : le corps assommé le plus proche va dans le chariot (2 au maximum) et ne se réveille plus.",
