@@ -153,14 +153,18 @@ export function drawVid(W: number,H: number,t: number){
   else{vTitle(g,W,H,t-VT.title)}
   if(t<VT.title){vvign(g,W,H,1);vlid(g,W,H,lid);if(dip>0){g.fillStyle='rgba(0,0,0,'+Math.min(1,dip)+')';g.fillRect(0,0,W,H)}
     if(t>1.5&&t<VT.title){g.fillStyle='rgba(255,255,255,.04)';for(let i=0;i<4;i++)g.fillRect(0,(t*90+i*H/4)%H,W,2)}}}
-export function vidFrame(t: number){const r=$('vid').getBoundingClientRect(),W=Math.max(2,Math.round(r.width)),H=Math.max(2,Math.round(r.height)),d=Math.min(2,devicePixelRatio||1);vd=d;
-  if(vcv.width!==Math.round(W*d)||vcv.height!==Math.round(H*d)){vcv.width=Math.round(W*d);vcv.height=Math.round(H*d)}drawVid(W,H,t)}
+let vSz={w:0,h:0,k:0};
+/** Taille du canvas mesurée une seule fois (et au redimensionnement), résolution plafonnée pour la fluidité sur mobile */
+function vidSize(force: boolean){if(force||!vSz.w){const r=$('vid').getBoundingClientRect(),d=Math.min(1.25,devicePixelRatio||1);vSz={w:Math.max(2,Math.round(r.width)),h:Math.max(2,Math.round(r.height)),k:d};vd=d;
+  vcv.width=Math.round(vSz.w*d);vcv.height=Math.round(vSz.h*d)}return vSz}
+addEventListener('resize',()=>{vSz.w=0});
+export function vidFrame(t: number){const z=vidSize(false);vd=z.k;drawVid(z.w,z.h,t)}
 /* Temps d'arrêt (instant de la vidéo, durée réelle en secondes) : le texte reste lisible avant chaque changement de scène */
 export const HOLDS: [number,number][]=[[3.0,2.6],[6.8,2.8],[9.3,2.6],[20.0,2.6],[21.6,2.8],[25.0,2.8]];
 export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(now-VID.last)/1000);VID.last=now;
-  if(VID.hold&&VID.hold>0){VID.hold-=dt;vidFrame(VID.t);requestAnimationFrame(vidLoop);return}
+  if(VID.hold&&VID.hold>0){if(!VID.drawn){vidFrame(VID.t);VID.drawn=true}VID.hold-=dt;if(VID.hold<=0)VID.drawn=false;requestAnimationFrame(vidLoop);return}
   VID.t+=dt*VSLOW;const t=VID.t;
-  VID.held=VID.held||{};for(const [ht,hd] of HOLDS){if(t>=ht&&!VID.held[ht]){VID.held[ht]=1;VID.hold=hd;VID.t=ht}}
+  VID.held=VID.held||{};for(const [ht,hd] of HOLDS){if(t>=ht&&!VID.held[ht]){VID.held[ht]=1;VID.hold=hd;VID.t=ht;VID.drawn=false}}
   setIntroMusic(t<VT.run?'tension':t<VT.title?'chase':null);
   vidFrame(t);
   if(t<VT.desk){while(VID.tick<t&&t<3.2){VID.tick+=.13;snd(900+Math.random()*300,.025,'square',.012)}}
@@ -172,11 +176,11 @@ export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(n
   if(t>VT.run&&t<VT.title){while(VID.tick<t){VID.tick+=.32;snd(75,.07,'square',.07,-20)}}
   vonce('title',VT.title,()=>{snd(330,.5,'triangle',.06);setTimeout(()=>snd(494,.5,'triangle',.06),150);setTimeout(()=>snd(659,.9,'triangle',.07),300);$('vGo').style.display='block'});
   requestAnimationFrame(vidLoop)}
-export function playVid(cb: () => void){VID.t=0;VID.tick=0;VID.hold=0;VID.held={};VID.fired={};VID.cb=cb;VID.run=true;VID.last=performance.now();$('vid').classList.add('show');$('vGo').style.display='none';requestAnimationFrame(vidLoop)}
+export function playVid(cb: () => void){vSz.w=0;VID.t=0;VID.tick=0;VID.hold=0;VID.held={};VID.fired={};VID.cb=cb;VID.run=true;VID.last=performance.now();$('vid').classList.add('show');$('vGo').style.display='none';requestAnimationFrame(vidLoop)}
 export function endVid(){if(!VID.run)return;VID.run=false;setIntroMusic(null);$('vid').classList.remove('show');const f=VID.cb;VID.cb=null;if(f)f()}
 export const realStart=()=>{$('intro').classList.remove('show');ST.started=true;ST.paused=false;try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};beginRun()};
 $('bStart').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};realStart()};
-const showDiff=()=>{$('bDiff').textContent='Difficulté : '+curDiff().n+' · '+curDiff().desc};
+const showDiff=()=>{$('bDiff').textContent='Difficulté : '+curDiff().n};
 applyDiff();ST.showCones=SET.cones;ST.muted=SET.muted;$('bCones').classList.toggle('on',ST.showCones);showDiff();
 $('bDiff').onclick=()=>{nextDiff();showDiff()};
 $('ver').textContent='Version '+__APP_VERSION__+' · '+__BUILD_DATE__;

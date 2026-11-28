@@ -1,6 +1,6 @@
 # Backlog
 
-Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalités attendues. La version courante est la 1.17.
+Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalités attendues. La version courante est la 1.18.
 
 ## 1. Bilan : ce qui est en place
 
@@ -44,7 +44,7 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Installation comme application et mode hors connexion
 
 ### Qualité et livraison
-- TypeScript strict sans `any`, lint, 8 tests unitaires, 28 scénarios de bout en bout
+- TypeScript strict sans `any`, lint, 8 tests unitaires, 29 scénarios de bout en bout
 - Publication automatique sur GitHub Pages après vérifications
 - Documentation en ligne : MCO, architecture, conception, changelog
 - Releases GitHub à chaque tag de version, mises à jour automatiques des dépendances
@@ -53,6 +53,12 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 
 ### Prochaine étape
 - Déboguer chaque niveau l'un après l'autre : RDC, puis étage 1, puis étage 2
+
+### Pouvoirs inutiles (un par personnage)
+- Nadia : lancer une musique disco, tout le monde danse dans les 10 secondes
+- Djibril : envoyer un message misérable à tout le monde, les conversations tournent un moment autour de l'événement
+- Max : nettoie un rayon d'une case autour de lui quand il ne fait rien (en place)
+- Kévin (proposition) : photo de groupe, tous les PNJ proches se figent 3 secondes pour poser
 
 ### À faire ensuite
 - Donner un ordre de groupe : tous les personnages suivent celui qui est actif

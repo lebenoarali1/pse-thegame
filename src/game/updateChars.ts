@@ -2,7 +2,7 @@ import { ST } from './store';
 import { $, rnd } from './utils';
 import { DOORS, KEYS, TERMS, cam, getE } from './state';
 import { say, toast } from './messages';
-import { BAR, BAR_R, PC_SAY, TALK, TALK_R } from './texts';
+import { BAR, BAR_CAT, BAR_R, BAR_R_CAT, PC_SAY, TALK, TALK_R } from './texts';
 import { nearestEnemy, startBusy } from './powers';
 import { findPath, los, passable } from './pathing';
 import { STAIRS, VENTS, ch, isDoor, isPC } from './levelData';
@@ -10,6 +10,7 @@ import { hear, smsServeur } from './noise';
 import { stepEntity } from './movement';
 import { snd } from './sound';
 import { pcEffect, pcOpen } from './pcMenu';
+import { SWITCH, toggleLights } from './pcMenu';
 import type { Character, Enemy, Order } from './types';
 /* mise à jour persos */
 export function feed(who: string,txt: string,me: boolean){const f=$('bfeed');if(!f)return;const d=document.createElement('div');d.className=me?'':'n';d.innerHTML='<b>'+who+'</b> '+txt;f.appendChild(d);while(f.children.length>3)f.removeChild(f.firstChild!)}
@@ -18,17 +19,27 @@ export function releaseTalk(c: Character){const e=getE(c.talking);c.talking=null
 export function updateChar(c: Character,dt: number){
   if(c.out)return;
   if(!c.joined){if(c.sayT>0)c.sayT-=dt;return}
+  if(c.moving||c.busy||c.talking||c.order||c.path.length||c.smoke)c.idleT=0;else c.idleT=(c.idleT||0)+dt;
+  if(c.id==='jordan'&&(c.idleT||0)>2){/* Max nettoie autour de lui (rayon 1 case) quand il ne fait rien */
+    const P=ST.S.puddles;for(let i=P.length-1;i>=0;i--)if(P[i].f===c.f&&Math.hypot(P[i].x-c.x,P[i].y-c.y)<1.3){P.splice(i,1);say(c,'Un coup de balai, ça ne mange pas de pain.',2.4);break}
+    if(Math.random()<dt*3)ST.P.push({f:c.f,x:c.x+rnd(-.9,.9),y:c.y+rnd(-.9,.9),z:1,vx:0,vy:0,vz:rnd(2,5),life:.5,col:'#cfe8ff',sz:2})}
   if(c.sayT>0)c.sayT-=dt;c.cd.q=Math.max(0,c.cd.q-dt);c.cd.e=Math.max(0,c.cd.e-dt);c.cd.w=Math.max(0,(c.cd.w||0)-dt);
   if(c.runOnce&&!c.path.length&&!c.order&&!c.busy){c.run=false;c.runOnce=false}
-  if(c.disguise&&c.run&&c.moving){c.disguise=null;toast('Djibril a couru : son déguisement est fichu','r');say(c,'Zut, la cravate.',2)}
+  if(c.disguise&&c.run&&c.moving&&!(c.order&&c.order.k==='chat2')){c.disguise=null;toast('Djibril a couru : son déguisement est fichu','r');say(c,'Zut, la cravate.',2)}
   if(c.busy){updateBusy(c,dt);return}
   if(c.talking){const e=getE(c.talking);
     if(!e||e.ko||e.f!==c.f||c.path.length||c.order||ST.S.over){releaseTalk(c)}
     else{c.moving=false;if(e.talk>1e8){c.chatT-=dt;if(c.chatT<=0){c.chatT=3.6;c.chatN++;
+        if(e.id==='brigitte'&&c.chatN>=3&&!ST.S.team.dgInfo){ST.S.team.dgInfo=true;say(e,'Le DG sort vers 18h pour sa visite hebdo, toujours seul, par le couloir est.',4.4);feed(e.name,'Le DG quitte son bureau seul à 18h pour sa visite hebdomadaire.',false);toast('Indice 2 : le DG sort seul pour sa visite hebdo','g')}
         if(e.id==='manon'&&c.chatN>=3&&!ST.S.team.codeInfo){ST.S.team.codeInfo=true;say(e,'Le code du coffre ? Demandez aux informaticiens : tout est sur le serveur, salle serveur, au nord-ouest.',4.4);feed(e.name,'Le code du coffre est sur le serveur, en salle serveur (nord-ouest).',false);toast('Information obtenue : le code est sur le serveur de la salle serveur. Nadia le pirate plus vite (6 s).','g')}
-        if(c.chatN%2){const L=BAR[Math.floor(Math.random()*BAR.length)];say(c,L,3.4);feed('Djibril',L,true)}
-        else{const L=BAR_R[Math.floor(Math.random()*BAR_R.length)];say(e,L,3.2);feed(e.name,L,false)}}}return}}
+        const cat=e.tech?'tech':e.type;
+        if(c.chatN%2){const B=BAR_CAT[cat]||BAR,L=B[Math.floor(Math.random()*B.length)];say(c,L,3.4);feed('Djibril',L,true)}
+        else{const R=BAR_R_CAT[cat]||BAR_R,L=R[Math.floor(Math.random()*R.length)];say(e,L,3.2);feed(e.name,L,false)}}}return}}
   const o=c.order;
+  if(o&&o.k==='chat2'){const e=getE(o.eid);
+    if(!e||e.f!==c.f||e.ko||e.state==='chase'){c.order=null;c.path=[];c.run=false;c.runOnce=false;if(e&&e.talk>1e8)e.talk=0}
+    else if(Math.hypot(e.x-c.x,e.y-c.y)<1.9){c.path=[];c.order=null;c.run=false;c.runOnce=false;c.talking=e.id;c.chatN=0;c.chatT=.4;c.face=Math.atan2(e.y-c.y,e.x-c.x);e.face=Math.atan2(c.y-e.y,c.x-e.x);e.talk=1e9;e.talkTo=c.id;startBusy(c,'talk',.8)}
+    else{c.repath-=dt;if(c.repath<=0||!c.path.length){c.repath=.35;const p=findPath(c.f,Math.floor(c.x),Math.floor(c.y),Math.floor(e.x),Math.floor(e.y));if(p)c.path=p}}}
   if(o&&o.k==='chat'){const e=getE(o.eid);if(!e||e.f!==c.f||e.ko){c.order=null;c.path=[]}else if(Math.hypot(e.x-c.x,e.y-c.y)<1.9){c.path=[];c.order=null;c.face=Math.atan2(e.y-c.y,e.x-c.x);const n=(e.chatN=(e.chatN||0)+1)-1,L=TALK[e.id]||['Bonjour.'],R=TALK_R[c.id]||['Bonjour.'];say(c,R[n%R.length],2.6);say(e,L[n%L.length],4)}}
   if(o&&(o.k==='ko'||o.k==='hide'||o.k==='uniform')){
     const e=getE(o.eid);
@@ -67,6 +78,7 @@ export function arrive(c: Character,o: Order){
   if(kind==='puddle'){c.order=null;if((c.cd.w||0)>0){toast('Pas encore prêt','w');return}c.cd.w=20;ST.S.puddles.push({f:c.f,x:o.x!,y:o.y!,t:0});
     say(c,['Attention, sol glissant. Panneau non fourni.','Je viens de passer la serpillère. Oups, trop mouillé.','Sécurité du travail : zéro.'][Math.floor(Math.random()*3)],2.8);snd(240,.18,'sine',.05,-90);
     for(let i=0;i<10;i++)ST.P.push({f:c.f,x:o.x!,y:o.y!,z:2,vx:rnd(-1.5,1.5),vy:rnd(-1.5,1.5),vz:rnd(5,14),life:.6,col:'#8fd3ff',sz:2});return}
+  if(kind==='switch'){c.order=null;if(Math.hypot(c.x-SWITCH[c.f].x,c.y-SWITCH[c.f].y)<1.8)toggleLights(c.f,c);return}
   if(kind==='stairs'){const s=STAIRS.find(s=>s.f===c.f&&s.x===o.sx&&s.y===o.sy);c.order=null;if(!s)return;transit(c,s.to)}
   else if(kind==='vent'){c.order=null;if(Math.hypot(c.x-o.vx!-.5,c.y-o.vy!-.5)>.8)return;
     if(c.id!=='kevin'){say(c,"C'est trop étroit pour moi.",2);return}

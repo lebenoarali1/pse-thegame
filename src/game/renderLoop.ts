@@ -55,12 +55,12 @@ export function render(dt: number){
       if(e.det>.02)drawBar(ctx,fx,fy-62,22,Math.min(1,e.det),e.det>.6?'#ff5d5d':'#ffb347');
       if(e.state==='chase'){ctx.fillStyle='#ff3b3b';ctx.font='bold 20px sans-serif';ctx.fillText('!',fx,fy-66)}
       else if(e.state==='look'){ctx.fillStyle='#ffb347';ctx.font='bold 18px sans-serif';ctx.fillText('?',fx,fy-66)}
-      if(e.talk>0)drawBar(ctx,fx,fy-62,22,e.talk/10,'#5aa0ff');
+      if(e.talk>0){if(e.talk>1e8){ctx.font='14px sans-serif';ctx.textAlign='center';ctx.fillText('💬',fx,fy-64)}else drawBar(ctx,fx,fy-62,22,Math.min(1,e.talk/10),'#5aa0ff')}
       if(e.sayT>0&&e.say)bubble(ctx,fx,fy-70,e.say)}})}
   for(const c of ST.S.chars){if(c.f!==ST.view||c.hide)continue;
     D.push({d:c.x+c.y,fn:()=>{const[fx,fy]=iso(c.x,c.y);const l=c.disguise||c.id;
       if(c.id===ST.S.sel&&c.joined){ctx.strokeStyle=CCOL[c.id];ctx.lineWidth=2.5;ctx.beginPath();ctx.ellipse(fx,fy,17+Math.sin(ST.S.t*5)*1.2,8,0,0,7);ctx.stroke()}
-      drawPerson(ctx,fx,fy,{look:l,kind:c.disguise?(c.disguise==='manager'?'manager':'vigile'):c.id,dir:c.face,moving:c.moving&&!(c.busy),s:c.small?(ST.S.age===7?.7:.82):1,smoke:c.smoke,hair:(c.id==='kevin'&&ST.S.age===77)?'#e9e9f2':undefined,bodies:ST.S.enemies.some(e=>e.hidden)&&c.id==='jordan'});
+      drawPerson(ctx,fx,fy,{look:l,kind:c.disguise?(c.disguise==='manager'?'manager':'vigile'):c.id,dir:c.face,moving:c.moving&&!(c.busy),idle:(c.idleT||0)>1.5,s:c.small?(ST.S.age===7?.7:.82):1,smoke:c.smoke,hair:(c.id==='kevin'&&ST.S.age===77)?'#e9e9f2':undefined,bodies:ST.S.enemies.some(e=>e.hidden)&&c.id==='jordan'});
       ctx.fillStyle=CCOL[c.id];ctx.font='700 12px "Barlow Condensed",sans-serif';ctx.textAlign='center';ctx.fillText(c.joined?c.name:'',fx,fy+14);
       if(!c.joined){const bb=Math.sin(ST.S.t*4)*2;ctx.fillStyle='#ffd166';ctx.beginPath();ctx.arc(fx,fy-60+bb,9,0,7);ctx.fill();ctx.fillStyle='#1a1020';ctx.font='700 13px sans-serif';ctx.fillText('!',fx,fy-55.5+bb)}
       if(c.busy&&c.busy.max){const col=c.busy.k==='hack'?(c.busy.slow?'#ff8ad8':'#4ee3f0'):'#ffd166';drawBar(ctx,fx,fy-62,28,c.busy.t/c.busy.max,col)}

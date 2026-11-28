@@ -5,7 +5,7 @@ import { rr } from './renderShapes';
 import type { Enemy, PersonOpts } from './types';
 /* rendu : personnages */
 export function drawPerson(g: CanvasRenderingContext2D,fx: number,fy: number,o: PersonOpts){
-  const a=APP[o.look],s=o.s||1,mv=o.moving,t=ST.S.t+(o.ph||0),sw=mv?Math.sin(t*10)*4:0,bob=mv?Math.abs(Math.sin(t*10))*1.6:0;
+  const a=APP[o.look],s=o.s||1,mv=o.moving,t=ST.S.t+(o.ph||0),sw=mv?Math.sin(t*10)*4:0,bob=mv?Math.abs(Math.sin(t*10))*1.6:o.idle?(Math.sin(t*2.2)+1)*.5:0;
   const sdx=Math.cos(o.dir)-Math.sin(o.dir),sdy=Math.cos(o.dir)+Math.sin(o.dir),away=sdy<-.35,ex=clamp(sdx,-1,1);
 /* eslint-disable-next-line prefer-const */
   let body=a.body,legs=a.legs,skin=a.skin;

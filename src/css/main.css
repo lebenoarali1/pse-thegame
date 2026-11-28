@@ -15,6 +15,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:
 #dbg{position:fixed;right:8px;top:104px;z-index:4;font:11px/1.35 monospace;color:#9fffb0;background:rgba(0,10,0,.72);border:1px solid rgba(120,255,150,.3);border-radius:8px;padding:6px 8px;pointer-events:none;display:none;max-width:250px;white-space:pre}
 #bAssist{display:none}
 .dbgonly{display:none}body.dbgon .dbgonly{display:flex}
+#clues{font-size:12px;color:#ffd166;margin-bottom:2px}
 #obj{font-size:14px;line-height:1.15;font-weight:600;color:var(--tx)}
 #obj b{color:var(--cy);font-weight:700}
 #tr{position:fixed;right:max(8px,env(safe-area-inset-right));top:max(8px,env(safe-area-inset-top));display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end;max-width:210px}

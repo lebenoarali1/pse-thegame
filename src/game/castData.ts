@@ -4,7 +4,7 @@ export const CCOL: Record<string, string>={jordan:'#4fd1c5',marc:'#4c8dff',nadeg
 
 export const ACT: Record<string, Action[]>={
  jordan:[{k:'ko',n:'Assommer',s:'Toucher un garde',i:'🧹',mode:'enemy'},{k:'hide',n:'Planquer',s:'Corps dans le chariot (2 max, ne se réveillent plus)',i:'🛒',mode:'auto'},{k:'puddle',n:'Flaque',s:'Il y va, pose une flaque : qui glisse est assommé',i:'💦',mode:'tile'},{k:'empty',n:'Vider',s:'Dépose les corps du chariot',i:'🗑️',mode:'auto'}],
- marc:[{k:'uniform',n:'Déguisement',s:'Prend la tenue d\'un corps, ou la retire',i:'👔',mode:'auto'},{k:'talk',n:'Baratin',s:'Déguisé : attire un PNJ, aussi longtemps que voulu',i:'🗣️',mode:'enemy'}],
+ marc:[{k:'uniform',n:'Déguisement',s:'Touchez un corps assommé pour prendre sa tenue, ou retire la tenue',i:'👔',mode:'body'},{k:'talk',n:'Baratin',s:'Déguisé : attire un PNJ, aussi longtemps que voulu',i:'🗣️',mode:'enemy'}],
  nadege:[{k:'hack',n:'Pirater',s:'Près du PC, ou porte (8 s si rouge)',i:'💻',mode:'hack'},{k:'clope',n:'Clope',s:'Lance une clope à un vigile : fumoir 60 s',i:'🚬',mode:'enemy'}],
  kevin:[{k:'vent',n:'Gaine',s:'Va à la gaine',i:'🕳️',mode:'auto'},{k:'throw',n:'Lancer',s:'Toucher un point',i:'🥤',mode:'tile'}]
 };
@@ -38,6 +38,6 @@ export function makeEnemies(E: EnemyFactory){return [
     E('drh','Mme Lambert','drh',2,4.5,7.5,{fov:72,range:8,sp:1.1,route:[{x:4.5,y:7.5,wait:3},{x:20.5,y:7.5,wait:3}]}),
     E('brigitte','Brigitte','assistante',2,18.5,12.5,{fov:90,range:7,face:-Math.PI/2,scan:{base:-Math.PI/2,amp:.35,period:8}}),
     E('dg','M. Vasseur','dg',2,20.5,2.5,{fov:100,range:7,sp:1.2,scan:{base:Math.PI/2,amp:.4,period:10}}),
-    E('cam1','Caméra','camera',2,1.5,7.5,{fov:58,range:10,scan:{base:0,amp:.55,period:7}}),
+    E('cam1','Caméra','camera',2,1.5,7.5,{fov:58,range:10,blind:[20,8],scan:{base:0,amp:.45,period:13}}),
     E('cam2','Caméra','camera',2,22.5,8.5,{fov:58,range:10,scan:{base:Math.PI,amp:.55,period:8}})
 ]}

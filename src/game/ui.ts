@@ -26,15 +26,15 @@ export function pressAct(i: number){
   if(ST.S.over||!ST.started)return;const c=selC(),a=ACT[c.id][i];hintOnce(a.k);
   if(a.k==='talk'&&c.talking){releaseTalk(c);return}
   if(ST.pend&&ST.pend.k===a.k){ST.pend=null;$('ban').style.display='none';return}
-  if(a.mode==='auto'||a.mode==='none'){ST.pend=null;$('ban').style.display='none';doAction(c,a.k)}
-  else{ST.pend={k:a.k};$('ban').textContent=a.mode==='enemy'?'Touchez un garde (ou la cible)':a.mode==='hack'?'Touchez un terminal ou une porte bleue':'Touchez le point à viser';$('ban').style.display='block'}
+  if(a.mode==='auto'||a.mode==='none'||(a.k==='uniform'&&c.disguise)){ST.pend=null;$('ban').style.display='none';doAction(c,a.k)}
+  else{ST.pend={k:a.k};$('ban').textContent=a.mode==='body'?'Touchez un corps assommé':a.mode==='enemy'?'Touchez un garde (ou la cible)':a.mode==='hack'?'Touchez un terminal ou une porte bleue':'Touchez le point à viser';$('ban').style.display='block'}
 }
 ST.lastUI=0;
 export function updateUI(){
   const t=ST.S.t,mins=15-t/(TL/15),cl=Math.min(15,t/(TL/15)),h=17,m=45+Math.floor(cl),s=Math.floor((cl%1)*60);
   $('ck').firstChild!.nodeValue=(m>=60?'18:'+String(m-60).padStart(2,'0'):'17:'+String(m).padStart(2,'0'));
   $('ck2').textContent=String(s).padStart(2,'0')+'s';$('barf').style.width=Math.min(100,t/TL*100)+'%';
-  $('obj').innerHTML=objective();
+  $('obj').innerHTML=objective();{const T=ST.S.team,n=(T.codeInfo?1:0)+(T.dgInfo?1:0);$('clues').textContent='🔑 '+n+'/2 · '+(T.codeInfo?'code sur le serveur':'code ?')+' · '+(T.dgInfo?'DG seul à 18h':'sortie DG ?')}
   if(ST.dbg){const f=(n: number)=>Math.max(0,n).toFixed(1),L=[];L.push('T '+ST.S.t.toFixed(1)+' s  reste '+f(TL-ST.S.t)+' s');L.push('caméras coupées : '+(ST.S.team.camsUntil>ST.S.t?f(ST.S.team.camsUntil-ST.S.t)+' s':'non'));
     const dd=Object.entries(ST.S.doorHack as Record<string,number>).filter(q=>q[1]>ST.S.t).map(q=>q[0]+' '+f(q[1]-ST.S.t)+'s');if(dd.length)L.push('portes ouvertes : '+dd.join(' | '));
     const sc=getC(ST.S.sel);L.push(sc.name+' : q '+f(sc.cd.q)+' s, e '+f(sc.cd.e)+' s');

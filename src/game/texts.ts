@@ -87,3 +87,19 @@ export const HINTS: Record<string, string>={
   vent:"Kévin : la gaine d'aération est à l'étage 2. Lui seul peut s'y glisser.",
   throw:"Kévin : touchez un point. Le gobelet fait du bruit, les gardes vont voir. Stock limité.",
 };
+
+/** Baratin adapté à la catégorie du PNJ (Djibril) */
+export const BAR_CAT: Record<string,string[]>={
+ vigile:['Votre ronde manque de leadership transversal.','On cherche des profils sécurité à fort impact terrain.','Votre badge a un potentiel de monétisation insoupçonné.'],
+ beaugosse:['Votre présence sécurise nos synergies.','Vous avez déjà pensé à une carrière de mentor ?','Ce regard, c\'est de la gouvernance.'],
+ manager:['Votre équipe a besoin d\'un cadre agile, et c\'est vous.','Je vous propose un point de recadrage stratégique.','Un comité de pilotage sur votre comité de pilotage ?'],
+ employe:['Votre poste est en pleine transformation, félicitations.','On réfléchit à vos soft skills, venez en parler.','Une formation de dix minutes, obligatoire, gratuite.'],
+ tech:['Votre stack est très prometteuse, très.','On cherche un référent cloud souverain, un peu comme vous.','Vos tickets sont une mine d\'or.'],
+ assistante:['Vous êtes le vrai centre névralgique ici.','Votre agenda mérite une refonte collaborative.','On m\'a dit que vous saviez tout. Je confirme.']};
+export const BAR_R_CAT: Record<string,string[]>={
+ vigile:['Hmm. Vous avez un badge ?','Je ronde, là.','Ça ressemble à une arnaque. Mais gentille.'],
+ beaugosse:['Je suis un peu flatté, je crois.','Continuez, je prends des notes mentales.','Mon casier est vierge, vous savez.'],
+ manager:['Envoyez-moi un invite, on cadrera.','Ça résonne avec mes OKR.','Je dois en parler à mon N+1.'],
+ employe:['Ah bon ? Personne ne me dit rien.','Je note. Où est la pause café ?','C\'est dans mon périmètre ?'],
+ tech:['Vous avez un ticket pour ça ?','Redémarrez, ça marchera.','Oui, mais en prod ?'],
+ assistante:['Je vais regarder son agenda.','Vous avez rendez-vous ?','Je vous glisse dans une case jeudi.']};

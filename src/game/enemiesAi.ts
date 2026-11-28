@@ -28,7 +28,17 @@ export function eliminate(c: Character,e: Enemy,why: string){if(c.out||c.disguis
   if(c.id==='kevin'&&!ST.S.team.key){fail('Sans Kévin, pas de coffre',why+' Lui seul passe par la gaine jusqu\'au coffre du DG. Rechargez la sauvegarde rapide ou recommencez.');return}
   if(!act.length){fail('Équipe décimée','Plus personne pour mener le plan. La réunion de 18h se passera sans résistance. Rechargez la sauvegarde rapide ou recommencez.');return}
   if(ST.S.sel===c.id){ST.S.sel=act[0].id;ST.pend=null;const n=getC(ST.S.sel);ST.view=n.f;cam.free=false;buildActs()}}
+/** Vitesse (cases/s) du garde appelé par une caméra : marche, jamais de course */
+export const CAM_GUARD_SPEED=1.5;
+/** Délai mini entre deux appels d'une même caméra (s) */
+const CAM_CALL_CD=8;
 export function spotted(e: Enemy,c: Character){
+  if(e.type==='camera'){
+    if((e.camCd||0)>ST.S.t)return;e.camCd=ST.S.t+CAM_CALL_CD;
+    let g: Enemy|undefined,bd=1e9;for(const o of ST.S.enemies){if(o.f!==e.f||o.ko||o.type==='camera'||o.type==='dg'||o.type==='drh'||o.calm||o.state==='chase'||o.talk>0)continue;if(o.type!=='vigile'&&o.type!=='beaugosse')continue;const d=Math.hypot(o.x-c.x,o.y-c.y);if(d<bd){bd=d;g=o}}
+    toast('Une caméra a repéré '+c.name+' : un garde arrive','w');snd(520,.25,'sawtooth',.05,-200);
+    if(g){g.state='patrol';g.path=[];g.look=null;g.camCall={x:c.x,y:c.y};const p=findPath(g.f,Math.floor(g.x),Math.floor(g.y),Math.floor(c.x),Math.floor(c.y));if(p)g.path=p;g.camSpeed=CAM_GUARD_SPEED;say(g,'Une caméra signale quelqu\'un, je regarde.',2.6)}
+    return}
   if(c.id==='kevin'){eliminate(c,e,(e.type==='camera'?'Une caméra':e.name)+' a repéré le stagiaire. Le pire, c\'est qu\'on l\'a reconnu tout de suite.');return}
 /* eslint-disable-next-line no-constant-condition */
   if(false){fail('Kévin est repéré !',(e.type==='camera'?'Une caméra':e.name)+' a vu un stagiaire là où il ne devait pas être. Le pire, c\'est qu\'on l\'a reconnu tout de suite : il n\'a jamais été aussi visible. Alerte immédiate. Rechargez la sauvegarde rapide ou recommencez.');return}
@@ -45,6 +55,7 @@ export function updateEnemy(e: Enemy,dt: number){
   if(e.freeze>0){e.freeze-=dt;e.moving=false;return}
   if(e.type==='camera'){
     const off=(ST.S.team.camsUntil>ST.S.t&&e.f===2)||((ST.S.team.camsOff||{})[e.f]||0)>ST.S.t||((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t;e.off=off;
+    if(e.blind){const ph=ST.S.t%e.blind[0];if(ph>=e.blind[0]-e.blind[1])e.off=true}
     e.face=e.scan!.base+e.scan!.amp*Math.sin(ST.S.t*6.283/e.scan!.period);return}
   if(e.talk>0&&!e.talkRed){e.talkRed=[e.fov,e.range];e.fov=Math.min(e.fov,56);e.range=Math.min(e.range,2.4)}
   else if(!(e.talk>0)&&e.talkRed){e.fov=e.talkRed[0];e.range=e.talkRed[1];e.talkRed=null}
@@ -92,6 +103,9 @@ export function updateEnemy(e: Enemy,dt: number){
       stepEntity(e,dt,1.7,false);if(!e.path.length&&e.moving===false&&Math.hypot(e.x-l.x,e.y-l.y)<1.6)l.arrived=true;if(!e.path.length)l.arrived=true}
     else{l.t+=dt;if(l.f0===undefined)l.f0=e.face;e.face=l.f0+Math.sin(l.t*2.2)*1.0;if(l.t>(e.lookDur||4.5)){e.state='patrol';e.look=null;e.path=[];e.wait=0}}
     return}
+  if(e.camCall){const k=e.camCall;
+    if(Math.hypot(k.x-e.x,k.y-e.y)<1.6||!e.path.length){e.camCall=null;e.path=[];e.wait=3;e.idleFace=e.face;say(e,'Personne ? Bizarre.',2.2)}
+    else{stepEntity(e,dt,e.camSpeed||CAM_GUARD_SPEED,false);return}}
   /* patrouille */
   if(!e.route.length){
     if(Math.hypot(e.x-e.hx,e.y-e.hy)>.3){if(!e.path.length){const p=findPath(e.f,Math.floor(e.x),Math.floor(e.y),Math.floor(e.hx),Math.floor(e.hy));e.path=p||[];if(!p){e.hx=e.x;e.hy=e.y}}stepEntity(e,dt,e.sp,false);return}

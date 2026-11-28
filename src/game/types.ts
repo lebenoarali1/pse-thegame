@@ -37,7 +37,7 @@ export interface Character {
   run: boolean; cd: { q: number; e: number; w?: number; x?: number };
   sp: number; moving: boolean; say: string; sayT: number;
   joined?: boolean; out?: boolean;
-  talking: string | null; runOnce?: boolean; smoke?: boolean; chatT: number; chatN: number; stall: number; repath: number; runN: number; small?: boolean;
+  talking: string | null; runOnce?: boolean; idleT?: number; smoke?: boolean; chatT: number; chatN: number; stall: number; repath: number; runN: number; small?: boolean;
 }
 
 export interface Enemy {
@@ -53,7 +53,7 @@ export interface Enemy {
   koT: number; koDur: number; freeze: number;
   path: number[][]; moving: boolean; say: string; sayT: number;
   talk: number; wait: number; lose: number; talkTo?: string | null; callTo?: string;
-  look?: Partial<Spot> & { x: number; y: number; t: number; arrived: boolean } | null; lookDur?: number; scan?: ScanCfg | null; fovS?: number | null; rangeS?: number | null; repath: number; stall: number; order?: Order | null; lastSeen?: Point;
+  look?: Partial<Spot> & { x: number; y: number; t: number; arrived: boolean } | null; lookDur?: number; scan?: ScanCfg | null; blind?: [number,number]; camCd?: number; camCall?: {x:number;y:number}|null; camSpeed?: number; fovS?: number | null; rangeS?: number | null; repath: number; stall: number; order?: Order | null; lastSeen?: Point;
   talkRed?: [number, number] | null; off?: boolean; chat?: number; chatN?: number; idleFace: number;
   snt?: { mid: string; cid: string; t: number } | null;
   brk?: Spot | null; cof?: Spot | null; cln?: Partial<Spot> & { x: number; y: number; t: number; arrived: boolean; dur: number } | null;
@@ -65,7 +65,7 @@ export interface GameState {
   t: number; over: null | 'win' | 'fail';
   sel: string; age: number; talked: Record<string, number>;
   chars: Character[]; enemies: Enemy[];
-  team: { code: boolean; codeInfo?: boolean; codeBy?: string; key: boolean; camsUntil: number; fluxUntil: number; throws: number; camsOff?: Record<number, number>; lightsOff?: Record<number, number>; lightsWho?: Record<number, string> };
+  team: { code: boolean; codeInfo?: boolean; dgInfo?: boolean; codeBy?: string; key: boolean; camsUntil: number; fluxUntil: number; throws: number; camsOff?: Record<number, number>; lightsOff?: Record<number, number>; lightsWho?: Record<number, string> };
   doorHack: Record<string, number>; dOpen: Record<string, boolean>; dLatch: Record<string, number>; dLing: Record<string, number>;
   puddles: Puddle[]; distCd: Record<string, number>; ev: Record<string, number>; flags: Record<string, number | boolean>;
   alertT: number;
@@ -79,7 +79,7 @@ export interface Store {
   P: Particle[]; PR: Projectile[];
 }
 
-export type ActionMode = 'auto' | 'tile' | 'enemy' | 'hack' | 'none';
+export type ActionMode = 'auto' | 'tile' | 'enemy' | 'hack' | 'none' | 'body';
 /** Pouvoir d'un personnage (entrée de ACT). */
 export interface Action { k: string; n: string; s: string; i: string; mode: ActionMode }
 /** Paramètre d'un pouvoir : case visée, PNJ visé, terminal ou porte. */
@@ -87,7 +87,7 @@ export interface ActionArg { x: number; y: number; eid?: string; kind?: string }
 
 export interface Appearance { skin: string; hair: string; body: string; legs: string }
 /** Options de dessin d'un personnage ou PNJ. */
-export interface PersonOpts {
+export interface PersonOpts { idle?: boolean;
   look: string; kind: string; dir: number; moving: boolean; s?: number; ph?: number;
   smoke?: boolean; hair?: string; bodies?: boolean; sit?: boolean; boxers?: boolean; ko?: boolean; hide?: boolean; disguise?: string | null;
   sel?: boolean; run?: boolean; small?: boolean; alpha?: number;
@@ -106,7 +106,7 @@ export interface PcAction { k: string; i: string; n: string; s: string; t: numbe
 export interface PcMenu { f: number; x: number; y: number; extra: PcAction[] }
 
 export interface VideoState {
-  t: number; run: boolean; cb: (() => void) | null; fired: Record<string, number>; last: number; tick: number; hold?: number; held?: Record<string, number>;
+  t: number; run: boolean; cb: (() => void) | null; fired: Record<string, number>; last: number; tick: number; hold?: number; drawn?: boolean; held?: Record<string, number>;
 }
 
 export interface Pointer { x: number; y: number; cx: number; cy: number; drag: boolean; id: number }

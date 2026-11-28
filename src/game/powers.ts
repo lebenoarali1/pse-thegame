@@ -32,7 +32,9 @@ export function doAction(c: Character,k: string,arg: ActionArg={x:0,y:0}){
   else if(k==='hide'){if(ST.S.enemies.filter(e=>e.cart).length>=2){toast('Chariot plein : 2 corps maximum','w');return}const e=nearestEnemy(c,(e: Enemy)=>e.ko&&!e.hidden&&e.type!=='dg');if(!e){toast(ST.S.enemies.some(q=>q.ko&&!q.hidden&&q.type==='dg'&&q.f===c.f)?'Le DG ne tient pas dans le seau':'Aucun corps à planquer ici','w');return}
     gotoPos(c,e.x,e.y,{k:'hide',eid:e.id})}
   else if(k==='uniform'&&c.disguise){c.disguise=null;say(c,'Je range le costume. La cravate reste.',2.2);toast('Djibril retire son déguisement','g')}
-  else if(k==='uniform'){const e=nearestEnemy(c,(e: Enemy)=>e.ko&&!e.uniformTaken&&(e.type==='vigile'||e.type==='beaugosse'||e.type==='manager'));
+  else if(k==='uniform'){const ok=(q: Enemy)=>q.ko&&!q.uniformTaken&&(q.type==='vigile'||q.type==='beaugosse'||q.type==='manager');const pick=arg&&arg.eid?getE(arg.eid):undefined;
+    if(pick&&!ok(pick)){toast(pick.ko?(pick.uniformTaken?'Sa tenue a déjà été prise':'Il faut un vigile, un agent de sécurité ou un manager'):'Il faut un corps assommé','w');return}
+    const e=pick||nearestEnemy(c,ok);
     if(!e){const o=ST.S.enemies.find(q=>q.ko&&!q.uniformTaken&&(q.type==='vigile'||q.type==='beaugosse'||q.type==='manager'));toast(o?'Le corps est à l\'étage '+['RDC','1','2'][o.f]+' : rejoignez-le':"Il faut un vigile, un agent de sécurité ou un manager assommé (dont la tenue n'a pas déjà été prise)",'w');return}
     gotoPos(c,e.x,e.y,{k:'uniform',eid:e.id})}
   else if(k==='talk'){if(c.talking){releaseTalk(c);return}
@@ -43,9 +45,10 @@ export function doAction(c: Character,k: string,arg: ActionArg={x:0,y:0}){
     if(c.disguise){if(d>11||!vis){toast("Il faut que le PNJ soit en vue (11 cases max)","w");return}}
     else{if(d>5.5||!vis){toast("Sans déguisement, approchez-vous : 5 cases, en vue","w");return}
       if(Math.abs(angDiff(Math.atan2(c.y-e.y,c.x-e.x),e.face))>1.45){toast("Sans déguisement, il faut être face à lui","w");return}}
+    if(c.disguise&&d>2.2){e.path=[];e.look=null;e.det=0;e.talk=1e9;e.talkTo=c.id;e.state='patrol';say(e,'Oui ? On m\'appelle ?',2.4);say(c,'Hep ! Une minute, j\'ai une opportunité pour vous.',2.6);
+      if(gotoPos(c,e.x,e.y,{k:'chat2',eid:e.id})){c.run=true;c.runOnce=true;c.cd.e=1;toast('Djibril rattrape '+e.name,'g')}else{e.talk=0}return}
     c.path=[];c.order=null;c.talking=e.id;c.chatN=0;c.chatT=.4;e.path=[];e.look=null;e.det=0;
-    if(c.disguise&&d>2.2){e.state='call';e.callTo=c.id;e.talk=0;say(e,'Oui ? On m\'appelle ?',2.4);say(c,'Hep ! Venez voir, j\'ai une opportunité pour vous.',2.6)}
-    else{e.talk=1e9;e.talkTo=c.id;e.state='patrol';say(e,'Ah ? Oui, je vous écoute.',3)}
+    e.talk=1e9;e.talkTo=c.id;e.state='patrol';say(e,'Ah ? Oui, je vous écoute.',3)
     c.cd.e=1;startBusy(c,'talk',.8);snd(520,.1,'triangle',.05)}
   else if(k==='hack'){if(!arg){toast('Touchez un terminal ou une porte bleue','w');return}
     const kind=arg.kind;const tx=arg.x+.5,ty=arg.y+.5;gotoPos(c,tx,ty,{k:'hack',f:c.f,x:arg.x,y:arg.y,kind})}

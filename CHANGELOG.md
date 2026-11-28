@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.18
+- Écran de démarrage allégé (titre, résumé, Commencer, difficulté) ; vidéo plus fluide (résolution plafonnée, taille mesurée une fois, image figée pas redessinée pendant les pauses)
+- Interrupteur : tout le monde peut couper ou rallumer la lumière en le touchant
+- Un simple appui pendant une course ramène à la marche ; animation de repos (idle) quand un personnage ne bouge pas ; Max nettoie au repos dans un rayon d'une case
+- Caméras : coupées par Nadia, elles le restent 120 s (le support les réactive, constante CAM_OFF_S) ; une caméra qui repère quelqu'un appelle le garde le plus proche, qui marche (CAM_GUARD_SPEED) ; caméra du couloir R+2 plus lente avec une phase aveugle de 8 s toutes les 20 s
+- Baratin de Djibril : plus de grande barre bleue (icône de bulle pendant la discussion), Djibril court rattraper le PNJ au lieu de le faire venir, répliques selon la catégorie du PNJ ; déguisement : on touche le corps à dépouiller
+- Icône des indices clés (🔑 n/2) : code sur le serveur (manageuse) et sortie du DG seul à 18h (Brigitte)
+- Backlog : pouvoirs inutiles de chaque personnage
+
 ## 1.17
 - Double appui : le personnage choisi court jusqu'à sa destination puis reprend la marche (remplace l'accélération du temps de la 1.15) ; Djibril déguisé ne court pas
 - Dialogues : retour à la réplique précédente par clic droit, touche flèche gauche ou retour arrière, ou bouton ◀ Retour (mobile)

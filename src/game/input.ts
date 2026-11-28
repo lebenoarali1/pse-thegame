@@ -14,6 +14,7 @@ import { snd } from './sound';
 import { startGame } from './video';
 import { SET, saveSettings } from './settings';
 import { objectiveList } from './ui';
+import { SWITCH } from './pcMenu';
 import { readSave, resetHints, writeSave } from './persist';
 /* saisie */
 export function toWorld(px: number,py: number){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
@@ -35,9 +36,12 @@ export function tapAt(px: number,py: number){
       for(let yy=Math.floor(w.y)-2;yy<=Math.floor(w.y)+2;yy++)for(let xx=Math.floor(w.x)-2;xx<=Math.floor(w.x)+2;xx++){if(!isPC(ST.view,xx,yy))continue;const d=Math.hypot(w.x-xx-.5,w.y-yy-.5);if(d<bd){bd=d;best={kind:'term',x:xx,y:yy}}}
       for(const d of DOORS)if(d.f===ST.view){const dd=Math.hypot(w.x-d.x-.5,w.y-d.y-.5);if(dd<bd){bd=dd;best={kind:'door',x:d.x,y:d.y}}}
       if(best){ST.pend=null;$('ban').style.display='none';doAction(sc,'hack',best)}else toast('Touchez un PC ou une porte bleue ou rouge','w')}
+    else if(a.mode==='body'){let be=null,bd=70;for(const e of ST.S.enemies){if(e.f!==ST.view||!e.ko||e.hidden)continue;const[fx,fy]=iso(e.x,e.y),d=Math.hypot(w.sx-fx,w.sy-(fy-10));if(d<bd){bd=d;be=e}}
+      if(be){ST.pend=null;$('ban').style.display='none';doAction(sc,'uniform',{x:be.x,y:be.y,eid:be.id})}else toast('Touchez un corps assommé','w')}
     else if(a.mode==='tile'){const k=ST.pend.k;if(k!=='puddle'&&Math.hypot(w.x-sc.x,w.y-sc.y)>9.5){toast('Trop loin (9 cases max)','w');return}ST.pend=null;$('ban').style.display='none';doAction(sc,k,{x:w.x,y:w.y})}
     return}
   if(sc.f!==ST.view){toast('Ce perso est à un autre étage : touchez son portrait','w');return}
+  {const sw=SWITCH[ST.view];if(sw&&Math.hypot(w.x-sw.x,w.y-sw.y)<1.4){if(gotoPos(sc,sw.x,sw.y,{k:'switch'}))toast('Interrupteur : '+sc.name+' y va','g');return}}
   {let be=null,bd=34;for(const e of ST.S.enemies){if(!e.calm||e.ko||e.f!==ST.view)continue;const[fx,fy]=iso(e.x,e.y),d=Math.hypot(w.sx-fx,w.sy-(fy-20));if(d<bd){bd=d;be=e}}
     if(be){if(gotoPos(sc,be.x,be.y,{k:'chat',eid:be.id}))toast('Vous allez parler à '+be.name,'g');return}}
   const c=ch(ST.view,tx,ty);
@@ -65,7 +69,7 @@ let lastTap={t:0,x:0,y:0};
 cv.addEventListener('pointerup',e=>{lpClear();
   if(ST.ptr&&!ST.ptr.drag&&!lpFired){const now=performance.now(),dbl=now-lastTap.t<350&&Math.hypot(e.clientX-lastTap.x,e.clientY-lastTap.y)<40;lastTap={t:now,x:e.clientX,y:e.clientY};
     if(dbl){const sc=selC();if(sc&&(sc.path.length||sc.order)&&!sc.run){if(sc.disguise)toast('Déguisé, Djibril ne court pas','w');else{sc.run=true;sc.runOnce=true}}lastTap.t=0}
-    else tapAt(e.clientX,e.clientY)}
+    else{const sc=selC();if(sc&&sc.run){sc.run=false;sc.runOnce=false}tapAt(e.clientX,e.clientY)}}
   ST.ptr=null});
 cv.addEventListener('pointercancel',()=>{lpClear();ST.ptr=null});
 cv.addEventListener('wheel',e=>{e.preventDefault();setZoom(ST.zoom*(e.deltaY<0?1.1:.9))},{passive:false});
