@@ -4,7 +4,9 @@ import { makeChars, makeEnemies } from './castData';
 import { H, W } from './utils';
 import { MAP, isDoor } from './levelData';
 /* état */
-export const TL=480;/* durée de la partie en secondes de jeu (15 min d'horloge) */
+/** Durée de la partie en secondes de jeu (15 min d'horloge), fixée par la difficulté (settings.ts). */
+export let TL=600;
+export function setTL(n: number){TL=n}
 ST.showCones=true;ST.noLimit=false;ST.dbg=false;ST.S=null as unknown as GameState;ST.view=0;ST.pend=null;ST.assist=false;ST.paused=true;ST.started=false;ST.muted=false;ST.spd=1;
 export const cam={x:0,y:0,free:false};ST.zoom=1;ST.P=[];ST.PR=[];ST.lastSave=null;ST.fCount=0;
 

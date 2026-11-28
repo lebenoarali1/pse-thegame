@@ -9,6 +9,7 @@ import { buildActs, mkUI } from './ui';
 import { VW } from './renderLoop';
 import type { VideoState } from './types';
 import { readSave } from './persist';
+import { SET, applyDiff, curDiff, nextDiff } from './settings';
 import { quickLoad } from './input';
 /* vidéo d'introduction : vue à la première personne, avant le menu */
 export let vd=1;
@@ -168,6 +169,9 @@ export function playVid(cb: () => void){VID.t=0;VID.tick=0;VID.fired={};VID.cb=c
 export function endVid(){if(!VID.run)return;VID.run=false;$('vid').classList.remove('show');const f=VID.cb;VID.cb=null;if(f)f()}
 export const realStart=()=>{$('intro').classList.remove('show');ST.started=true;ST.paused=false;try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};beginRun()};
 $('bStart').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};realStart()};
+const showDiff=()=>{$('bDiff').textContent='Difficulté : '+curDiff().n+' · '+curDiff().desc};
+applyDiff();ST.showCones=SET.cones;ST.muted=SET.muted;$('bCones').classList.toggle('on',ST.showCones);showDiff();
+$('bDiff').onclick=()=>{nextDiff();showDiff()};
 $('ver').textContent='Version '+__APP_VERSION__+' · '+__BUILD_DATE__;
 if(readSave())$('bResume').style.display='';
 $('bResume').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};realStart();ST.lastSave=readSave()?.json??null;quickLoad()};

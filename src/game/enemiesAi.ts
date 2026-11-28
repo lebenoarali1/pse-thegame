@@ -8,6 +8,7 @@ import { buildActs } from './ui';
 import { BRK_SAY, CHAT, CLEAN_SAY, COF_SAY } from './texts';
 import { stepEntity } from './movement';
 import { goCoffee } from './noise';
+import { curDiff } from './settings';
 import type { Character, Enemy } from './types';
 /* ennemis */
 export function canSee(e: Enemy,c: Character,fovExtra?: number){
@@ -43,7 +44,7 @@ export function updateEnemy(e: Enemy,dt: number){
   if(e.ko){if(!e.hidden){e.koT=(e.koT||0)+dt;if(e.koT>=(e.koDur||50)&&!ST.S.chars.some(c=>c.busy&&c.busy.eid===e.id))wakeUp(e)}return}
   if(e.freeze>0){e.freeze-=dt;e.moving=false;return}
   if(e.type==='camera'){
-    const off=(ST.S.team.camsUntil>ST.S.t&&e.f===2)||((ST.S.team.camsOff||{})[e.f]||0)>ST.S.t;e.off=off;
+    const off=(ST.S.team.camsUntil>ST.S.t&&e.f===2)||((ST.S.team.camsOff||{})[e.f]||0)>ST.S.t||((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t;e.off=off;
     e.face=e.scan!.base+e.scan!.amp*Math.sin(ST.S.t*6.283/e.scan!.period);return}
   if(e.talk>0&&!e.talkRed){e.talkRed=[e.fov,e.range];e.fov=Math.min(e.fov,56);e.range=Math.min(e.range,2.4)}
   else if(!(e.talk>0)&&e.talkRed){e.fov=e.talkRed[0];e.range=e.talkRed[1];e.talkRed=null}
@@ -118,9 +119,10 @@ export function detect(dt: number){
       const v=canSee(e,c);if(!v)continue;
       const d=Math.hypot(c.x-e.x,c.y-e.y);
       if(c.id==='jordan'&&c.f<=1)continue;
+      if(((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t&&d>2.6)continue;
       if(c.disguise&&e.type!=='drh'&&e.type!=='dg'&&e.type!=='camera'&&d>2.0)continue;
       if(c.disguise&&e.type==='camera'&&d>2.0)continue;
-      let rate=(.55+.9*(1-d/e.range))*(v===2?1.2:1);
+      let rate=(.55+.9*(1-d/e.range))*(v===2?1.2:1)*curDiff().detect;
       if(c.run)rate*=1.7;if(c.id==='kevin')rate*=2.2;
       e.det=Math.min(1.05,e.det+rate*dt);seen=true;
       if(e.det>=1){if(e.calm){snitch(e,c);break}spotted(e,c);return}
@@ -129,7 +131,7 @@ export function detect(dt: number){
     /* corps découverts */
     if(e.type!=='camera'&&e.talk<=0)for(const b of ST.S.enemies){
       if(!b.ko||b.hidden||b.f!==e.f||b===e)continue;
-      const d=Math.hypot(b.x-e.x,b.y-e.y);if(d>e.range)continue;
+      const d=Math.hypot(b.x-e.x,b.y-e.y);if(d>e.range)continue;if(((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t&&d>2.6)continue;
       const inCone=Math.abs(angDiff(Math.atan2(b.y-e.y,b.x-e.x),e.face))<=e.fov*Math.PI/360;
       if((inCone||d<2.1)&&los(e.f,e.x,e.y,b.x,b.y)){say(e,'Un corps !',2.5);fail('Corps découvert !',e.name+" est tombé sur "+b.name+" assommé. Un collègue inanimé, c'est la première fois qu'on le voit aussi calme au bureau. Alerte générale. Un corps visible = fin de partie : planquez-les (Max) avant qu'on les voie.");return}}
   }

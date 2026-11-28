@@ -80,15 +80,15 @@ export function render(dt: number){
     if(a.mode==='hack'){for(const k in TERMS){const[f,x,y]=k.split(',').map(Number);if(f!==ST.view)continue;const[fx,fy]=iso(x+.5,y+.5);ctx.strokeStyle='#4ee3f0';ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(fx,fy,20,10,0,0,7);ctx.stroke()}}
           if(a.mode==='tile'){const[fx,fy]=iso(sc.x,sc.y);ctx.strokeStyle='rgba(255,224,138,.5)';ctx.lineWidth=1.5;ctx.setLineDash([5,5]);ctx.beginPath();ctx.ellipse(fx,fy+16,9.5*32,9.5*16,0,0,7);ctx.stroke();ctx.setLineDash([])}}
   /* lumière */
-  const dk=ST.view===2?.52:.56;
+  const dark=((ST.S.team.lightsOff||{})[ST.view]||0)>ST.S.t;const dk=dark?.9:ST.view===2?.52:.56;
   lctx.setTransform(1,0,0,1,0,0);lctx.globalCompositeOperation='source-over';lctx.clearRect(0,0,lc.width,lc.height);lctx.fillStyle='rgba(8,12,30,'+dk+')';lctx.fillRect(0,0,lc.width,lc.height);
   lctx.setTransform(T,0,0,T,(VW/2-cam.x*ST.zoom)*DPR,(VH/2-cam.y*ST.zoom)*DPR);lctx.globalCompositeOperation='destination-out';
-  for(const l of LIGHTS[ST.view]){const[sx,sy]=iso(l[0],l[1],20);lctx.globalAlpha=.9;lctx.drawImage(lightSpr,sx-240,sy-120,480,240)}
+  if(!dark)for(const l of LIGHTS[ST.view]){const[sx,sy]=iso(l[0],l[1],20);lctx.globalAlpha=.9;lctx.drawImage(lightSpr,sx-240,sy-120,480,240)}
   for(const c of ST.S.chars)if(c.f===ST.view&&!c.hide){const[sx,sy]=iso(c.x,c.y,10);lctx.globalAlpha=.8;lctx.drawImage(lightSpr,sx-70,sy-36,140,72)}
   for(const e of ST.S.enemies)if(e.f===ST.view&&e.state==='chase'){const[sx,sy]=iso(e.x,e.y,10);lctx.globalAlpha=.6;lctx.drawImage(lightSpr,sx-90,sy-45,180,90)}
   lctx.globalAlpha=1;lctx.globalCompositeOperation='source-over';
   ctx.setTransform(1,0,0,1,0,0);ctx.drawImage(lc,0,0);
   ctx.setTransform(T,0,0,T,(VW/2-cam.x*ST.zoom)*DPR,(VH/2-cam.y*ST.zoom)*DPR);ctx.globalCompositeOperation='lighter';
-  for(const l of LIGHTS[ST.view])if(l[2]){const[sx,sy]=iso(l[0],l[1],14);ctx.globalAlpha=.22;ctx.fillStyle=l[2];ctx.save();ctx.translate(sx,sy);ctx.scale(1,.5);ctx.beginPath();ctx.arc(0,0,120,0,7);ctx.globalAlpha=.09;ctx.fill();ctx.restore()}
+  if(!dark)for(const l of LIGHTS[ST.view])if(l[2]){const[sx,sy]=iso(l[0],l[1],14);ctx.globalAlpha=.22;ctx.fillStyle=l[2];ctx.save();ctx.translate(sx,sy);ctx.scale(1,.5);ctx.beginPath();ctx.arc(0,0,120,0,7);ctx.globalAlpha=.09;ctx.fill();ctx.restore()}
   ctx.globalAlpha=1;ctx.globalCompositeOperation='source-over';
 }

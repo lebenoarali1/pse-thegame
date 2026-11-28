@@ -20,7 +20,7 @@ Ordre de découverte : Kévin et Nadia au RDC (dialogue d'intro, choix d'âge), 
 - Un corps assommé découvert : défaite. Il faut le planquer (Max).
 - Déguisé, un perso n'est pas détecté au-delà de 2 cases (sauf DRH, DG).
 - Victoire : clé obtenue, tous les survivants autour de l'ascenseur (RDC, 21,5 / 12,5).
-- Défaite : 480 s de jeu écoulées, corps trouvé, équipe décimée.
+- Défaite : 600 s de jeu écoulées, corps trouvé, équipe décimée.
 - Aucun brouillard : tous les PNJ sont visibles.
 
 ## Étages et énigmes
@@ -36,11 +36,11 @@ Ordre de découverte : Kévin et Nadia au RDC (dialogue d'intro, choix d'âge), 
 **Étage 2** : couloir, DRH en ronde, Brigitte à l'accueil, deux caméras, bureau du DG (porte niveau 3). Le DG quitte son bureau à 17h55 (240 s). Kévin prend la gaine (16,8) vers le bureau (16,2), ouvre le coffre (22,1) avec le code, revient par la gaine.
 
 ## Événements chronométrés
-320 s : le DG quitte son bureau. 440 s : dernière minute (la durée totale `TL` vaut 480 s).
+320 s : le DG quitte son bureau. 555 s : dernière minute (la durée totale `TL` vaut 600 s).
 
 ## État de validation
 - Chaîne complète de mécaniques jusqu'à la victoire : testée automatiquement (gardes aveugles).
-- Solvabilité en furtivité totale sans debug : non démontrée, à confirmer en jeu. Risque principal : le temps (480 s) pour un premier essai.
+- Solvabilité en furtivité totale sans debug : démontrée par le test 18 (victoire vers 425 s). Risque principal : le temps (600 s) pour un premier essai.
 
 ## Backlog
 Voir [BACKLOG.md](BACKLOG.md) : épopées, user stories, statut (DONE, TODO, IDEE), priorités et ordre de travail.

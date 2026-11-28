@@ -6,11 +6,11 @@ import { rnd } from './utils';
 import { SMK } from './levelData';
 /* événements */
 export const EVENTS=[
- {t:TL*2/3,fn(){const e=getE('dg');if(e.ko)return;
+ {t:320,fn(){const e=getE('dg');if(e.ko)return;
    e.route=[{x:20.5,y:2.5,wait:.2},{x:18.5,y:5.5},{x:18.5,y:7.5},{x:3.5,y:7.5},{x:3.5,y:10.5},{x:2.5,y:11.5,warp:{f:1,x:21.5,y:8.5}},{x:17.5,y:8.5},{x:17.5,y:11.5},{x:20.5,y:10.5,wait:999,face:Math.PI}];
    e.loop=false;e.ri=0;e.path=[];e.scan=null;e.wait=0;e.state='patrol';
    toast("17h55 · Le DG quitte son bureau : réunion à préparer. Le bureau est libre !",'w');snd(440,.15,'triangle',.05)}},
- {t:TL*11/12,fn(){toast("17h58 · Dernière minute : il faut être dehors à 18h pile",'r');snd(300,.3,'sawtooth',.05)}}
+ {get t(){return TL-45},fn(){toast("17h58 · Dernière minute : il faut être dehors à 18h pile",'r');snd(300,.3,'sawtooth',.05)}}
 ];
 
 export function fxTick(dt: number){

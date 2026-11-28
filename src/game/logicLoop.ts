@@ -9,13 +9,18 @@ import { updateChar } from './updateChars';
 import { detect, updateEnemy } from './enemiesAi';
 import { pcTick } from './pcMenu';
 import { snd } from './sound';
+import { writeSave } from './persist';
 import { rnd } from './utils';
 import { hear, smokeBreak } from './noise';
 /* boucle logique */
+/** Sauvegarde automatique au premier passage à un nouvel étage (E5-3). */
+function autoSave(f: number){ST.lastSave=JSON.stringify(ST.S);writeSave(ST.lastSave);toast('Sauvegarde automatique : étage '+f,'g')}
 export function update(dt: number){
   if(ST.S.over)return;
   ST.S.t+=dt;
   if(ST.S.t>2&&!ST.dlg)hintOnce('move');
+  const top=Math.max(0,...ST.S.chars.filter(c=>c.joined&&!c.out).map(c=>c.f));
+  if(top>(Number(ST.S.flags.maxF)||0)){ST.S.flags.maxF=top;autoSave(top)}
   for(const ev of EVENTS)if(!ST.S.ev[ev.t]&&ST.S.t>=ev.t){ST.S.ev[ev.t]=1;ev.fn()}
   if(ST.S.t>=TL&&!ST.noLimit){fail('18h00. Trop tard.',"Les portes se verrouillent, les badges sont coupés. L'équipe est officiellement licenciée, avec la reconnaissance chaleureuse de la direction et un pot de départ sans alcool.");return}
   updateDoors();

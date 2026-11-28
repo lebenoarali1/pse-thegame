@@ -15,7 +15,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 |---|---|---|
 | Valeur joueur | La chaîne complète de mécaniques existe et est testée, mais la solvabilité en furtivité totale n'a pas été démontrée en jeu | Valider la partie de bout en bout est le premier risque produit |
 | Onboarding | Aucun tutoriel : les pouvoirs, les clics droits et les raccourcis sont à découvrir seul | Un nouveau joueur décroche avant d'avoir vu les bonnes idées |
-| Difficulté | Un seul niveau de réglage (480 s), pas de score, pas de rejeu structuré | Peu de raisons de rejouer, difficulté non calibrée |
+| Difficulté | Un seul niveau de réglage (600 s), pas de score, pas de rejeu structuré | Peu de raisons de rejouer, difficulté non calibrée |
 | Contenu | Étages 0 et 1 riches, étage 2 mince (DRH, Brigitte, DG) | Le final est moins drôle que le milieu |
 | Mobile | Le jeu s'utilise au toucher, mais la lisibilité (petits sprites, menus) et l'ergonomie n'ont pas été éprouvées sur plusieurs écrans | Public principal probable : le téléphone |
 | Accessibilité | Aucun attribut ARIA, information portée par la couleur (cônes), texte de dialogue sans taille réglable, son sans alternative visuelle | Exclut une partie des joueurs, facile à améliorer tôt |
@@ -34,9 +34,9 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | ID | Story | Statut | Prio | Taille |
 |---|---|---|---|---|
 | E1-1 | En tant que concepteur, je veux une solution complète rejouée automatiquement (test 18, sans téléportation) afin de prouver que la partie est gagnable | DONE (1.7) | Must | L |
-| E1-2 | En tant que joueur, je veux que la partie se gagne en moins de 8 minutes de jeu sans debug au premier essai raisonnable, afin de ne pas être bloqué par le chrono | TODO | Must | M |
-| E1-3 | En tant que concepteur, je veux consigner les paramètres de difficulté (temps, portées, durées de KO) dans un seul tableau de réglages, afin de les ajuster sans fouiller le code | TODO | Should | M |
-| E1-4 | En tant que joueur, je veux trois niveaux de difficulté (Stagiaire, Cadre, Directeur) qui modifient le temps et la vigilance, afin d'adapter le défi | TODO | Should | M |
+| E1-2 | En tant que joueur, je veux que la partie se gagne avec une marge d'au moins 2 minutes sur la solution automatique (test 18, 425 s sur 600 s), afin de ne pas être bloqué par le chrono | DONE (1.8) | Must | M |
+| E1-3 | En tant que concepteur, je veux consigner les paramètres de difficulté (temps, portées, durées de KO) dans un seul tableau de réglages, afin de les ajuster sans fouiller le code | DONE (1.8) | Should | M |
+| E1-4 | En tant que joueur, je veux trois niveaux de difficulté (Stagiaire, Cadre, Directeur) qui modifient le temps et la vigilance, afin d'adapter le défi | DONE (1.8) | Should | M |
 | E1-5 | En tant que joueur, je veux un score de fin (temps restant, discrétion, collègues sortis) et un classement local, afin d'avoir une raison de rejouer | TODO | Could | M |
 
 ## E2. Découverte et tutoriel
@@ -82,8 +82,8 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 |---|---|---|---|---|
 | E5-1 | En tant que joueur, je veux une sauvegarde rapide et un import/export d'état en JSON | DONE 0.8 | Should | S |
 | E5-2 | En tant que joueur, je veux que la sauvegarde rapide survive au rechargement de la page (stockage du navigateur), afin de reprendre plus tard, surtout sur mobile | DONE 1.4 | Must | S |
-| E5-3 | En tant que joueur, je veux une sauvegarde automatique à chaque étage franchi, afin de ne pas tout perdre | TODO | Should | S |
-| E5-4 | En tant que joueur, je veux retrouver mes réglages (son, cônes visibles, vitesse) au prochain lancement | TODO | Should | S |
+| E5-3 | En tant que joueur, je veux une sauvegarde automatique à chaque étage franchi, afin de ne pas tout perdre | DONE (1.8) | Should | S |
+| E5-4 | En tant que joueur, je veux retrouver mes réglages (son, cônes visibles, vitesse) au prochain lancement | DONE (1.8) | Should | S |
 | E5-5 | En tant que concepteur, je veux versionner le format de sauvegarde, afin qu'une ancienne sauvegarde ne casse pas une nouvelle version | DONE 1.4 | Should | S |
 
 ## E6. Interface, mobile et accessibilité

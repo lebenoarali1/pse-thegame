@@ -63,7 +63,7 @@ export interface GameState {
   t: number; over: null | 'win' | 'fail';
   sel: string; age: number; talked: Record<string, number>;
   chars: Character[]; enemies: Enemy[];
-  team: { code: boolean; key: boolean; camsUntil: number; fluxUntil: number; throws: number; camsOff?: Record<number, number> };
+  team: { code: boolean; key: boolean; camsUntil: number; fluxUntil: number; throws: number; camsOff?: Record<number, number>; lightsOff?: Record<number, number>; lightsWho?: Record<number, string> };
   doorHack: Record<string, number>; dOpen: Record<string, boolean>; dLatch: Record<string, number>; dLing: Record<string, number>;
   puddles: Puddle[]; distCd: Record<string, number>; ev: Record<string, number>; flags: Record<string, number | boolean>;
   alertT: number;

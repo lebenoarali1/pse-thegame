@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.8
+- Nadia : nouvelle action « Éteindre la lumière » (60 s, étage dans le noir, on n'est vu que de très près, les caméras sont aveugles) ; un employé va rallumer
+- Le menu du PC ne propose plus les caméras aux étages qui n'en ont pas (RDC, étage 1)
+- Difficulté : Stagiaire (12 min de jeu), Cadre (10 min, référence), Directeur (8 min, gardes plus vigilants), choisie sur l'écran d'accueil
+- Durée de la partie portée à 10 min de jeu (marge de 2 min sur la solution automatique) ; le départ du DG reste à 320 s
+- Réglages mémorisés : difficulté, cônes, son ; tableau unique dans `settings.ts`
+- Sauvegarde automatique au premier passage à chaque étage
+- Tests 19 (lumière) et 20 (difficulté, réglages, sauvegarde auto)
+
 ## 1.7
 - Test 18 : une solution complète rejouée sans téléportation (RDC, code, Max, porte rouge, caméras, coffre du DG, ascenseur) gagne en moins de 8 minutes de jeu ; validé 3 fois sur 3
 - Constats pour l'équilibrage (E1-2) : la fenêtre du DG (attente d'environ 60 s à l'étage 2) est longue, et la descente finale à découvert coûte deux personnages

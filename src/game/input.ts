@@ -12,6 +12,7 @@ import { passable } from './pathing';
 import { advDlg } from './dialogues';
 import { snd } from './sound';
 import { startGame } from './video';
+import { SET, saveSettings } from './settings';
 import { readSave, resetHints, writeSave } from './persist';
 /* saisie */
 export function toWorld(px: number,py: number){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
@@ -49,7 +50,7 @@ export function tapAt(px: number,py: number){
 export function marker(x: number,y: number){ST.P.push({f:ST.view,x:x+.5,y:y+.5,z:0,vx:0,vy:0,vz:0,life:.6,col:'#fff',sz:0,ring:true,age:0})}
 /* pointeur : tap ou glisser */
 ST.ptr=null;
-export function toggleCones(){ST.showCones=!ST.showCones;$('bCones').classList.toggle('on',ST.showCones);toast(ST.showCones?'Cônes de vision affichés':'Cônes de vision masqués','g')}
+export function toggleCones(){ST.showCones=!ST.showCones;SET.cones=ST.showCones;saveSettings();$('bCones').classList.toggle('on',ST.showCones);toast(ST.showCones?'Cônes de vision affichés':'Cônes de vision masqués','g')}
 let lpTimer=0,lpFired=false;
 const lpClear=()=>{clearTimeout(lpTimer);lpTimer=0};
 let wasPaused=false;
@@ -84,7 +85,7 @@ $('bState').onclick=()=>{$('stTxt').value=ST.S?JSON.stringify(ST.S):'';$('stBox'
 $('stClose').onclick=()=>$('stBox').classList.remove('show');
 $('stCopy').onclick=()=>{const t=$('stTxt');t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand('copy')}toast('État copié','g')};
 $('stLoad').onclick=()=>{try{const o=JSON.parse($('stTxt').value);if(!o||!o.chars||!o.enemies)throw 0;ST.lastSave=$('stTxt').value;$('stBox').classList.remove('show');ST.started=true;$('intro').classList.remove('show');ST.paused=false;quickLoad()}catch(e){toast("État illisible",'r')}};
-$('bSnd').onclick=()=>{ST.muted=!ST.muted};$('bDbg').onclick=()=>{ST.dbg=!ST.dbg;document.body.classList.toggle('dbgon',ST.dbg);$('bDbg').classList.toggle('on',ST.dbg);$('dbg').style.display=ST.dbg?'block':'none'};$('bZi').onclick=()=>setZoom(ST.zoom*1.2);$('bZo').onclick=()=>setZoom(ST.zoom/1.2);
+$('bSnd').onclick=()=>{ST.muted=!ST.muted;SET.muted=ST.muted;saveSettings()};$('bDbg').onclick=()=>{ST.dbg=!ST.dbg;document.body.classList.toggle('dbgon',ST.dbg);$('bDbg').classList.toggle('on',ST.dbg);$('dbg').style.display=ST.dbg?'block':'none'};$('bZi').onclick=()=>setZoom(ST.zoom*1.2);$('bZo').onclick=()=>setZoom(ST.zoom/1.2);
 $('bSave').onclick=quickSave;$('bLoad').onclick=quickLoad;
 export function quickSave(){if(ST.S.over)return;ST.lastSave=JSON.stringify(ST.S);writeSave(ST.lastSave);toast('Sauvegarde rapide effectuée','g');snd(900,.08,'triangle',.04)}
 export function quickLoad(){if(!ST.lastSave)ST.lastSave=readSave()?.json??null;if(!ST.lastSave){toast('Aucune sauvegarde','w');return}ST.S=JSON.parse(ST.lastSave);ST.dlg=null;$('dlg').classList.remove('show');document.body.classList.remove('indlg');ST.pend=null;ST.P=[];ST.PR=[];$('end').classList.remove('show');$('ban').style.display='none';const c=selC();ST.view=c.f;cam.free=false;buildActs();toast('Sauvegarde chargée','g')}
