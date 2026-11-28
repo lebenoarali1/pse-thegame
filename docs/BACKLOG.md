@@ -110,7 +110,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | E7-3 | En tant que joueur, je veux un étage 2 plus riche : situations et gags autour de la DRH, de Brigitte et du DG (au moins trois interactions nouvelles) | DONE (1.10) | Must | L |
 | E7-4 | En tant que joueur, je veux une fin de partie mise en scène (victoire et chaque défaite) avec une réplique et une courte séquence, afin de conclure sur un rire | DONE (1.11) | Should | M |
 | E7-5 | En tant que joueur, je veux des répliques d'ambiance variées pour les employés selon l'heure et les événements (réunion, plan social qui approche) | DONE (1.12) | Could | S |
-| E7-6 | En tant que joueur, je veux une musique d'ambiance adaptative (calme, tension, poursuite) et un mixage des effets, avec un réglage du volume | TODO | Should | L |
+| E7-6 | En tant que joueur, je veux une musique d'ambiance adaptative (calme, tension, poursuite) et un mixage des effets, avec un réglage du volume | DONE (1.14) | Should | L |
 | E7-7 | En tant que joueur, je veux des sprites et animations plus soignés (marche, KO, déguisement) et un éclairage par étage | TODO | Could | L |
 | E7-8 | En tant que joueur, je veux un deuxième niveau (autre bâtiment ou scénario) pour prolonger l'aventure | IDEE | Could | L |
 

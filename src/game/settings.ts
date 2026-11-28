@@ -9,9 +9,9 @@ export const DIFFS: Record<string, Diff> = {
 };
 export const DIFF_ORDER = ['stagiaire', 'cadre', 'directeur'];
 
-export interface Settings { diff: string; cones: boolean; muted: boolean }
+export interface Settings { diff: string; cones: boolean; muted: boolean; music: number; sfx: number }
 const KEY = 'plansocial.settings';
-const DEFAULTS: Settings = { diff: 'cadre', cones: true, muted: false };
+const DEFAULTS: Settings = { diff: 'cadre', cones: true, muted: false, music: 0.6, sfx: 1 };
 
 function load(): Settings {
   try {
@@ -20,6 +20,8 @@ function load(): Settings {
       diff: typeof o.diff === 'string' && o.diff in DIFFS ? o.diff : DEFAULTS.diff,
       cones: typeof o.cones === 'boolean' ? o.cones : DEFAULTS.cones,
       muted: typeof o.muted === 'boolean' ? o.muted : DEFAULTS.muted,
+      music: typeof o.music === 'number' ? Math.min(1, Math.max(0, o.music)) : DEFAULTS.music,
+      sfx: typeof o.sfx === 'number' ? Math.min(1, Math.max(0, o.sfx)) : DEFAULTS.sfx,
     };
   } catch { return { ...DEFAULTS } }
 }

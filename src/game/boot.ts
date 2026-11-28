@@ -12,6 +12,7 @@ import { pcChoose, pcOpen, pcm } from './pcMenu';
 import { advDlg, beginRun, recruit } from './dialogues';
 import { doAction, gotoPos } from './powers';
 import { quickLoad, quickSave, tapAt } from './input';
+import { startMusic, currentMode } from './music';
 import { findPath } from './pathing';
 /* démarrage */
 resize();for(let f=0;f<3;f++){ST.S=ST.S||newState();buildFloor(f)}
@@ -29,5 +30,6 @@ export function frame(now: number){
 }
 requestAnimationFrame(frame);
 if(location.hash!=='#novid')playVid(()=>{});
+startMusic();
 if('serviceWorker' in navigator&&location.protocol==='https:')window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>undefined)});
-window.__G={MAP,pcChoose,pcOpen,get pcm(){return pcm},vidFrame,VID,KEYS,iso,cam,get VW(){return VW},get P(){return ST.P},get VH(){return VH},get dlg(){return ST.dlg},advDlg,beginRun,recruit,gotoPos,getC,getE,get S(){return ST.S},update,doAction,tapAt,findPath,selectChar,startGame,get view(){return ST.view},set view(v: number){ST.view=v},get paused(){return ST.paused},set paused(v: boolean){ST.paused=v},get showCones(){return ST.showCones},set started(v: boolean){ST.started=v},quickSave,quickLoad,get zoom(){return ST.zoom}};
+window.__G={MAP,pcChoose,pcOpen,get pcm(){return pcm},vidFrame,VID,KEYS,iso,cam,get VW(){return VW},get P(){return ST.P},get musicMode(){return currentMode()},get VH(){return VH},get dlg(){return ST.dlg},advDlg,beginRun,recruit,gotoPos,getC,getE,get S(){return ST.S},update,doAction,tapAt,findPath,selectChar,startGame,get view(){return ST.view},set view(v: number){ST.view=v},get paused(){return ST.paused},set paused(v: boolean){ST.paused=v},get showCones(){return ST.showCones},set started(v: boolean){ST.started=v},quickSave,quickLoad,get zoom(){return ST.zoom}};

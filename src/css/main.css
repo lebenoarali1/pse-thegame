@@ -111,3 +111,5 @@ body.indlg #bt{visibility:hidden}
 #eQ{font-style:italic;color:var(--or);margin-top:10px}
 @keyframes eIn{to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){#eS span{animation:none;opacity:1;transform:none}}
+
+.vol{display:flex;align-items:center;gap:10px;margin:8px 0;color:#cfe}.vol input{flex:1;min-height:44px}

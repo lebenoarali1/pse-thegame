@@ -33,3 +33,15 @@ describe('messages', () => {
     expect(where(0, 20, 11)).toContain('côté est');
   });
 });
+
+import { musicMode } from '../../src/game/musicMode';
+describe('musique adaptative', () => {
+  const calme = { chase: false, maxDet: 0, alert: false, left: 300 };
+  it('calme par défaut', () => expect(musicMode(calme)).toBe('calm'));
+  it('tension si on est repéré, en alerte ou dans la dernière minute', () => {
+    expect(musicMode({ ...calme, maxDet: 0.3 })).toBe('tension');
+    expect(musicMode({ ...calme, alert: true })).toBe('tension');
+    expect(musicMode({ ...calme, left: 30 })).toBe('tension');
+  });
+  it('poursuite prioritaire', () => expect(musicMode({ ...calme, chase: true, maxDet: 1 })).toBe('chase'));
+});

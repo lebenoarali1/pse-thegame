@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.14
+- Musique d'ambiance procédurale adaptative : calme, tension (repéré, alerte ou dernière minute) et poursuite ; réglages de volume musique et effets dans l'aide (❓), mémorisés ; test 26 et tests unitaires du choix d'intensité
+
 ## 1.13
 - Installation en application (PWA) : manifeste et service worker, le jeu se relance hors connexion une fois visité (en HTTPS)
 - Tests unitaires Vitest (`npm run test:unit`) sur le pathing, la difficulté et les messages ; ajoutés à la CI avant les scénarios
