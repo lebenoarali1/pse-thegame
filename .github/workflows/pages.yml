@@ -32,7 +32,7 @@ jobs:
       - run: pip install playwright
       - name: Scénarios de bout en bout
         run: python tests/run_all.py
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v5
         with:
           path: dist
       - id: deployment
