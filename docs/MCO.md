@@ -127,7 +127,7 @@ Principe : Claude écrit, teste et pousse ; la personne qui maintient décide, r
 
 - Typage : mode strict actif et zéro `any` explicite dans src ; tout nouveau champ dynamique doit être déclaré dans `types.ts` (pas d'index signature). Un `any` ajouté est une régression à refuser en revue
 - Tests : ils dépendent de Python et Playwright ; un portage en TypeScript permettrait un simple `npm test`.
-- Furtivité de bout en bout non démontrée sans debug : à valider en jeu (voir le backlog).
+- Furtivité de bout en bout démontrée par le test 18 (victoire vers 425 s) ; une première partie humaine reste à valider niveau par niveau.
 
 ## 10. Intégration continue et sauvegarde
 

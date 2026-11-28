@@ -7,9 +7,9 @@ import type { Mode } from './musicMode';
 /* Musique d'ambiance procédurale : une basse et quelques notes synthétisées, plus vives quand la tension monte (E7-6). */
 const BPM: Record<Mode, number> = { calm: 80, tension: 100, chase: 128 };
 const BASS: Record<Mode, number[]> = {
-  calm: [55, 0, 0, 0, 65.4, 0, 0, 0, 49, 0, 0, 0, 61.7, 0, 0, 0],
-  tension: [55, 0, 55, 0, 58.3, 0, 55, 0, 49, 0, 49, 0, 58.3, 0, 55, 0],
-  chase: [55, 55, 110, 55, 58.3, 58.3, 116.5, 58.3, 49, 49, 98, 49, 58.3, 58.3, 116.5, 58.3],
+  calm: [220, 0, 0, 0, 261.6, 0, 0, 0, 196, 0, 0, 0, 246.8, 0, 0, 0],
+  tension: [220, 0, 220, 0, 233.2, 0, 220, 0, 196, 0, 196, 0, 233.2, 0, 220, 0],
+  chase: [220, 220, 440, 220, 233.2, 233.2, 466, 233.2, 196, 196, 392, 196, 233.2, 233.2, 466, 233.2],
 };
 const ARP = [220, 261.6, 329.6, 261.6, 233.1, 277.2, 349.2, 277.2];
 let mode: Mode = 'calm';
@@ -48,13 +48,14 @@ function tick() {
     if (next < ac.currentTime) next = ac.currentTime + 0.05;
     while (next < ac.currentTime + 0.25) {
       const i = step % 16, b = BASS[mode][i];
-      if (b) note(b, next, dur * 1.8, 'triangle', 0.22);
-      if (mode === 'calm' && i === 0) { for (const f of [220, 261.6, 329.6]) note(f, next, dur * 14, 'sine', 0.05) }
-      if (mode === 'tension' && i % 4 === 2) note(ARP[(step >> 2) % 8] / 2, next, dur * 2, 'sine', 0.06);
-      if (mode === 'chase') { note(ARP[step % 8], next, dur * 0.9, 'sawtooth', 0.04); if (i % 4 === 0) note(60, next, 0.12, 'square', 0.1) }
+      if (b) note(b, next, dur * 1.8, 'triangle', 0.3);
+      if (mode === 'calm' && i === 0) { for (const f of [440, 523.3, 659.3]) note(f, next, dur * 14, 'sine', 0.06) }
+      if (mode === 'tension' && i % 4 === 2) note(ARP[(step >> 2) % 8], next, dur * 2, 'sine', 0.08);
+      if (mode === 'chase') { note(ARP[step % 8], next, dur * 0.9, 'sawtooth', 0.04); if (i % 4 === 0) note(110, next, 0.12, 'square', 0.1) }
       step++; next += dur;
     }
   } catch { /* audio indisponible */ }
 }
 
-export function startMusic() { if (!timer) timer = window.setInterval(tick, 80) }
+export function startMusic() {
+  window.addEventListener('pointerdown', () => { if (ST.AC && ST.AC.state === 'suspended') void ST.AC.resume() }); if (!timer) timer = window.setInterval(tick, 80) }

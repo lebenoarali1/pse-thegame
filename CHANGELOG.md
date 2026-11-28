@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.14.1
+- RDC : le menu du PC ne propose plus « Ouvrir la porte » (doublon du portillon bleu) ; les actions de porte ne s'affichent qu'aux étages 1 et 2
+- Musique : notes remontées de deux octaves (la basse était inaudible sur un téléphone), reprise du son au premier appui
+- Backlog réécrit : un bilan structuré de ce qui est en place et une liste simple de fonctionnalités attendues
+
 ## 1.14
 - Musique d'ambiance procédurale adaptative : calme, tension (repéré, alerte ou dernière minute) et poursuite ; réglages de volume musique et effets dans l'aide (❓), mémorisés ; test 26 et tests unitaires du choix d'intensité
 
