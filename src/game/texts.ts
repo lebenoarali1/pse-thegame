@@ -26,7 +26,9 @@ export function introSteps(){return [
  {w:'nadege',t:"Bref. Au 2e étage, il y a le coffre du DG. Vasseur y planque de quoi lui faire très mal, donc de quoi garder nos postes. Moi, je m'occupe de l'informatique. Toi, tu te faufiles, comme tout bon stagiaire."},
  {w:'kevin',t:"On n'est que deux ?"},
  {w:'nadege',t:"Djibril s'est enfermé dans une salle de réunion du 1er pour pleurer, discrètement, en faisant semblant de répéter un pitch. Et Max, notre homme de ménage, est sûrement aux toilettes du 1er, téléphone en main, et pas pour la raison habituelle."},
- {w:'nadege',t:"Les vigiles ne doivent pas nous voir. Toi surtout : le moindre regard, et l'alerte est donnée. Toi, tu jettes un gobelet : un vigile qui nettoie ne surveille rien. Moi, je lance une clope au second : un vigile qui fume ne surveille presque rien, avec la fumée. Ensuite, je pirate le portillon bleu. Tu cours."}]}
+ {w:'nadege',t:"Les vigiles ne doivent pas nous voir. Toi surtout : le moindre regard, et l'alerte est donnée. Toi, tu jettes un gobelet : un vigile qui nettoie ne surveille rien. Moi, je lance une clope au second : un vigile qui fume ne surveille presque rien, avec la fumée. Ensuite, je pirate le portillon bleu. Tu cours."},
+ {w:'nadege',t:"Le plan en quatre temps. Un : on monte au 1er chercher Djibril et Max. Deux : il nous faut le code du coffre, il est sur le serveur de la salle serveur, ou dans la poche du DG. Trois : toi, tu passes par la gaine pour ouvrir le coffre. Quatre : tout le monde ressort par l'ascenseur de service. La liste des étapes est en haut à gauche, touchez-la pour la relire."}
+]}
 
 export const RECRUIT: Record<string, () => DlgStep[]>={
  marc:()=>[
@@ -37,7 +39,8 @@ export const RECRUIT: Record<string, () => DlgStep[]>={
    {t:"On a besoin de ton baratin pour piquer un truc au DG.",r:[{w:'marc',t:"Un coup de force ? J'adore, ça fait start-up. Je suis des vôtres."}]},
    {t:"Il y a un buffet gratuit au 2e étage.",r:[{w:'marc',t:"Un buffet ?! Il fallait commencer par là. J'ai le costume pour ça."}]},
    {t:"Tu peux te faire passer pour n'importe qui ?",r:[{w:'marc',t:"Manager, vigile, ce que tu veux, si on me prête la tenue. C'est ma spécialité."}]}]},
-  {w:'marc',t:"Deux conseils : je ne cours jamais, ça froisse le costume. Et je ne baratine pas la DRH, elle a lu mon CV."}],
+  {w:'marc',t:"Deux conseils : je ne cours jamais, ça froisse le costume. Et je ne baratine pas la DRH, elle a lu mon CV."},
+  {w:'marc',t:"Pour le code du coffre, mon rôle : prendre la tenue d'un manager assommé, puis faire parler la manageuse en chef. Elle sait où le code est rangé, et elle adore qu'on l'écoute."}],
  jordan:()=>[
   {w:'jordan',t:"Hein ? Quoi ? Ah, c'est vous. Je finis mon niveau, deux secondes. Oui, je suis aux toilettes. C'est le seul endroit calme de l'immeuble."},
   {w:'$',t:"On est virés à 18h, Max."},
@@ -46,7 +49,8 @@ export const RECRUIT: Record<string, () => DlgStep[]>={
    {t:"Tu as les clés de l'immeuble, non ?",r:[{w:'jordan',t:"Celles des étages 0 et 1. Au-dessus, personne ne m'a rien confié. Par principe."}]},
    {t:"On va se venger du DG.",r:[{w:'jordan',t:"Se venger, c'est fatigant. Mais pour Vasseur, je veux bien faire un effort."}]},
    {t:"Il y a un canapé tout neuf au rez-de-chaussée.",r:[{w:'jordan',t:"Un canapé ? J'arrive. Enfin, j'arrive, c'est un grand mot."}]}]},
-  {w:'jordan',t:"Personne ne regarde un mec qui passe la serpillère. Aux étages 0 et 1, je suis invisible. Sauf si je m'arrête devant une machine à café."}]
+  {w:'jordan',t:"Personne ne regarde un mec qui passe la serpillère. Aux étages 0 et 1, je suis invisible. Sauf si je m'arrête devant une machine à café."},
+  {w:'jordan',t:"Autre option pour le code : le DG sort de son bureau pour sa visite hebdomadaire. Je l'assomme dans le couloir et je lui prends le post-it. Il me faut juste qu'il soit seul."}]
 };
 
 export const VCAP=[[2.4,5.2,"Dans un monde en guerre."],[5.2,8,"Quatre héros d'élite."],[8,10.4,"Un seul objectif : la victoire, brique par brique."]];

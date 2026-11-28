@@ -65,7 +65,7 @@ export interface GameState {
   t: number; over: null | 'win' | 'fail';
   sel: string; age: number; talked: Record<string, number>;
   chars: Character[]; enemies: Enemy[];
-  team: { code: boolean; key: boolean; camsUntil: number; fluxUntil: number; throws: number; camsOff?: Record<number, number>; lightsOff?: Record<number, number>; lightsWho?: Record<number, string> };
+  team: { code: boolean; codeInfo?: boolean; codeBy?: string; key: boolean; camsUntil: number; fluxUntil: number; throws: number; camsOff?: Record<number, number>; lightsOff?: Record<number, number>; lightsWho?: Record<number, string> };
   doorHack: Record<string, number>; dOpen: Record<string, boolean>; dLatch: Record<string, number>; dLing: Record<string, number>;
   puddles: Puddle[]; distCd: Record<string, number>; ev: Record<string, number>; flags: Record<string, number | boolean>;
   alertT: number;
@@ -106,7 +106,7 @@ export interface PcAction { k: string; i: string; n: string; s: string; t: numbe
 export interface PcMenu { f: number; x: number; y: number; extra: PcAction[] }
 
 export interface VideoState {
-  t: number; run: boolean; cb: (() => void) | null; fired: Record<string, number>; last: number; tick: number;
+  t: number; run: boolean; cb: (() => void) | null; fired: Record<string, number>; last: number; tick: number; hold?: number; held?: Record<string, number>;
 }
 
 export interface Pointer { x: number; y: number; cx: number; cy: number; drag: boolean; id: number }

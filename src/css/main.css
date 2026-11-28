@@ -113,3 +113,6 @@ body.indlg #bt{visibility:hidden}
 @media (prefers-reduced-motion:reduce){#eS span{animation:none;opacity:1;transform:none}}
 
 .vol{display:flex;align-items:center;gap:10px;margin:8px 0;color:#cfe}.vol input{flex:1;min-height:44px}
+
+.gl{padding:6px 0;line-height:1.35;color:#9fb0d0}.gl.ok{color:#7fd69a}.gl.now{color:#fff;font-weight:600}
+#obj{cursor:pointer}#obj::after{content:' ⓘ';opacity:.6}

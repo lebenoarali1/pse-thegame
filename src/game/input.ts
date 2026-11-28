@@ -13,6 +13,7 @@ import { advDlg } from './dialogues';
 import { snd } from './sound';
 import { startGame } from './video';
 import { SET, saveSettings } from './settings';
+import { objectiveList } from './ui';
 import { readSave, resetHints, writeSave } from './persist';
 /* saisie */
 export function toWorld(px: number,py: number){const sx=(px-VW/2)/ST.zoom+cam.x,sy=(py-VH/2)/ST.zoom+cam.y;return {sx,sy,x:(sy/16+sx/32)/2,y:(sy/16-sx/32)/2}}
@@ -94,6 +95,7 @@ $('stLoad').onclick=()=>{try{const o=JSON.parse($('stTxt').value);if(!o||!o.char
 $('volMusic').value=String(Math.round(SET.music*100));$('volSfx').value=String(Math.round(SET.sfx*100));
 $('volMusic').oninput=()=>{SET.music=Number($('volMusic').value)/100;saveSettings()};
 $('volSfx').oninput=()=>{SET.sfx=Number($('volSfx').value)/100;saveSettings()};
+$('obj').onclick=()=>{$('goalList').innerHTML=objectiveList();$('goalBox').classList.add('show')};$('goalClose').onclick=()=>$('goalBox').classList.remove('show');
 $('bMore').onclick=()=>{const o=$('tr').classList.toggle('open');$('bMore').setAttribute('aria-expanded',String(o));$('bMore').classList.toggle('on',o)};
 $('bSnd').onclick=()=>{ST.muted=!ST.muted;SET.muted=ST.muted;saveSettings()};$('bDbg').onclick=()=>{ST.dbg=!ST.dbg;document.body.classList.toggle('dbgon',ST.dbg);$('bDbg').classList.toggle('on',ST.dbg);$('dbg').style.display=ST.dbg?'block':'none'};$('bZi').onclick=()=>setZoom(ST.zoom*1.2);$('bZo').onclick=()=>setZoom(ST.zoom/1.2);
 $('bSave').onclick=quickSave;$('bLoad').onclick=quickLoad;

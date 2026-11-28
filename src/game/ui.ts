@@ -52,13 +52,27 @@ export function updateUI(){
   $('alertfx').classList.toggle('on',ST.S.alertT>0||ST.S.enemies.some(e=>e.state==='chase'&&!e.ko));
   $('bPause').textContent=ST.paused?'▶':'⏸';$('bPause').classList.toggle('on',ST.paused);$('bSpeed').classList.toggle('on',ST.spd===2);$('bAssist').classList.toggle('on',ST.assist);$('bSnd').textContent=ST.muted?'🔇':'🔊'
 }
+/** Liste complète des étapes indispensables, avec ce qui est fait et qui doit agir (E2-6). */
+export function objectiveList(){
+  const T=ST.S.team,F=ST.S.flags,tm=ST.S.chars.filter(c=>c.joined),dj=getC('marc'),mx=getC('jordan');
+  const L:[boolean,string][]=[
+    [tm.some(c=>c.f>=1),'<b>Kévin et Nadia</b> : traverser le rez-de-chaussée (gobelet, clope, portillon bleu) et monter à l\'étage 1'],
+    [!!(dj.joined&&mx.joined),'<b>Étage 1</b> : retrouver Djibril (salle de réunion, est) et Max (toilettes, ouest)'],
+    [!!F.manager||tm.some(c=>c.f===2),'<b>Porte rouge</b> : Nadia la pirate, ou Max assomme le manager et Djibril prend sa tenue'],
+    [!!T.codeInfo,'<b>Djibril</b> (en tenue) fait parler la manageuse en chef : où est le code ? (facultatif, accélère Nadia)'],
+    [!!T.code,'<b>Le code du coffre</b> : Nadia pirate la salle serveur, <i>ou bien</i> Max assomme le DG à sa sortie et le lui prend'],
+    [!!F.cams,'<b>Nadia</b> coupe les caméras de l\'étage 2 depuis la salle serveur'],
+    [!!T.key,'<b>Kévin</b> ouvre le coffre du DG (par la gaine), une fois le bureau libre'],
+    [false,'<b>Tous</b> descendent au RDC et prennent l\'ascenseur de service avant la fin du temps']];
+  const first=L.findIndex(q=>!q[0]);
+  return L.map((q,i)=>'<div class="gl'+(q[0]?' ok':i===first?' now':'')+'">'+(q[0]?'✔':i===first?'▶':'○')+' '+q[1]+'</div>').join('')}
 export function objective(){
   const T=ST.S.team,F=ST.S.flags,tm=ST.S.chars.filter(c=>c.joined),dj=getC('marc'),mx=getC('jordan');
   const steps=[
    [tm.some(c=>c.f>=1),"Rez-de-chaussée : <b>Kévin</b> jette un gobelet (Roger nettoie 10 s), <b>Nadia</b> lance une clope à Dédé (fumoir, 1 min), puis pirate le portillon bleu"],
    [dj.joined&&mx.joined,"Étage 1 : <b>Djibril</b> pleure en salle de réunion (est), <b>Max</b> est aux toilettes (ouest) : <b>Kévin</b> jette un gobelet près de la plante, Dylan nettoie puis file à la cafétéria"],
    [F.manager||tm.some(c=>c.f===2),"Porte rouge de l'escalier : <b>Nadia</b> la pirate de près (8 s), ou <b>Max</b> assomme le manager et <b>Djibril</b> prend son costume. <b>Nadia</b>, devant n'importe quel PC, choisit : porte, notification, pause café, réunion, lumière ou imprimante"],
-   [T.code,"<b>Nadia</b> pirate le serveur (étage 1, nord-ouest) pour le code du coffre"],
+   [!!T.code,T.codeInfo?"Le code est sur le serveur : <b>Nadia</b> le pirate en salle serveur (étage 1, nord-ouest), ou <b>Max</b> assomme le DG à sa sortie":"Trouver le code du coffre : <b>Djibril</b>, en tenue, fait parler la manageuse en chef ; <b>Nadia</b> pirate le serveur (étage 1, nord-ouest) ; ou <b>Max</b> assomme le DG à sa sortie et lui prend le code"],
    [F.cams&&tm.some(c=>c.f===2),"Couper les caméras et monter à l'étage 2 (Djibril ouvre, les autres collent derrière)"],
    [T.key,"<b>Kévin</b> : gaine du couloir, puis coffre du DG, une fois son bureau libre"],
    [false,"Tous au <b>RDC</b>, devant l'ascenseur de service, avant 18h"]];

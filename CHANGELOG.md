@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.16
+- Vidéo d'introduction : musique de suspense puis d'action, et six temps d'arrêt (2,6 à 2,8 s) avant les changements de scène pour laisser lire les sous-titres
+- Guidage : le dialogue d'introduction énonce le plan en quatre temps ; Djibril et Max annoncent leur rôle pour le code
+- Objectif : touchez le cadre en haut à gauche pour voir toutes les étapes indispensables (✔ fait, ▶ en cours, ○ à venir) et qui doit agir
+- Code du coffre, deux voies : Djibril (en tenue) retient la manageuse en chef et apprend où est le code, ce qui accélère Nadia (6 s au lieu de 10) ; ou Max assomme le DG et lui prend le code ; test 28
+
 ## 1.15
 - Hiérarchie des ordres donnés au personnel : serveur (SMS) avant réunion, lumière, imprimante, gobelet puis café ; un gobelet ou un café ne détourne plus quelqu'un parti en salle serveur
 - Interrupteur de chaque étage dessiné sur la carte (il s'éclaire quand la lumière est coupée)

@@ -24,6 +24,7 @@ export function updateChar(c: Character,dt: number){
   if(c.talking){const e=getE(c.talking);
     if(!e||e.ko||e.f!==c.f||c.path.length||c.order||ST.S.over){releaseTalk(c)}
     else{c.moving=false;if(e.talk>1e8){c.chatT-=dt;if(c.chatT<=0){c.chatT=3.6;c.chatN++;
+        if(e.id==='manon'&&c.chatN>=3&&!ST.S.team.codeInfo){ST.S.team.codeInfo=true;say(e,'Le code du coffre ? Demandez aux informaticiens : tout est sur le serveur, salle serveur, au nord-ouest.',4.4);feed(e.name,'Le code du coffre est sur le serveur, en salle serveur (nord-ouest).',false);toast('Information obtenue : le code est sur le serveur de la salle serveur. Nadia le pirate plus vite (6 s).','g')}
         if(c.chatN%2){const L=BAR[Math.floor(Math.random()*BAR.length)];say(c,L,3.4);feed('Djibril',L,true)}
         else{const L=BAR_R[Math.floor(Math.random()*BAR_R.length)];say(e,L,3.2);feed(e.name,L,false)}}}return}}
   const o=c.order;
@@ -94,7 +95,8 @@ export function updateBusy(c: Character,dt: number){
   c.busy=null;
   if(b.k==='dist'){c.path=b.sp||[];c.order=b.so||null;return}
   if(b.k==='ko'){const e=getE(b.eid);if(e&&!e.ko&&Math.hypot(e.x-c.x,e.y-c.y)<2.4){e.ko=true;e.koT=0;e.koDur=50;e.state='ko';e.path=[];e.det=0;e.talk=0;snd(110,.25,'sine',.08);
-      for(let i=0;i<10;i++)ST.P.push({f:e.f,x:e.x,y:e.y,z:34,vx:rnd(-1.2,1.2),vy:rnd(-1.2,1.2),vz:rnd(10,30),life:.8,col:'#ffd54a',sz:2.4});say(c,'Dodo.',1.6)}}
+      for(let i=0;i<10;i++)ST.P.push({f:e.f,x:e.x,y:e.y,z:34,vx:rnd(-1.2,1.2),vy:rnd(-1.2,1.2),vz:rnd(10,30),life:.8,col:'#ffd54a',sz:2.4});say(c,'Dodo.',1.6);
+      if(e.type==='dg'&&!ST.S.team.code){ST.S.team.code=true;ST.S.team.codeBy='max';toast('Max fouille le DG assommé et trouve le code du coffre : 6969','g');say(c,'Le post-it « code coffre » dans la poche. Classique.',3.2)}}}
   else if(b.k==='hide'){const e=getE(b.eid);if(e&&e.ko){e.hidden=true;e.cart=true;say(c,'Dans le chariot.',1.8);snd(180,.2,'sine',.05)}}
   else if(b.k==='uniform'){const e=getE(b.eid);if(e&&e.ko&&!e.uniformTaken){e.uniformTaken=true;c.disguise=e.type==='manager'?'manager':'vigile';say(c,e.type==='manager'?'Cadre dynamique, sans équipe ni budget.':'Vigile en CDI, le dernier du bâtiment.',2.4);
       toast('Djibril est déguisé en '+(e.type==='manager'?'manager (niveau 2)':'vigile (niveau 1)')+'. Il passe inaperçu au-delà de 2 cases seulement.','g');if(e.type==='manager')ST.S.flags.manager=true;snd(500,.12,'triangle',.05)}}

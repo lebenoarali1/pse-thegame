@@ -18,6 +18,9 @@ let next = 0;
 let timer = 0;
 let master: GainNode | null = null;
 
+let intro: Mode | null = null;
+/** Musique de la vidéo d'introduction : suspense, puis action pendant la course (null pour l'arrêter). */
+export function setIntroMusic(m: Mode | null) { intro = m }
 export function currentMode(): Mode { return mode }
 
 function note(fr: number, t: number, d: number, type: OscillatorType, v: number) {
@@ -35,9 +38,9 @@ function situation() {
 }
 
 function tick() {
-  if (!ST.S || ST.S.t < 0.2 || ST.S.over) return;
-  mode = musicMode(situation());
-  if (ST.paused || ST.muted || SET.music <= 0) return;
+  if (intro) mode = intro;
+  else { if (!ST.S || ST.S.t < 0.2 || ST.S.over || !ST.started) return; mode = musicMode(situation()) }
+  if ((ST.paused && !intro) || ST.muted || SET.music <= 0) return;
   try {
     if (!ST.AC) ST.AC = new (window.AudioContext || window.webkitAudioContext)();
     const ac = ST.AC;

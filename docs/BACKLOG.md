@@ -1,6 +1,6 @@
 # Backlog
 
-Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalités attendues. La version courante est la 1.15.
+Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalités attendues. La version courante est la 1.16.
 
 ## 1. Bilan : ce qui est en place
 
@@ -25,10 +25,13 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Le menu n'affiche que les actions utiles à l'étage
 - Hiérarchie des ordres : serveur, puis réunion, lumière, imprimante, gobelet, café ; un ordre moins prioritaire n'écrase pas un ordre en cours
 - Interrupteur de chaque étage visible sur la carte
+- Étapes indispensables : liste lisible en touchant l'objectif (fait, en cours, qui doit agir)
+- Deux voies pour le code du coffre : Djibril fait parler la manageuse en chef puis Nadia pirate le serveur (plus vite), ou Max assomme le DG à sa sortie et lui prend le code
 - Double appui : l'action en cours passe à vitesse x4 jusqu'à sa fin ou jusqu'à ce qu'un garde s'en mêle
 
 ### Interface
 - Écran d'accueil avec choix de la difficulté
+- Vidéo d'introduction avec musique de suspense puis d'action, et un temps d'arrêt avant chaque changement de scène pour lire
 - Aide (❓), bulles d'astuces au premier usage, première minute guidée
 - Fin de partie mise en scène, défaites expliquées (qui a vu, où)
 - Mobile : portrait et paysage, boutons de 44 px, options rares derrière « ⋯ »
@@ -40,7 +43,7 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Installation comme application et mode hors connexion
 
 ### Qualité et livraison
-- TypeScript strict sans `any`, lint, 8 tests unitaires, 27 scénarios de bout en bout
+- TypeScript strict sans `any`, lint, 8 tests unitaires, 28 scénarios de bout en bout
 - Publication automatique sur GitHub Pages après vérifications
 - Documentation en ligne : MCO, architecture, conception, changelog
 - Releases GitHub à chaque tag de version, mises à jour automatiques des dépendances

@@ -29,7 +29,7 @@ export const PCACT=[
  {k:'lights',i:'💡',n:'Éteindre la lumière',s:'Étage dans le noir 60 s : on ne voit qu\'à 2,6 cases, quelqu\'un ira rallumer',t:5}];
 export const SWITCH=[{x:16.5,y:10.5},{x:19.5,y:11.5},{x:8.5,y:7.5}];
 export function pcExtras(name: string){const E: PcAction[]=[];
-  if(name==='serveur'){if(!ST.S.team.code)E.push({k:'code',i:'🔐',n:'Pirater le code du coffre',s:'Indispensable pour ouvrir le coffre du DG',t:10});E.push({k:'cams2',i:'📷',n:'Couper les caméras de l\'étage 2',s:'70 s, vue sur le bureau du DG',t:6})}
+  if(name==='serveur'){if(!ST.S.team.code)E.push({k:'code',i:'🔐',n:'Pirater le code du coffre',s:ST.S.team.codeInfo?'Djibril a localisé le code : piratage rapide':'Indispensable pour ouvrir le coffre du DG',t:ST.S.team.codeInfo?6:10});E.push({k:'cams2',i:'📷',n:'Couper les caméras de l\'étage 2',s:'70 s, vue sur le bureau du DG',t:6})}
   if(name==='accueil')E.push({k:'portillon',i:'🚧',n:'Ouvrir le portillon bleu',s:'Le portillon de l\'accueil reste ouvert 45 s',t:4});
   return E}
 export function pcAvail(a: { k: string; i: string; n: string; s: string; t: number; },f: number,px: number,py: number){if(a.k==='door')return f>=1&&DOORS.some(d=>d.f===f&&d.l<=2&&Math.hypot(d.x-px,d.y-py)<12);if(a.k==='notif')return f===1;if(a.k==='eval'||a.k==='copies')return f===2;if(a.k==='meeting')return f===2&&!ST.S.ev[320];if(a.k==='cam')return ST.S.enemies.some(e=>e.type==='camera'&&e.f===f);if(a.k==='cafe')return !!CAFE[f];if(a.k==='reu')return !!MEET[f];if(a.k==='print')return !!PRN[f];return true}

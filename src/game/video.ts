@@ -10,6 +10,7 @@ import { VW } from './renderLoop';
 import type { VideoState } from './types';
 import { readSave } from './persist';
 import { SET, applyDiff, curDiff, nextDiff } from './settings';
+import { setIntroMusic } from './music';
 import { quickLoad } from './input';
 /* vidéo d'introduction : vue à la première personne, avant le menu */
 export let vd=1;
@@ -154,7 +155,13 @@ export function drawVid(W: number,H: number,t: number){
     if(t>1.5&&t<VT.title){g.fillStyle='rgba(255,255,255,.04)';for(let i=0;i<4;i++)g.fillRect(0,(t*90+i*H/4)%H,W,2)}}}
 export function vidFrame(t: number){const r=$('vid').getBoundingClientRect(),W=Math.max(2,Math.round(r.width)),H=Math.max(2,Math.round(r.height)),d=Math.min(2,devicePixelRatio||1);vd=d;
   if(vcv.width!==Math.round(W*d)||vcv.height!==Math.round(H*d)){vcv.width=Math.round(W*d);vcv.height=Math.round(H*d)}drawVid(W,H,t)}
-export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(now-VID.last)/1000);VID.last=now;VID.t+=dt*VSLOW;const t=VID.t;
+/* Temps d'arrêt (instant de la vidéo, durée réelle en secondes) : le texte reste lisible avant chaque changement de scène */
+export const HOLDS: [number,number][]=[[3.0,2.6],[6.8,2.8],[9.3,2.6],[20.0,2.6],[21.6,2.8],[25.0,2.8]];
+export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(now-VID.last)/1000);VID.last=now;
+  if(VID.hold&&VID.hold>0){VID.hold-=dt;vidFrame(VID.t);requestAnimationFrame(vidLoop);return}
+  VID.t+=dt*VSLOW;const t=VID.t;
+  VID.held=VID.held||{};for(const [ht,hd] of HOLDS){if(t>=ht&&!VID.held[ht]){VID.held[ht]=1;VID.hold=hd;VID.t=ht}}
+  setIntroMusic(t<VT.run?'tension':t<VT.title?'chase':null);
   vidFrame(t);
   if(t<VT.desk){while(VID.tick<t&&t<3.2){VID.tick+=.13;snd(900+Math.random()*300,.025,'square',.012)}}
   vonce('ping',3,()=>{snd(880,.18,'triangle',.06);setTimeout(()=>snd(660,.3,'triangle',.06),160)});
@@ -165,8 +172,8 @@ export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(n
   if(t>VT.run&&t<VT.title){while(VID.tick<t){VID.tick+=.32;snd(75,.07,'square',.07,-20)}}
   vonce('title',VT.title,()=>{snd(330,.5,'triangle',.06);setTimeout(()=>snd(494,.5,'triangle',.06),150);setTimeout(()=>snd(659,.9,'triangle',.07),300);$('vGo').style.display='block'});
   requestAnimationFrame(vidLoop)}
-export function playVid(cb: () => void){VID.t=0;VID.tick=0;VID.fired={};VID.cb=cb;VID.run=true;VID.last=performance.now();$('vid').classList.add('show');$('vGo').style.display='none';requestAnimationFrame(vidLoop)}
-export function endVid(){if(!VID.run)return;VID.run=false;$('vid').classList.remove('show');const f=VID.cb;VID.cb=null;if(f)f()}
+export function playVid(cb: () => void){VID.t=0;VID.tick=0;VID.hold=0;VID.held={};VID.fired={};VID.cb=cb;VID.run=true;VID.last=performance.now();$('vid').classList.add('show');$('vGo').style.display='none';requestAnimationFrame(vidLoop)}
+export function endVid(){if(!VID.run)return;VID.run=false;setIntroMusic(null);$('vid').classList.remove('show');const f=VID.cb;VID.cb=null;if(f)f()}
 export const realStart=()=>{$('intro').classList.remove('show');ST.started=true;ST.paused=false;try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};beginRun()};
 $('bStart').onclick=()=>{try{if(!ST.AC)ST.AC=new(window.AudioContext||window.webkitAudioContext)()}catch(e){};realStart()};
 const showDiff=()=>{$('bDiff').textContent='Difficulté : '+curDiff().n+' · '+curDiff().desc};
