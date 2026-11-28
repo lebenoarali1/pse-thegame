@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.10
+- Correctif : un appui tactile qui ouvre le menu du PC ne valide plus le premier bouton (l'imprimante se déclenchait seule) ; les boutons du menu ignorent les clics des 0,5 premières secondes
+- Mobile : cibles tactiles d'au moins 44 px en portrait et en paysage, boutons rares (assistance, debug, état, sauvegarde, chargement) derrière « ⋯ » ; test 22
+- Étage 2 : trois nouvelles actions de PC pour Nadia : entretien d'évaluation (la DRH quitte le couloir 25 s), « 12 copies » (Brigitte quitte son poste 25 s), avancer la réunion du comité (le DG part tout de suite, ce qui supprime l'attente) ; test 23
+
 ## 1.9
 - Défaites expliquées : qui a vu et où (étage, côté, nord ou sud), y compris pour un corps découvert ; test 21
 - Aperçu de partage (description, Open Graph) et couleur de thème

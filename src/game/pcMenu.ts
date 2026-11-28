@@ -1,6 +1,7 @@
 import { ST } from './store';
-import { DOORS, getC } from './state';
+import { DOORS, getC, getE } from './state';
 import { CAFE } from './levelData';
+import { EVENTS } from './events';
 import { $ } from './utils';
 import { say, toast } from './messages';
 import { startBusy } from './powers';
@@ -10,6 +11,8 @@ import type { Enemy, Order, PcAction, PcMenu } from './types';
 import type { Character } from './types';
 /* menu de piratage d'un PC : Nadia choisit l'action */
 export let pcm: PcMenu | null=null;
+/** Instant d'ouverture du menu : un appui tactile qui l'a ouvert ne doit pas valider le premier bouton (clic fantôme). */
+let pcOpenedAt=0;
 export const MEET=[null,{x:20.5,y:10.5},null];
 export const PRN=[{x:14.5,y:2.5},{x:14.5,y:2.5},{x:12.5,y:2.5}];
 export const PRN_SAY=['Qui imprime 400 pages à cette heure-ci ?','Encore bloquée, comme tous les vendredis.','C\'est mon CV, ne regardez pas.','Une imprimante qui marche. Il y a forcément un piège.'];
@@ -20,17 +23,20 @@ export const PCACT=[
  {k:'reu',i:'📅',n:'Réunion urgente',s:'Manager et support en salle de réunion (45 s)',t:5},
  {k:'cam',i:'📷',n:'Éteindre les caméras',s:'Caméras de l\'étage coupées 40 s',t:6},
  {k:'print',i:'🖨️',n:'Imprimer à distance',s:'Tout le personnel vient voir l\'imprimante (20 s)',t:4},
+ {k:'eval',i:'🗂️',n:'Entretien d\'évaluation',s:'Mme Lambert est convoquée au fond de l\'étage (25 s)',t:5},
+ {k:'copies',i:'📠',n:'Le DG veut 12 copies',s:'Brigitte quitte son poste pour l\'imprimante (25 s)',t:5},
+ {k:'meeting',i:'📆',n:'Avancer la réunion du comité',s:'Le DG quitte son bureau tout de suite',t:6},
  {k:'lights',i:'💡',n:'Éteindre la lumière',s:'Étage dans le noir 60 s : on ne voit qu\'à 2,6 cases, quelqu\'un ira rallumer',t:5}];
 export const SWITCH=[{x:16.5,y:10.5},{x:19.5,y:11.5},{x:8.5,y:7.5}];
 export function pcExtras(name: string){const E: PcAction[]=[];
   if(name==='serveur'){if(!ST.S.team.code)E.push({k:'code',i:'🔐',n:'Pirater le code du coffre',s:'Indispensable pour ouvrir le coffre du DG',t:10});E.push({k:'cams2',i:'📷',n:'Couper les caméras de l\'étage 2',s:'70 s, vue sur le bureau du DG',t:6})}
   if(name==='accueil')E.push({k:'portillon',i:'🚧',n:'Ouvrir le portillon bleu',s:'Le portillon de l\'accueil reste ouvert 45 s',t:4});
   return E}
-export function pcAvail(a: { k: string; i: string; n: string; s: string; t: number; },f: number,px: number,py: number){if(a.k==='door')return DOORS.some(d=>d.f===f&&d.l<=2&&Math.hypot(d.x-px,d.y-py)<12);if(a.k==='notif')return f===1;if(a.k==='cam')return ST.S.enemies.some(e=>e.type==='camera'&&e.f===f);if(a.k==='cafe')return !!CAFE[f];if(a.k==='reu')return !!MEET[f];if(a.k==='print')return !!PRN[f];return true}
-export function pcOpen(c: Character,o: Order,name: string){pcm={f:o.f!,x:o.x!,y:o.y!,extra:pcExtras(name)};pcRender();ST.paused=true}
+export function pcAvail(a: { k: string; i: string; n: string; s: string; t: number; },f: number,px: number,py: number){if(a.k==='door')return DOORS.some(d=>d.f===f&&d.l<=2&&Math.hypot(d.x-px,d.y-py)<12);if(a.k==='notif')return f===1;if(a.k==='eval'||a.k==='copies')return f===2;if(a.k==='meeting')return f===2&&!ST.S.ev[320];if(a.k==='cam')return ST.S.enemies.some(e=>e.type==='camera'&&e.f===f);if(a.k==='cafe')return !!CAFE[f];if(a.k==='reu')return !!MEET[f];if(a.k==='print')return !!PRN[f];return true}
+export function pcOpen(c: Character,o: Order,name: string){pcm={f:o.f!,x:o.x!,y:o.y!,extra:pcExtras(name)};pcOpenedAt=performance.now();pcRender();ST.paused=true}
 export function pcClose(){pcm=null;$('pcm').classList.remove('show');ST.paused=false}
 export function pcRender(){const b=$('pcm');b.innerHTML='<h4>Poste piraté : que faire ? <small style="font-weight:400;color:#8a93b8">(temps en pause)</small><span id="pcx">✕</span></h4>';
-  pcm!.extra.concat(PCACT.filter((a: PcAction)=>pcAvail(a,pcm!.f,pcm!.x,pcm!.y))).forEach((a: PcAction)=>{const bt=document.createElement('button');bt.className='pa';bt.innerHTML='<i>'+a.i+'</i><div>'+a.n+' <small>'+a.s+' · '+a.t+' s</small></div>';bt.onclick=()=>pcChoose(a.k);b.appendChild(bt)});
+  pcm!.extra.concat(PCACT.filter((a: PcAction)=>pcAvail(a,pcm!.f,pcm!.x,pcm!.y))).forEach((a: PcAction)=>{const bt=document.createElement('button');bt.className='pa';bt.innerHTML='<i>'+a.i+'</i><div>'+a.n+' <small>'+a.s+' · '+a.t+' s</small></div>';bt.onclick=()=>{if(performance.now()-pcOpenedAt<500)return;pcChoose(a.k)};b.appendChild(bt)});
   $('pcx').onclick=pcClose;b.classList.add('show')}
 export function pcChoose(k: string){const c=getC('nadege');if(!pcm||c.out)return;const a=pcm!.extra.concat(PCACT).find((q: PcAction)=>q.k===k);if(!a)return;
   if((Number(ST.S.flags['pc_'+k])||0)>ST.S.t){toast('Déjà fait il y a peu, attendez un peu','w');return}
@@ -46,6 +52,9 @@ export function pcEffect(k: string,c: Character){const f=c.f;ST.S.flags['pc_'+k]
   else if(k==='notif'){if(f!==1){toast('Pas de salle serveur à cet étage','w');return}smsServeur();say(c,'Notification envoyée. Signé : la DSI.',2.6)}
   else if(k==='cafe'){if(!CAFE[f]){toast('Pas de cafétéria à cet étage','w');return}staff.forEach(e=>{if(goCoffee(e,45))n++});toast(n?n+' personne'+(n>1?'s':'')+' invitée'+(n>1?'s':'')+' à la pause café':'Personne à inviter','g');say(c,'Invitation : « Café offert, présence obligatoire ».',2.6)}
   else if(k==='reu'){if(!MEET[f]){toast('Pas de salle de réunion à cet étage','w');return}staff.forEach((e,i)=>{sendTo(e,MEET[f]!,45,MEET_SAY,'Réunion urgente ? À cette heure-ci ?',i);n++});toast(n?n+' personne'+(n>1?'s':'')+' filent en réunion (45 s)':'Personne à convoquer','g');say(c,'Réunion : ordre du jour, « point sur le point ».',2.6)}
+  else if(k==='eval'){const e=getE('drh');if(e.ko||e.state==='chase'){toast('Mme Lambert est indisponible','w');return}sendTo(e,{x:12.5,y:11.5},25,['Tiens, un entretien ? Je ne l\'avais pas prévu.','Évaluation à 360 degrés, sans angle mort.'],'Un entretien ? À cette heure-ci ?',0);toast('Mme Lambert file en entretien d\'évaluation (25 s)','g');say(c,'Invitation : « Entretien annuel, durée indéterminée ».',2.6)}
+  else if(k==='copies'){const e=getE('brigitte');if(e.ko||e.state==='chase'){toast('Brigitte est indisponible','w');return}sendTo(e,PRN[2],25,PRN_SAY,'Le DG veut douze copies. Pour hier.',0);toast('Brigitte part à l\'imprimante (25 s)','g');say(c,'Demande du DG : « 12 copies, recto verso, couleur ».',2.6)}
+  else if(k==='meeting'){if(ST.S.ev[320]){toast('Le DG est déjà parti','w');return}const e=getE('dg');if(e.ko){toast('Le DG est hors service','w');return}ST.S.ev[320]=1;EVENTS[0].fn();say(c,'Agenda modifié : « Comité stratégique, tout de suite ».',2.8)}
   else if(k==='lights'){ST.S.team.lightsOff=ST.S.team.lightsOff||{};ST.S.team.lightsOff[f]=ST.S.t+60;ST.S.flags['pc_lights']=ST.S.t+80;
     let best: Enemy|undefined,bd=1e9;for(const e of ST.S.enemies){if(e.f!==f||e.ko||e.type==='camera'||e.state==='chase'||e.state==='break'||e.type==='dg'||e.type==='drh')continue;const d=Math.hypot(e.x-c.x,e.y-c.y);if(d<bd){bd=d;best=e}}
     if(best){ST.S.team.lightsWho=ST.S.team.lightsWho||{};ST.S.team.lightsWho[f]=best.id;sendTo(best,SWITCH[f],4,['Disjoncteur...','Encore une coupure.'],'Qui a coupé la lumière ?!',0)}

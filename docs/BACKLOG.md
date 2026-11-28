@@ -94,7 +94,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | E6-2 | En tant que joueur, je veux un menu de piratage filtré par étage, qui met le temps en pause | DONE 1.0, 1.1, 1.2 | Must | M |
 | E6-3 | En tant que joueur, je veux le clic droit pour afficher ou masquer les cônes (et un bouton équivalent au toucher) | DONE 1.2 (clic droit) | Should | S |
 | E6-4 | En tant que joueur sur téléphone, je veux un bouton pour afficher ou masquer les cônes et un appui long pour le clic droit, afin de ne rien perdre en tactile | DONE 1.5 | Must | S |
-| E6-5 | En tant que joueur sur téléphone, je veux une mise en page testée en portrait et paysage (petits écrans, encoche), avec des cibles tactiles d'au moins 44 px | TODO | Must | M |
+| E6-5 | En tant que joueur sur téléphone, je veux une mise en page testée en portrait et paysage (petits écrans, encoche), avec des cibles tactiles d'au moins 44 px | DONE (1.10) | Must | M |
 | E6-6 | En tant que joueur, je veux régler la taille du texte des dialogues et un contraste élevé, afin de lire confortablement | TODO | Should | S |
 | E6-7 | En tant que joueur daltonien, je veux que la menace se lise sans la couleur (forme ou motif des cônes, icône de statut) | TODO | Should | M |
 | E6-8 | En tant que joueur au clavier ou avec un lecteur d'écran, je veux des libellés ARIA sur les boutons et une navigation complète au clavier | TODO | Should | M |
@@ -107,7 +107,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 |---|---|---|---|---|
 | E7-1 | En tant que joueur, je veux une vidéo d'intro en vue à la première personne avec option de la sauter | DONE 0.9, 0.9.1 | Should | L |
 | E7-2 | En tant que joueur, je veux des dialogues de recrutement propres à chaque personnage, avec le choix d'âge de Kévin | DONE 0.x | Must | M |
-| E7-3 | En tant que joueur, je veux un étage 2 plus riche : situations et gags autour de la DRH, de Brigitte et du DG (au moins trois interactions nouvelles) | TODO | Must | L |
+| E7-3 | En tant que joueur, je veux un étage 2 plus riche : situations et gags autour de la DRH, de Brigitte et du DG (au moins trois interactions nouvelles) | DONE (1.10) | Must | L |
 | E7-4 | En tant que joueur, je veux une fin de partie mise en scène (victoire et chaque défaite) avec une réplique et une courte séquence, afin de conclure sur un rire | TODO | Should | M |
 | E7-5 | En tant que joueur, je veux des répliques d'ambiance variées pour les employés selon l'heure et les événements (réunion, plan social qui approche) | TODO | Could | S |
 | E7-6 | En tant que joueur, je veux une musique d'ambiance adaptative (calme, tension, poursuite) et un mixage des effets, avec un réglage du volume | TODO | Should | L |

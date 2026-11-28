@@ -33,7 +33,7 @@ html,body{margin:0;height:100%;background:var(--bg);color:var(--tx);font-family:
 .ab b{display:block;font-size:15px;line-height:1;font-weight:700}
 .ab small{display:block;font-size:11px;color:var(--mu);line-height:1.1;margin-top:2px}
 .kh{display:inline!important;color:#777!important}
-@media (pointer:coarse),(max-width:620px){.kh{display:none!important}.ab{min-width:0;padding:6px 8px;gap:6px}.ab b{font-size:14px}.ab .ic{font-size:18px}.ab small{font-size:10px}}
+@media (pointer:coarse),(max-width:620px),(max-height:500px){.kh{display:none!important}.ab{min-width:0;padding:6px 8px;gap:6px}.ab b{font-size:14px}.ab .ic{font-size:18px}.ab small{font-size:10px}}
 .ab.act{border-color:var(--or);box-shadow:0 0 0 2px rgba(255,138,76,.45)}
 .ab.cd{opacity:.45}
 .ab.off{opacity:.35}
@@ -92,3 +92,15 @@ body.indlg #bt{visibility:hidden}
 
 .hk{border-collapse:collapse;width:100%;font-size:13px;margin:8px 0}.hk th,.hk td{border-bottom:1px solid #2a3050;padding:5px 6px;text-align:left;vertical-align:top}.hk th{color:#ef7757}
 .t.h{border-color:#7fb2ff;color:#dbe8ff}
+
+/* Cibles tactiles d'au moins 44 px sur téléphone (E6-5) ; les boutons rares passent derrière « ⋯ » */
+.mob{display:none}
+@media (pointer:coarse),(max-width:620px),(max-height:500px){
+  .ib{width:44px;height:44px}
+  .mob{display:flex}
+  #tr .sec{display:none}
+  #tr.open .sec{display:flex}
+  body:not(.dbgon) #tr.open .dbgonly{display:none}
+  #tr{max-width:210px}
+  .ab{min-height:44px}
+}

@@ -85,6 +85,7 @@ $('bState').onclick=()=>{$('stTxt').value=ST.S?JSON.stringify(ST.S):'';$('stBox'
 $('stClose').onclick=()=>$('stBox').classList.remove('show');
 $('stCopy').onclick=()=>{const t=$('stTxt');t.select();try{navigator.clipboard.writeText(t.value)}catch(e){document.execCommand('copy')}toast('État copié','g')};
 $('stLoad').onclick=()=>{try{const o=JSON.parse($('stTxt').value);if(!o||!o.chars||!o.enemies)throw 0;ST.lastSave=$('stTxt').value;$('stBox').classList.remove('show');ST.started=true;$('intro').classList.remove('show');ST.paused=false;quickLoad()}catch(e){toast("État illisible",'r')}};
+$('bMore').onclick=()=>{const o=$('tr').classList.toggle('open');$('bMore').setAttribute('aria-expanded',String(o));$('bMore').classList.toggle('on',o)};
 $('bSnd').onclick=()=>{ST.muted=!ST.muted;SET.muted=ST.muted;saveSettings()};$('bDbg').onclick=()=>{ST.dbg=!ST.dbg;document.body.classList.toggle('dbgon',ST.dbg);$('bDbg').classList.toggle('on',ST.dbg);$('dbg').style.display=ST.dbg?'block':'none'};$('bZi').onclick=()=>setZoom(ST.zoom*1.2);$('bZo').onclick=()=>setZoom(ST.zoom/1.2);
 $('bSave').onclick=quickSave;$('bLoad').onclick=quickLoad;
 export function quickSave(){if(ST.S.over)return;ST.lastSave=JSON.stringify(ST.S);writeSave(ST.lastSave);toast('Sauvegarde rapide effectuée','g');snd(900,.08,'triangle',.04)}
