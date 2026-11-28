@@ -37,7 +37,7 @@ export interface Character {
   run: boolean; cd: { q: number; e: number; w?: number; x?: number };
   sp: number; moving: boolean; say: string; sayT: number;
   joined?: boolean; out?: boolean;
-  talking: string | null; runOnce?: boolean; idleT?: number; smoke?: boolean; chatT: number; chatN: number; stall: number; repath: number; runN: number; small?: boolean;
+  talking: string | null; runOnce?: boolean; idleT?: number; idleF?: number; smoke?: boolean; chatT: number; chatN: number; stall: number; repath: number; runN: number; small?: boolean;
 }
 
 export interface Enemy {
@@ -53,7 +53,7 @@ export interface Enemy {
   koT: number; koDur: number; freeze: number;
   path: number[][]; moving: boolean; say: string; sayT: number;
   talk: number; wait: number; lose: number; talkTo?: string | null; callTo?: string;
-  look?: Partial<Spot> & { x: number; y: number; t: number; arrived: boolean } | null; lookDur?: number; scan?: ScanCfg | null; blind?: [number,number]; camCd?: number; camCall?: {x:number;y:number}|null; camSpeed?: number; fovS?: number | null; rangeS?: number | null; repath: number; stall: number; order?: Order | null; lastSeen?: Point;
+  look?: Partial<Spot> & { x: number; y: number; t: number; arrived: boolean } | null; lookDur?: number; scan?: ScanCfg | null; blind?: [number,number]; dance?: {at:number;until:number}|null; camCd?: number; camCall?: {x:number;y:number}|null; camSpeed?: number; fovS?: number | null; rangeS?: number | null; repath: number; stall: number; order?: Order | null; lastSeen?: Point;
   talkRed?: [number, number] | null; off?: boolean; chat?: number; chatN?: number; idleFace: number;
   snt?: { mid: string; cid: string; t: number } | null;
   brk?: Spot | null; cof?: Spot | null; cln?: Partial<Spot> & { x: number; y: number; t: number; arrived: boolean; dur: number } | null;
@@ -87,7 +87,7 @@ export interface ActionArg { x: number; y: number; eid?: string; kind?: string }
 
 export interface Appearance { skin: string; hair: string; body: string; legs: string }
 /** Options de dessin d'un personnage ou PNJ. */
-export interface PersonOpts { idle?: boolean;
+export interface PersonOpts { idle?: boolean; dance?: boolean;
   look: string; kind: string; dir: number; moving: boolean; s?: number; ph?: number;
   smoke?: boolean; hair?: string; bodies?: boolean; sit?: boolean; boxers?: boolean; ko?: boolean; hide?: boolean; disguise?: string | null;
   sel?: boolean; run?: boolean; small?: boolean; alpha?: number;

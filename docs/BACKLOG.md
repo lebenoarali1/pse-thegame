@@ -45,6 +45,7 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Course : un appui revient à la marche ; animation de repos ; Max nettoie au repos
 - Caméras coupées 120 s, garde appelé à pied, caméra R+2 adoucie
 - Baratin de Djibril : plus de barre bleue, il court au PNJ, dialogues par catégorie, choix du corps pour le déguisement
+- Pouvoir inutile de Nadia (disco) ; animations de repos plus marquées (balancement, inclinaison, regard qui balaie)
 - Icône des indices clés
 - Page Recette dans la documentation
 
@@ -65,8 +66,8 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Déboguer chaque niveau l'un après l'autre : RDC, puis étage 1, puis étage 2
 
 ### Pouvoirs inutiles (un par personnage)
-- Nadia : lancer une musique disco, tout le monde danse dans les 10 secondes
 - Djibril : envoyer un message misérable à tout le monde, les conversations tournent un moment autour de l'événement
+- Nadia : musique disco, tout l'étage danse dans les 10 s pendant 25 s (en place, bouton 🪩)
 - Max : nettoie un rayon d'une case autour de lui quand il ne fait rien (en place)
 - Kévin (proposition) : photo de groupe, tous les PNJ proches se figent 3 secondes pour poser
 

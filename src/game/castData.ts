@@ -5,7 +5,7 @@ export const CCOL: Record<string, string>={jordan:'#4fd1c5',marc:'#4c8dff',nadeg
 export const ACT: Record<string, Action[]>={
  jordan:[{k:'ko',n:'Assommer',s:'Toucher un garde',i:'🧹',mode:'enemy'},{k:'hide',n:'Planquer',s:'Corps dans le chariot (2 max, ne se réveillent plus)',i:'🛒',mode:'auto'},{k:'puddle',n:'Flaque',s:'Il y va, pose une flaque : qui glisse est assommé',i:'💦',mode:'tile'},{k:'empty',n:'Vider',s:'Dépose les corps du chariot',i:'🗑️',mode:'auto'}],
  marc:[{k:'uniform',n:'Déguisement',s:'Touchez un corps assommé pour prendre sa tenue, ou retire la tenue',i:'👔',mode:'body'},{k:'talk',n:'Baratin',s:'Déguisé : attire un PNJ, aussi longtemps que voulu',i:'🗣️',mode:'enemy'}],
- nadege:[{k:'hack',n:'Pirater',s:'Près du PC, ou porte (8 s si rouge)',i:'💻',mode:'hack'},{k:'clope',n:'Clope',s:'Lance une clope à un vigile : fumoir 60 s',i:'🚬',mode:'enemy'}],
+ nadege:[{k:'hack',n:'Pirater',s:'Près du PC, ou porte (8 s si rouge)',i:'💻',mode:'hack'},{k:'clope',n:'Clope',s:'Lance une clope à un vigile : fumoir 60 s',i:'🚬',mode:'enemy'},{k:'disco',n:'Disco',s:'Musique : tout l\'étage danse dans les 10 s (pouvoir inutile)',i:'🪩',mode:'auto'}],
  kevin:[{k:'vent',n:'Gaine',s:'Va à la gaine',i:'🕳️',mode:'auto'},{k:'throw',n:'Lancer',s:'Toucher un point',i:'🥤',mode:'tile'}]
 };
 

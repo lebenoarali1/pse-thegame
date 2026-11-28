@@ -73,6 +73,7 @@ export const PC_SAY=['Mot de passe : Azerty123. Le DG est un visionnaire.','Quar
 
 /** Astuces affichées une seule fois, au premier usage (clé = id de pouvoir ou événement). */
 export const HINTS: Record<string, string>={
+  disco:'Disco : tout l\'étage se met à danser dans les 10 secondes, pendant 25 s. Pouvoir inutile, mais les danseurs ne patrouillent plus.',
   cone:"Le cône coloré est le champ de vision d'un garde. Restez hors du cône, ou derrière un mur : le jaune devient orange puis rouge quand il vous remarque.",
   jauge:"La jauge au-dessus d'un garde monte quand il vous voit. Reculez ou mettez un obstacle entre vous avant qu'elle soit pleine.",
   cacher:"Pas de cachette ici : le mur et les angles sont vos abris. Kévin passe par la gaine, Max cache les corps dans son chariot.",

@@ -48,6 +48,12 @@ Cocher une case quand la fonction a été vue en jeu et fonctionne. Sinon noter 
 - [ ] Parler trois fois à la manageuse donne l'indice 1, trois fois à Brigitte donne l'indice 2
 - [ ] Toucher le cadre d'objectif liste les étapes indispensables
 
+## 7 bis. Pouvoirs inutiles
+- [ ] Nadia a un bouton 🪩 Disco : dans les 10 s, tous les PNJ de l'étage dansent (bras en l'air, déhanché), ne patrouillent plus, puis reprennent au bout de 25 s
+- [ ] Les danseurs voient toujours Nadia et ses coéquipiers : un repérage reste possible
+- [ ] Le disco a une recharge de 45 s
+- [ ] Idle : un personnage immobile se balance, s'incline et tourne le regard de gauche à droite après 2,5 s (Nadia, Max, Kévin, Djibril)
+
 ## 8. Dialogues
 - [ ] Clic droit, flèche gauche ou bouton ◀ Retour ramène à la réplique précédente
 

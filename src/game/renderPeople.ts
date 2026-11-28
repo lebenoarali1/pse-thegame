@@ -5,12 +5,12 @@ import { rr } from './renderShapes';
 import type { Enemy, PersonOpts } from './types';
 /* rendu : personnages */
 export function drawPerson(g: CanvasRenderingContext2D,fx: number,fy: number,o: PersonOpts){
-  const a=APP[o.look],s=o.s||1,mv=o.moving,t=ST.S.t+(o.ph||0),sw=mv?Math.sin(t*10)*4:0,bob=mv?Math.abs(Math.sin(t*10))*1.6:o.idle?(Math.sin(t*2.2)+1)*.5:0;
+  const a=APP[o.look],s=o.s||1,mv=o.moving,t=ST.S.t+(o.ph||0),sw=o.dance?Math.sin(t*9)*5:mv?Math.sin(t*10)*4:o.idle?Math.sin(t*2.4)*2:0,bob=o.dance?Math.abs(Math.sin(t*9))*3.5:mv?Math.abs(Math.sin(t*10))*1.6:o.idle?(Math.sin(t*2.4)+1)*1.5:0,up=o.dance?12+Math.sin(t*9)*3:0;
   const sdx=Math.cos(o.dir)-Math.sin(o.dir),sdy=Math.cos(o.dir)+Math.sin(o.dir),away=sdy<-.35,ex=clamp(sdx,-1,1);
 /* eslint-disable-next-line prefer-const */
   let body=a.body,legs=a.legs,skin=a.skin;
   if(o.boxers){body='#f6dede';legs=a.skin}
-  g.save();g.translate(fx,fy);g.scale(s,s);
+  g.save();g.translate(fx+(o.dance?Math.sin(t*4.5)*3:0),fy);g.scale(s,s);if(o.idle&&!mv)g.rotate(Math.sin(t*1.7)*.06);if(o.dance)g.rotate(Math.sin(t*4.5)*.1);
   g.fillStyle='rgba(0,0,0,.3)';g.beginPath();g.ellipse(0,0,11,5,0,0,7);g.fill();
   if(o.sit){g.strokeStyle='#2b2f3a';g.lineWidth=2;g.beginPath();g.moveTo(-9,-1);g.lineTo(9,-1);g.moveTo(0,-1);g.lineTo(0,-9);g.stroke();g.fillStyle='#4a5063';g.beginPath();g.ellipse(0,-9,11,5.5,0,0,7);g.fill();g.translate(0,5);if(!away){g.fillStyle='#3a3f4d';rr(g,-8,-34,16,17,4);g.fill()}}
   if(o.kind==='jordan'){ /* chariot de ménage */
@@ -21,8 +21,8 @@ export function drawPerson(g: CanvasRenderingContext2D,fx: number,fy: number,o: 
   g.beginPath();if(o.sit){g.moveTo(-3,-12);g.lineTo(-3+ex*6,-9);g.moveTo(3,-12);g.lineTo(3+ex*6,-9)}else{g.moveTo(-3,-12-bob);g.lineTo(-3+sw,-1);g.moveTo(3,-12-bob);g.lineTo(3-sw,-1)}g.stroke();
   const bw=o.kind==='beaugosse'?20:o.kind==='dg'?19:15;
   g.fillStyle=body;rr(g,-bw/2,-31-bob,bw,20+(o.kind==='dg'?3:0),5);g.fill();
-  g.strokeStyle=body;g.lineWidth=4;g.beginPath();g.moveTo(-bw/2+1,-28-bob);g.lineTo(-bw/2-3-sw*.4,-16-bob);g.moveTo(bw/2-1,-28-bob);g.lineTo(bw/2+3+sw*.4,-16-bob);g.stroke();
-  g.fillStyle=skin;g.beginPath();g.arc(-bw/2-3-sw*.4,-15-bob,2.4,0,7);g.arc(bw/2+3+sw*.4,-15-bob,2.4,0,7);g.fill();
+  g.strokeStyle=body;g.lineWidth=4;g.beginPath();g.moveTo(-bw/2+1,-28-bob);g.lineTo(-bw/2-3-sw*.4,-16-bob-up);g.moveTo(bw/2-1,-28-bob);g.lineTo(bw/2+3+sw*.4,-16-bob-up);g.stroke();
+  g.fillStyle=skin;g.beginPath();g.arc(-bw/2-3-sw*.4,-15-bob-up,2.4,0,7);g.arc(bw/2+3+sw*.4,-15-bob-up,2.4,0,7);g.fill();
   if(o.sit&&away){g.fillStyle='rgba(58,63,77,.95)';rr(g,-8.5,-33,17,18,4);g.fill()}
   if(o.boxers){g.fillStyle='#e0566b';g.font='8px sans-serif';g.textAlign='center';g.fillText('♥ ♥',0,-18)}
   const k=o.kind;

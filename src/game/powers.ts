@@ -59,6 +59,9 @@ export function doAction(c: Character,k: string,arg: ActionArg={x:0,y:0}){
     const d=Math.hypot(e.x-c.x,e.y-c.y);if(d>9.5){toast('Trop loin (9 cases max)','w');return}
     c.cd.e=40;c.path=[];c.order=null;c.smoke=false;
     ST.PR.push({f:c.f,x0:c.x,y0:c.y,x1:e.x,y1:e.y,t:0,dur:Math.min(1.2,.5+d*.04),kind:'clope',eid:e.id});say(c,['Une clope, '+e.name+' ? Offerte par la maison.','Hep, '+e.name+', pause réglementaire !','Vous fumez ? Moi non, je distribue.'][Math.floor(Math.random()*3)],2.6);snd(520,.1,'triangle',.04)}
+  else if(k==='disco'){if(c.cd.e>0){toast('Disco en recharge','w');return}c.cd.e=45;let n=0;
+    for(const e of ST.S.enemies){if(e.f!==c.f||e.ko||e.type==='camera'||e.state==='chase')continue;const at=ST.S.t+1+Math.random()*9;e.dance={at,until:at+25};n++}
+    say(c,'Un petit son pour l\'ambiance. Tout le monde sur la piste !',2.8);toast('Disco : '+n+' personnes vont danser dans les 10 s','g');snd(330,.4,'square',.05,200);snd(440,.4,'square',.05,200)}
   else if(k==='flux'){if(c.cd.e>0){toast('Flux en recharge','w');return}ST.S.team.fluxUntil=ST.S.t+12;c.cd.e=26;say(c,'Je vois tout. Et ils ne font rien.',2.2);toast('Flux caméras : tous les gardes visibles 12 s','g');snd(900,.2,'sine',.05)}
   else if(k==='vent'){const v=VENTS.filter(v=>v.f===c.f).sort((a,b)=>Math.hypot(a.x-c.x,a.y-c.y)-Math.hypot(b.x-c.x,b.y-c.y))[0];
     if(!v){toast('Aucune gaine à cet étage','w');return}gotoPos(c,v.x+.5,v.y+.5,{k:'vent',vx:v.x,vy:v.y})}

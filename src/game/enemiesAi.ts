@@ -53,6 +53,7 @@ export function updateEnemy(e: Enemy,dt: number){
   if(!e.ko&&e.state==='patrol'&&e.talk<=0){e.chat-=dt;if(e.chat<=0){e.chat=22+Math.random()*30;const dark=((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t;const L=dark?CHAT_NOIR:Math.random()<.5?(ST.S.t>330?CHAT_PLAN:ST.S.t>150?CHAT_SOIR:CHAT_DEBUT):CHAT[e.type];if(L&&e.sayT<=0&&!(ST.S.over))say(e,L[Math.floor(Math.random()*L.length)],3.2)}}
   if(e.ko){if(!e.hidden){e.koT=(e.koT||0)+dt;if(e.koT>=(e.koDur||50)&&!ST.S.chars.some(c=>c.busy&&c.busy.eid===e.id))wakeUp(e)}return}
   if(e.freeze>0){e.freeze-=dt;e.moving=false;return}
+  if(e.dance){if(ST.S.t>=e.dance.until||e.state==='chase')e.dance=null;else if(ST.S.t>=e.dance.at){e.moving=false;e.path=[];e.look=null;return}}
   if(e.type==='camera'){
     const off=(ST.S.team.camsUntil>ST.S.t&&e.f===2)||((ST.S.team.camsOff||{})[e.f]||0)>ST.S.t||((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t;e.off=off;
     if(e.blind){const ph=ST.S.t%e.blind[0];if(ph>=e.blind[0]-e.blind[1])e.off=true}

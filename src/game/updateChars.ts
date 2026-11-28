@@ -20,6 +20,7 @@ export function updateChar(c: Character,dt: number){
   if(c.out)return;
   if(!c.joined){if(c.sayT>0)c.sayT-=dt;return}
   if(c.moving||c.busy||c.talking||c.order||c.path.length||c.smoke)c.idleT=0;else c.idleT=(c.idleT||0)+dt;
+  if((c.idleT||0)>2.5){if(c.idleF===undefined)c.idleF=c.face;c.face=c.idleF+Math.sin((c.idleT||0)*.9)*.8}else c.idleF=undefined;
   if(c.id==='jordan'&&(c.idleT||0)>2){/* Max nettoie autour de lui (rayon 1 case) quand il ne fait rien */
     const P=ST.S.puddles;for(let i=P.length-1;i>=0;i--)if(P[i].f===c.f&&Math.hypot(P[i].x-c.x,P[i].y-c.y)<1.3){P.splice(i,1);say(c,'Un coup de balai, ça ne mange pas de pain.',2.4);break}
     if(Math.random()<dt*3)ST.P.push({f:c.f,x:c.x+rnd(-.9,.9),y:c.y+rnd(-.9,.9),z:1,vx:0,vy:0,vz:rnd(2,5),life:.5,col:'#cfe8ff',sz:2})}

@@ -50,7 +50,7 @@ export function render(dt: number){
     if(e.ko){if(!e.hidden)D.push({d:e.x+e.y,fn:()=>drawBody(ctx,e)});continue}
     if(e.type==='camera'){D.push({d:e.x+e.y,fn:()=>drawCamera(ctx,e)});continue}
     if(!enemyVisible(e))continue;
-    D.push({d:e.x+e.y,fn:()=>{const[fx,fy]=iso(e.x,e.y);drawPerson(ctx,fx,fy,{look:e.type,kind:e.type,dir:e.face,moving:e.moving&&!e.calm,sit:e.calm&&e.state==='patrol'&&!e.moving,boxers:e.uniformTaken,ph:e.name.length,smoke:e.state==='break'&&!!e.brk&&e.brk.arrived});
+    D.push({d:e.x+e.y,fn:()=>{const[fx,fy]=iso(e.x,e.y);drawPerson(ctx,fx,fy,{look:e.type,kind:e.type,dir:e.face,moving:e.moving&&!e.calm,dance:!!e.dance&&ST.S.t>=e.dance.at,sit:e.calm&&e.state==='patrol'&&!e.moving,boxers:e.uniformTaken,ph:e.name.length,smoke:e.state==='break'&&!!e.brk&&e.brk.arrived});
       ctx.fillStyle='rgba(255,255,255,.55)';ctx.font='600 10px "Barlow Condensed",sans-serif';ctx.textAlign='center';ctx.fillText(ROLE[e.type],fx,fy+11);
       if(e.det>.02)drawBar(ctx,fx,fy-62,22,Math.min(1,e.det),e.det>.6?'#ff5d5d':'#ffb347');
       if(e.state==='chase'){ctx.fillStyle='#ff3b3b';ctx.font='bold 20px sans-serif';ctx.fillText('!',fx,fy-66)}

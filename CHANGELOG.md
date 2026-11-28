@@ -1,6 +1,7 @@
 # Changelog
 
 ## 1.19
+- Pouvoir inutile de Nadia : 🪩 Disco, tout l'étage danse dans les 10 s pendant 25 s ; animations de repos plus marquées
 - Bouton ☰ Menu en jeu : reprendre, sauvegarder, charger, commandes, retour à l'écran titre
 - Interrupteur : si l'employé parti rallumer est assommé ou lance une poursuite, un autre prend le relais
 - Vidéo d'intro refaite : convocation DRH grande, longue et lisible avec pause de lecture, bandeaux de personnages plus percutants (nom géant, rôle, pouvoirs, faiblesse, pause par personnage), faux éléments de gameplay pendant la course finale, texte de fin sur bandeau opaque
