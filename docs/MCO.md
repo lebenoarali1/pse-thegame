@@ -136,3 +136,6 @@ Principe : Claude écrit, teste et pousse ; la personne qui maintient décide, r
 - Format de sauvegarde : `SAVE_FORMAT` dans `src/game/persist.ts` ; l'incrémenter à chaque changement incompatible de `GameState` (les anciennes sauvegardes sont alors ignorées sans erreur)
 - La version affichée vient de `package.json` (champ `version`) ; la mettre à jour avec le changelog
 - Astuces de premier usage : textes dans `HINTS` (`src/game/texts.ts`), clé = id de pouvoir ; l'état « vu » est dans le stockage du navigateur (`persist.ts`)
+
+### Tests unitaires
+`npm run test:unit` (Vitest) vérifie la logique pure en moins d une seconde : pathing, difficulté, messages. Les scénarios de bout en bout restent la référence pour le comportement en jeu.

@@ -29,4 +29,5 @@ export function frame(now: number){
 }
 requestAnimationFrame(frame);
 if(location.hash!=='#novid')playVid(()=>{});
+if('serviceWorker' in navigator&&location.protocol==='https:')window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js').catch(()=>undefined)});
 window.__G={MAP,pcChoose,pcOpen,get pcm(){return pcm},vidFrame,VID,KEYS,iso,cam,get VW(){return VW},get P(){return ST.P},get VH(){return VH},get dlg(){return ST.dlg},advDlg,beginRun,recruit,gotoPos,getC,getE,get S(){return ST.S},update,doAction,tapAt,findPath,selectChar,startGame,get view(){return ST.view},set view(v: number){ST.view=v},get paused(){return ST.paused},set paused(v: boolean){ST.paused=v},get showCones(){return ST.showCones},set started(v: boolean){ST.started=v},quickSave,quickLoad,get zoom(){return ST.zoom}};

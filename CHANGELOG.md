@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.13
+- Installation en application (PWA) : manifeste et service worker, le jeu se relance hors connexion une fois visité (en HTTPS)
+- Tests unitaires Vitest (`npm run test:unit`) sur le pathing, la difficulté et les messages ; ajoutés à la CI avant les scénarios
+
 ## 1.12
 - Bruits visualisés : un cercle orange s'étend autour de chaque bruit (course, gobelet) à la taille de sa portée
 - Répliques d'ambiance selon l'avancement de la soirée (début, soirée, plan social qui approche) et lors d'une coupure de lumière ; test 25

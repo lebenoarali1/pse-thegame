@@ -124,7 +124,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | E8-4 | En tant que développeur, je veux que la CI exécute `typecheck` et les 14 scénarios avant le déploiement, afin de bloquer une régression | DONE 1.4 | Must | M |
 | E8-5 | En tant que développeur, je veux porter les tests en TypeScript (Playwright Test) pour un simple `npm test` sans Python | TODO | Should | L |
 | E8-6 | En tant que développeur, je veux un linter et un formateur (ESLint, Prettier) interdisant `any`, afin de garder le niveau de typage | DONE 1.4 | Should | S |
-| E8-7 | En tant que développeur, je veux des tests unitaires sur la logique pure (pathing, visibilité, détection), plus rapides que les scénarios | TODO | Should | M |
+| E8-7 | En tant que développeur, je veux des tests unitaires sur la logique pure (pathing, visibilité, détection), plus rapides que les scénarios | DONE (1.13) | Should | M |
 | E8-8 | En tant que développeur, je veux mettre à jour automatiquement les dépendances (Dependabot) avec alerte de sécurité | DONE (1.9) | Could | S |
 | E8-9 | En tant que joueur, je veux voir le numéro de version et la date de build dans le jeu, afin de savoir quelle version j'ai | DONE 1.4 | Should | S |
 | E8-10 | En tant que mainteneur, je veux publier des versions étiquetées (tags, notes de version générées depuis le changelog) | DONE (1.9) | Could | S |
@@ -135,7 +135,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | ID | Story | Statut | Prio | Taille |
 |---|---|---|---|---|
 | E9-1 | En tant que mainteneur, je veux une licence explicite (code et contenus) dans le dépôt, afin de clarifier la réutilisation | DONE 1.4 | Must | S |
-| E9-2 | En tant que joueur, je veux installer le jeu comme une application (PWA) et jouer hors connexion | TODO | Should | M |
+| E9-2 | En tant que joueur, je veux installer le jeu comme une application (PWA) et jouer hors connexion | DONE (1.13) | Should | M |
 | E9-3 | En tant que joueur, je veux une carte de partage (aperçu réseaux sociaux) et un titre de page soignés, afin de diffuser le jeu | DONE (1.9) | Could | S |
 | E9-4 | En tant que concepteur, je veux un bouton « envoyer un retour » (formulaire ou export de l'état de la partie), afin de comprendre où les joueurs échouent | TODO | Should | M |
 | E9-5 | En tant que concepteur, je veux des statistiques anonymes sur les échecs par étage, uniquement avec consentement explicite | IDEE | Won't | M |
