@@ -46,7 +46,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | E2-1 | En tant que nouveau joueur, je veux des bulles d'aide contextuelles lors de la première utilisation de chaque pouvoir, afin de comprendre sans lire un manuel | DONE 1.6 | Must | M |
 | E2-2 | En tant que nouveau joueur, je veux un écran de commandes (tactile et clavier) accessible depuis le menu et en pause, afin de retrouver les raccourcis | DONE 1.5 | Must | S |
 | E2-3 | En tant que nouveau joueur, je veux une première minute guidée au RDC (déplacer, se cacher, voir un cône), afin de ne pas échouer sur une règle ignorée | TODO | Should | M |
-| E2-4 | En tant que joueur, je veux que le jeu explique pourquoi j'ai perdu (qui m'a vu, où, quel corps trouvé) et propose de reprendre à la dernière sauvegarde, afin d'apprendre de l'échec | TODO | Should | M |
+| E2-4 | En tant que joueur, je veux que le jeu explique pourquoi j'ai perdu (qui m'a vu, où, quel corps trouvé) et propose de reprendre à la dernière sauvegarde, afin d'apprendre de l'échec | DONE (1.9) | Should | M |
 | E2-5 | En tant que joueur, je veux un objectif courant affiché en haut (« Trouver le code du coffre ») qui évolue, afin de ne jamais me demander quoi faire | DONE 1.2 (objectif évolutif en haut à gauche) | Should | S |
 
 ## E3. Mécaniques et personnages
@@ -71,7 +71,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | E4-1 | En tant que joueur, je veux que la vision (cônes, jauge de détection, vue réduite sous baratin) soit lisible, avec des cônes verts pour les non-menaçants et rouges pour les gardes | DONE 0.3 à 1.2 | Must | M |
 | E4-2 | En tant que joueur, je veux que le support cafte au manager qui chasse, tandis que les employés calmes ne détectent pas | DONE 1.2 | Must | M |
 | E4-3 | En tant que joueur, je veux que les imprimantes (RDC et R+1) attirent tout le personnel disponible 20 s | DONE 1.2 | Should | M |
-| E4-4 | En tant que joueur, je veux que les gardes en poursuite perdent la trace après un délai et reviennent à leur ronde, afin qu'un échec ne soit pas toujours définitif | TODO | Should | M |
+| E4-4 | En tant que joueur, je veux que les gardes en poursuite perdent la trace après un délai et reviennent à leur ronde, afin qu'un échec ne soit pas toujours définitif | DONE (1.2) | Should | M |
 | E4-5 | En tant que joueur, je veux que les gardes appellent des renforts lors d'une alerte, avec une conséquence visible sur les étages voisins, afin que l'erreur coûte sans terminer la partie | IDEE | Could | L |
 | E4-6 | En tant que concepteur, je veux des tests de non-régression de l'IA (un scénario par état : patrouille, enquête, poursuite, pause) | TODO | Should | M |
 | E4-7 | En tant que joueur, je veux des employés qui réagissent aux bruits (cris, objet qui tombe) par une réplique, afin de renforcer l'humour d'ambiance | TODO | Could | S |
@@ -125,9 +125,9 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 | E8-5 | En tant que développeur, je veux porter les tests en TypeScript (Playwright Test) pour un simple `npm test` sans Python | TODO | Should | L |
 | E8-6 | En tant que développeur, je veux un linter et un formateur (ESLint, Prettier) interdisant `any`, afin de garder le niveau de typage | DONE 1.4 | Should | S |
 | E8-7 | En tant que développeur, je veux des tests unitaires sur la logique pure (pathing, visibilité, détection), plus rapides que les scénarios | TODO | Should | M |
-| E8-8 | En tant que développeur, je veux mettre à jour automatiquement les dépendances (Dependabot) avec alerte de sécurité | TODO | Could | S |
+| E8-8 | En tant que développeur, je veux mettre à jour automatiquement les dépendances (Dependabot) avec alerte de sécurité | DONE (1.9) | Could | S |
 | E8-9 | En tant que joueur, je veux voir le numéro de version et la date de build dans le jeu, afin de savoir quelle version j'ai | DONE 1.4 | Should | S |
-| E8-10 | En tant que mainteneur, je veux publier des versions étiquetées (tags, notes de version générées depuis le changelog) | TODO | Could | S |
+| E8-10 | En tant que mainteneur, je veux publier des versions étiquetées (tags, notes de version générées depuis le changelog) | DONE (1.9) | Could | S |
 | E8-11 | En tant que développeur, je veux une documentation publiée automatiquement (architecture, MCO, conception, historique) | DONE 1.3 | Should | M |
 
 ## E9. Distribution, légal et mesure
@@ -136,7 +136,7 @@ Dernière mise à jour : version 1.6. Ce document remplace la liste courte de GA
 |---|---|---|---|---|
 | E9-1 | En tant que mainteneur, je veux une licence explicite (code et contenus) dans le dépôt, afin de clarifier la réutilisation | DONE 1.4 | Must | S |
 | E9-2 | En tant que joueur, je veux installer le jeu comme une application (PWA) et jouer hors connexion | TODO | Should | M |
-| E9-3 | En tant que joueur, je veux une carte de partage (aperçu réseaux sociaux) et un titre de page soignés, afin de diffuser le jeu | TODO | Could | S |
+| E9-3 | En tant que joueur, je veux une carte de partage (aperçu réseaux sociaux) et un titre de page soignés, afin de diffuser le jeu | DONE (1.9) | Could | S |
 | E9-4 | En tant que concepteur, je veux un bouton « envoyer un retour » (formulaire ou export de l'état de la partie), afin de comprendre où les joueurs échouent | TODO | Should | M |
 | E9-5 | En tant que concepteur, je veux des statistiques anonymes sur les échecs par étage, uniquement avec consentement explicite | IDEE | Won't | M |
 | E9-6 | En tant que joueur, je veux une version en anglais, afin d'élargir le public | IDEE | Could | L |

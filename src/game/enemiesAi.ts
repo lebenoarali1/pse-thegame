@@ -2,7 +2,7 @@ import { ST } from './store';
 import { findPath, los } from './pathing';
 import { angDiff } from './utils';
 import { snd } from './sound';
-import { fail, say, toast } from './messages';
+import { fail, say, toast, where } from './messages';
 import { cam, getC, getE } from './state';
 import { buildActs } from './ui';
 import { BRK_SAY, CHAT, CLEAN_SAY, COF_SAY } from './texts';
@@ -20,7 +20,7 @@ export function canSee(e: Enemy,c: Character,fovExtra?: number){
   if(e.type!=='camera'&&d<2.1)return 2;
   return 0;
 }
-export function eliminate(c: Character,e: Enemy,why: string){if(c.out||c.disguise)return;c.out=true;c.f=-1;c.path=[];c.order=null;c.busy=null;c.run=false;c.hide=false;snd(160,.5,'sawtooth',.06,-90);ST.S.alertT=2;
+export function eliminate(c: Character,e: Enemy,why: string){if(c.out||c.disguise)return;why+=' (vu '+where(e.f,c.x,c.y)+')';c.out=true;c.f=-1;c.path=[];c.order=null;c.busy=null;c.run=false;c.hide=false;snd(160,.5,'sawtooth',.06,-90);ST.S.alertT=2;
   const L=[' est cueilli : licenciement pour faute grave, présence dans les locaux.',' est embarqué. Le DRH n\'a même pas eu à se déplacer.',' est escorté vers la sortie, sans pot de départ.'];
   toast(c.name+L[Math.floor(Math.random()*L.length)],'r');
   for(const o of ST.S.enemies){if(o.tgt===c.id&&o.state==='chase'){o.state='patrol';o.path=[];o.det=0;o.tgt=null}if(o.det>0)o.det=0}
@@ -133,7 +133,7 @@ export function detect(dt: number){
       if(!b.ko||b.hidden||b.f!==e.f||b===e)continue;
       const d=Math.hypot(b.x-e.x,b.y-e.y);if(d>e.range)continue;if(((ST.S.team.lightsOff||{})[e.f]||0)>ST.S.t&&d>2.6)continue;
       const inCone=Math.abs(angDiff(Math.atan2(b.y-e.y,b.x-e.x),e.face))<=e.fov*Math.PI/360;
-      if((inCone||d<2.1)&&los(e.f,e.x,e.y,b.x,b.y)){say(e,'Un corps !',2.5);fail('Corps découvert !',e.name+" est tombé sur "+b.name+" assommé. Un collègue inanimé, c'est la première fois qu'on le voit aussi calme au bureau. Alerte générale. Un corps visible = fin de partie : planquez-les (Max) avant qu'on les voie.");return}}
+      if((inCone||d<2.1)&&los(e.f,e.x,e.y,b.x,b.y)){say(e,'Un corps !',2.5);fail('Corps découvert !',e.name+" est tombé sur "+b.name+" assommé "+where(b.f,b.x,b.y)+". Un collègue inanimé, c'est la première fois qu'on le voit aussi calme au bureau. Alerte générale. Un corps visible = fin de partie : planquez-les (Max) avant qu'on les voie.");return}}
   }
 }
 

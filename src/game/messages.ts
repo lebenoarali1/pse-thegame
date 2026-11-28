@@ -8,6 +8,8 @@ import type { Character, Enemy } from './types';
 /* messages */
 export function toast(t: string,cls=''){const d=document.createElement('div');d.className='t '+cls;d.textContent=t;$('toast').appendChild(d);while($('toast').children.length>(cls==='h'?4:3))$('toast').firstChild?.remove();setTimeout(()=>d.remove(),cls==='h'?8000:4200)}
 export function say(e: Character | Enemy,t: string,d=2.4){e.say=t;e.sayT=d}
+/** Lieu lisible d'un incident, pour expliquer une défaite (E2-4). */
+export function where(f: number,x: number,y: number){return (['au rez-de-chaussée','à l\'étage 1','à l\'étage 2'][f]||'dans l\'immeuble')+', '+(x<8?'côté ouest':x>16?'côté est':'au centre')+(y<5?', au nord':y>9?', au sud':'')}
 export function fail(title: string,text: string){if(ST.S.over)return;ST.S.over='fail';snd(160,.7,'sawtooth',.07,-90);$('eT').textContent=title;$('eP').textContent=text;$('bRetry').style.display=ST.lastSave?'':'none';$('end').classList.add('show')}
 export function win(){if(ST.S.over)return;ST.S.over='win';snd(660,.15,'triangle',.07);setTimeout(()=>snd(880,.3,'triangle',.07),150);
   const left=Math.max(0,Math.round(TL-ST.S.t));$('eT').textContent='Dehors, tous les quatre !';

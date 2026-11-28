@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.9
+- Défaites expliquées : qui a vu et où (étage, côté, nord ou sud), y compris pour un corps découvert ; test 21
+- Aperçu de partage (description, Open Graph) et couleur de thème
+- Dependabot (npm hebdomadaire, actions mensuelles)
+- Versions étiquetées : pousser un tag `vX.Y.Z` publie une release GitHub avec les notes du changelog
+
 ## 1.8
 - Nadia : nouvelle action « Éteindre la lumière » (60 s, étage dans le noir, on n'est vu que de très près, les caméras sont aveugles) ; un employé va rallumer
 - Le menu du PC ne propose plus les caméras aux étages qui n'en ont pas (RDC, étage 1)
