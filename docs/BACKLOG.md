@@ -31,12 +31,22 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Dialogues : retour à la réplique précédente par clic droit, flèche gauche ou bouton ◀ Retour sur mobile
 
 ### Interface
-- Écran d'accueil avec choix de la difficulté
+- Écran d accueil léger (titre, résumé, difficulté)
 - Vidéo d'introduction avec musique de suspense puis d'action, et un temps d'arrêt avant chaque changement de scène pour lire
 - Aide (❓), bulles d'astuces au premier usage, première minute guidée
 - Fin de partie mise en scène, défaites expliquées (qui a vu, où)
 - Mobile : portrait et paysage, boutons de 44 px, options rares derrière « ⋯ »
 - Musique d'ambiance adaptative (calme, tension, poursuite), volumes musique et effets
+
+### Fait récemment (1.18 et 1.19)
+- Écran de démarrage allégé, bouton ☰ Menu en jeu (reprendre, sauvegarder, charger, commandes, écran titre)
+- Vidéo d'intro refaite : convocation DRH longue et lisible, bandeaux de personnages plus percutants, faux gameplay pendant la course, texte de fin lisible, vidéo plus fluide
+- Interrupteur utilisable par tous ; si le préposé est pris, un autre rallume
+- Course : un appui revient à la marche ; animation de repos ; Max nettoie au repos
+- Caméras coupées 120 s, garde appelé à pied, caméra R+2 adoucie
+- Baratin de Djibril : plus de barre bleue, il court au PNJ, dialogues par catégorie, choix du corps pour le déguisement
+- Icône des indices clés
+- Page Recette dans la documentation
 
 ### Sauvegarde et réglages
 - Sauvegarde manuelle et automatique à chaque nouvel étage, conservée au rechargement
@@ -44,7 +54,7 @@ Deux parties : le bilan de ce qui est en place, puis la liste des fonctionnalit�
 - Installation comme application et mode hors connexion
 
 ### Qualité et livraison
-- TypeScript strict sans `any`, lint, 8 tests unitaires, 29 scénarios de bout en bout
+- TypeScript strict sans `any`, lint, 8 tests unitaires, 30 scénarios de bout en bout
 - Publication automatique sur GitHub Pages après vérifications
 - Documentation en ligne : MCO, architecture, conception, changelog
 - Releases GitHub à chaque tag de version, mises à jour automatiques des dépendances

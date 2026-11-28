@@ -10,10 +10,11 @@ const pages = [
   { file: 'docs/ARCHITECTURE.md', slug: 'architecture', title: 'Architecture du code' },
   { file: 'docs/GAME_DESIGN.md', slug: 'conception', title: 'Conception du jeu' },
   { file: 'docs/BACKLOG.md', slug: 'backlog', title: 'Backlog' },
+  { file: 'docs/RECETTE.md', slug: 'recette', title: 'Recette' },
   { file: 'CHANGELOG.md', slug: 'changelog', title: 'Historique des versions' },
   { file: 'README.md', slug: 'readme', title: 'Présentation' },
 ];
-const linkMap = { 'MCO.md': 'index.html', 'ARCHITECTURE.md': 'architecture.html', 'GAME_DESIGN.md': 'conception.html', 'BACKLOG.md': 'backlog.html', 'CHANGELOG.md': 'changelog.html', 'README.md': 'readme.html' };
+const linkMap = { 'MCO.md': 'index.html', 'ARCHITECTURE.md': 'architecture.html', 'GAME_DESIGN.md': 'conception.html', 'BACKLOG.md': 'backlog.html', 'RECETTE.md': 'recette.html', 'CHANGELOG.md': 'changelog.html', 'README.md': 'readme.html' };
 const esc = s => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
 
 const css = `
@@ -33,6 +34,11 @@ for (const p of pages) {
   let md = fs.readFileSync(path.join(root, p.file), 'utf8');
   let html = marked.parse(md, { gfm: true }) ;
   html = html.replace(/href="(?:\.\/|\.\.\/docs\/|docs\/)?([A-Z_]+\.md)"/g, (m, f) => (linkMap[f] ? `href="${linkMap[f]}"` : m));
+  if (p.slug === 'recette') {
+    /* cases à cocher utilisables, mémorisées dans le navigateur */
+    html = html.replace(/<input (checked="" )?disabled="" type="checkbox">/g, (m, c) => '<input type="checkbox" class="rc">');
+    html += '<script>(function(){var K="plansocial.recette",s={};try{s=JSON.parse(localStorage.getItem(K)||"{}")}catch(e){}var b=document.querySelectorAll("input.rc");b.forEach(function(x,i){x.checked=!!s[i];x.onchange=function(){s[i]=x.checked;try{localStorage.setItem(K,JSON.stringify(s))}catch(e){}c()}});function c(){var n=0;b.forEach(function(x){if(x.checked)n++});var e=document.getElementById("rcount");if(e)e.textContent=n+" / "+b.length+" vérifiés"}c()})()</script>';
+  }
   const nav = pages.map(q => `<a href="${q.slug === 'index' ? 'index' : q.slug}.html" class="${q === p ? 'on' : ''}">${esc(q.title)}</a>`).join('');
   const page = `<!DOCTYPE html><html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(p.title)} | PLAN SOCIAL</title><link rel="icon" href="../favicon.svg"><style>${css}</style></head><body><header><b>PLAN SOCIAL</b><nav>${nav}</nav><a class="play" href="../">Jouer</a></header><main>${html}</main></body></html>`;
   fs.writeFileSync(path.join(out, p.slug + '.html'), page);

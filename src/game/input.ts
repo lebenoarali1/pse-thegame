@@ -59,8 +59,15 @@ export function toggleCones(){ST.showCones=!ST.showCones;SET.cones=ST.showCones;
 let lpTimer=0,lpFired=false;
 const lpClear=()=>{clearTimeout(lpTimer);lpTimer=0};
 let wasPaused=false;
+let menuWas=false;
 export function toggleHelp(){const b=$('helpBox'),open=!b.classList.contains('show');if(open){wasPaused=ST.paused;ST.paused=true}else ST.paused=wasPaused;b.classList.toggle('show',open)}
-$('helpHints').onclick=()=>{resetHints();toggleHelp();toast('Les astuces réapparaîtront au prochain usage','g')};$('bHelp').onclick=toggleHelp;$('helpClose').onclick=toggleHelp;$('bCones').onclick=toggleCones;$('bCones').classList.add('on');
+$('helpHints').onclick=()=>{resetHints();toggleHelp();toast('Les astuces réapparaîtront au prochain usage','g')};$('bHelp').onclick=toggleHelp;
+{const mb=$('menuBox'),open=(v: boolean)=>{if(v===mb.classList.contains('show'))return;if(v){menuWas=ST.paused;ST.paused=true}else ST.paused=menuWas;mb.classList.toggle('show',v)};
+ $('bMenu').onclick=()=>open(!mb.classList.contains('show'));$('mResume').onclick=()=>open(false);
+ $('mSave').onclick=()=>{quickSave();open(false)};$('mLoad').onclick=()=>{quickLoad();open(false)};
+ $('mHelp').onclick=()=>{open(false);toggleHelp()};
+ $('mTitle').onclick=()=>{quickSave();location.reload()}}
+$('helpClose').onclick=toggleHelp;$('bCones').onclick=toggleCones;$('bCones').classList.add('on');
 cv.addEventListener('contextmenu',e=>{e.preventDefault();toggleCones()});
 cv.addEventListener('pointerdown',e=>{if(e.button===2)return;lpFired=false;lpClear();if(e.pointerType==='touch')lpTimer=window.setTimeout(()=>{if(ST.ptr&&!ST.ptr.drag){lpFired=true;toggleCones()}},550);ST.ptr={x:e.clientX,y:e.clientY,cx:cam.x,cy:cam.y,drag:false,id:e.pointerId};try{cv.setPointerCapture(e.pointerId)}catch(_){}});
 cv.addEventListener('pointermove',e=>{if(!ST.ptr)return;const dx=e.clientX-ST.ptr.x,dy=e.clientY-ST.ptr.y;if(!ST.ptr.drag&&Math.hypot(dx,dy)>9){ST.ptr.drag=true;lpClear()}if(ST.ptr.drag){cam.free=true;cam.x=ST.ptr.cx-dx/ST.zoom;cam.y=ST.ptr.cy-dy/ST.zoom}});

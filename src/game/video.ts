@@ -19,6 +19,7 @@ export const VSLOW=.5;/* vitesse de la vidéo : 1 = normal, .5 = deux fois plus 
 export const vcv=document.getElementById('vc') as HTMLCanvasElement,vg=vcv.getContext('2d') as CanvasRenderingContext2D;
 export function vonce(k: string,t: number,fn: () => void){if(VID.t>=t&&!VID.fired[k]){VID.fired[k]=1;fn()}}
 export function vwrap(g: CanvasRenderingContext2D,txt: string,x: number,y: number,mw: number,lh: number){const w=txt.split(' ');let l='';for(const a of w){const tt=l?l+' '+a:a;if(g.measureText(tt).width>mw&&l){g.fillText(l,x,y);y+=lh;l=a}else l=tt}if(l){g.fillText(l,x,y);y+=lh}return y}
+export function vwrapC(g: CanvasRenderingContext2D,txt: string,x: number,y: number,mw: number,lh: number){let l='';for(const w of txt.split(' ')){const tt=l?l+' '+w:w;if(g.measureText(tt).width>mw&&l){g.fillText(l,x,y);y+=lh;l=w}else l=tt}g.fillText(l,x,y)}
 export const vease=(k: number)=>k<0?0:k>1?1:k*k*(3-2*k);
 export function vrr(g: CanvasRenderingContext2D,x: number,y: number,w: number,h: number,r: number){g.beginPath();g.moveTo(x+r,y);g.arcTo(x+w,y,x+w,y+h,r);g.arcTo(x+w,y+h,x,y+h,r);g.arcTo(x,y+h,x,y,r);g.arcTo(x,y,x+w,y,r);g.closePath()}
 /* sous-titre en bas, fondu */
@@ -58,9 +59,6 @@ export function vDesk(g: CanvasRenderingContext2D,W: number,H: number,t: number)
   const nw=t>3?vease((t-3)/.4):0,off=nw*(f*2.1);
   if(nw>0){g.fillStyle='#ff4b4b';g.fillRect(mx,my+f*2.4,mw,f*2.1*nw);if(nw>.6){g.fillStyle='#fff';g.font='bold '+f+'px Arial';g.fillText('DRH : Entretien à 18h00, sans badge',mx+8,my+f*3)}}
   rows.forEach((r,i)=>{const yy=my+f*2.4+off+i*f*2.1;if(yy>my+mh-f)return;g.fillStyle=i%2?'#e1e9f6':'#f2f6fc';g.fillRect(mx,yy,mw,f*2.1);g.fillStyle='#2b3550';g.font='bold '+f+'px Arial';g.fillText(String(r[0]),mx+8,yy+f*.5);g.font=f+'px Arial';g.fillStyle='#55607e';g.fillText(String(r[1]),mx+mw*.24,yy+f*.5)});
-  if(t>4.3){const k=vease((t-4.3)/.35),pw=mw*.84,ph=mh*.62,px=mx+(mw-pw)/2,py=my+mh*.2+(1-k)*20;g.save();g.globalAlpha=k;g.fillStyle='rgba(0,0,0,.25)';g.fillRect(px+5,py+6,pw,ph);g.fillStyle='#fff';g.fillRect(px,py,pw,ph);g.fillStyle='#b32626';g.fillRect(px,py,pw,f*1.9);g.fillStyle='#fff';g.font='bold '+f+'px Arial';g.fillText('CONVOCATION',px+8,py+f*.4);
-    g.fillStyle='#222';g.font=Math.round(f*1.02)+'px Arial';const body='Bonjour. Vous êtes convié(e) à un entretien à 18h00. Prévoir un carton. Merci de ne rien emporter : tout ce qui est sur votre bureau appartient désormais à l\'entreprise.';
-    const n=Math.floor(clamp((t-4.7)*38,0,body.length));vwrap(g,body.slice(0,n),px+10,py+f*2.4,pw-20,f*1.35);g.restore()}
   g.restore();
   /* bureau et clavier */
   const dy=H*.64;const dk=g.createLinearGradient(0,dy,0,H);dk.addColorStop(0,'#6b4a30');dk.addColorStop(1,'#3d2a1b');g.fillStyle=dk;g.fillRect(0,dy,W,H-dy);
@@ -87,13 +85,53 @@ export function vPan(g: CanvasRenderingContext2D,W: number,H: number,t: number,T
   /* réticule et verrouillage */
   const near=Math.abs(th-Math.round(th)),lock=1-clamp(near/.18,0,1),cxr=W/2,cyr=H*.52,rr=Math.min(W,H)*.09*(1.25-.25*lock);
   g.strokeStyle=lock>.5?'#ffd23f':'rgba(255,255,255,.7)';g.lineWidth=2;g.beginPath();[[-1,-1],[1,-1],[1,1],[-1,1]].forEach(q=>{g.moveTo(cxr+q[0]*rr,cyr+q[1]*rr*.6);g.lineTo(cxr+q[0]*rr,cyr+q[1]*(rr*.6-12*q[1]*-1*0)-q[1]*14);g.moveTo(cxr+q[0]*rr,cyr+q[1]*rr*.6);g.lineTo(cxr+q[0]*rr-q[0]*14,cyr+q[1]*rr*.6)});g.stroke();
-  /* bandeau */
-  const ci=Math.round(th);if(lock>.4&&ci>=0&&ci<4&&t>T0){const ch=VCARD[ci],k=clamp(fr<.55?(fr)/.2:1,0,1);
-    const bw=W*.9,bh=Math.max(92,H*.17),bxx=W*.05,byy=H*.66;g.save();g.globalAlpha=Math.min(1,lock*1.6)*(i0===ci?clamp(fr/.12,0,1):1);
-    g.fillStyle='rgba(8,10,22,.88)';g.fillRect(bxx,byy,bw,bh);g.fillStyle=ch.c;g.fillRect(bxx,byy,6,bh);
-    const f1=clamp(bh*.26,18,34),f2=clamp(bh*.13,12,17);g.textAlign='left';g.textBaseline='top';g.fillStyle=ch.c;g.font='900 '+f1+'px Arial Black, Arial, sans-serif';g.fillText(ch.n,bxx+16,byy+8);const nw=g.measureText(ch.n).width;
-    g.fillStyle='#aab3d0';g.font='bold '+f2+'px Arial';g.fillText(ch.r.toUpperCase(),bxx+24+nw,byy+8+f1*.3);g.fillStyle='#e8ecff';g.font='italic '+f2+'px Arial';vwrap(g,ch.q,bxx+16,byy+f1+14,bw-32,f2*1.3);g.restore()}
+  /* bandeau : entrée en glissade avec rebond, nom géant, rôle, pouvoirs, faiblesse */
+  const ci=Math.round(th);if(lock>.4&&ci>=0&&ci<4&&t>T0){const ch=VCARD[ci],ap=i0===ci?clamp(fr/.16,0,1):1,bk=ap<1?1+2.2*Math.pow(ap-1,3)+1.2*Math.pow(ap-1,2):1;
+    const bw=W*.94,bh=Math.max(200,H*.38),bxx=W*.03,byy=H*.55,slide=(1-Math.min(1,bk))*-W*.6;g.save();g.globalAlpha=Math.min(1,lock*1.6)*clamp(ap*2,0,1);g.translate(slide,0);
+    g.fillStyle='rgba(6,8,18,.94)';g.fillRect(bxx,byy,bw,bh);
+    g.fillStyle=ch.c;g.fillRect(bxx,byy,bw,6);g.fillRect(bxx,byy,8,bh);
+    const f1=clamp(bh*.17,22,46),f2=clamp(bh*.06,12,17);g.textAlign='left';g.textBaseline='middle';
+    g.font='900 '+f1+'px Arial Black, Impact, Arial, sans-serif';g.lineJoin='round';g.lineWidth=f1*.14;g.strokeStyle=ch.c;g.strokeText(ch.n,bxx+20,byy+bh*.14);g.fillStyle='#ffffff';g.fillText(ch.n,bxx+20,byy+bh*.14);
+    g.font='900 '+f2+'px Arial';const rw=g.measureText(ch.r.toUpperCase()).width+18;g.fillStyle=ch.c;vrr(g,bxx+20,byy+bh*.27,rw,f2*1.7,f2*.85);g.fill();g.fillStyle='#0b0d18';g.textAlign='center';g.fillText(ch.r.toUpperCase(),bxx+20+rw/2,byy+bh*.27+f2*.85+1);
+    g.textAlign='left';g.textBaseline='top';g.fillStyle='#ffffff';g.font='italic 700 '+f2*1.08+'px Arial';vwrap(g,ch.q,bxx+20,byy+bh*.39,bw-36,f2*1.35);
+    let cx=bxx+20;const cy=byy+bh*.67;g.font='bold '+f2*.9+'px Arial';for(const pw0 of ch.p){const w=g.measureText(pw0).width+18;g.strokeStyle=ch.c;g.lineWidth=2;vrr(g,cx,cy,w,f2*1.7,f2*.85);g.stroke();g.fillStyle=ch.c;g.fillText(pw0,cx+9,cy+f2*.3);cx+=w+8}
+    g.fillStyle='#ff8a8a';g.font='bold '+f2*.95+'px Arial';vwrap(g,'☠ '+ch.f,bxx+20,byy+bh*.8,bw-36,f2*1.25);g.restore()}
   g.fillStyle='rgba(255,255,255,.75)';g.font='bold '+Math.round(clamp(W*.035,12,18))+'px Arial';g.textAlign='left';g.textBaseline='top';g.fillText('● REC  17:'+Math.min(55,47+Math.floor((t-T0)/3))+'  ÉQUIPE '+(Math.min(4,Math.max(1,Math.round(th)+1)))+'/4',14,14)}
+
+/** Convocation de la DRH : grande feuille lisible, texte plus long, tapé progressivement */
+const LETTER=['Bonjour,','Dans le cadre de la réorganisation « Cap 2030 », vous êtes convié(e) à un entretien individuel ce soir, 18h00, salle du Conseil, étage 2.','Prévoir un carton. Merci de ne rien emporter : tout ce qui est sur votre bureau appartient désormais à l\'entreprise, plante comprise.','Votre badge sera désactivé à l\'issue de l\'entretien. Nous vous remercions de votre compréhension.','Cordialement, la DRH (qui vous veut du bien).'];
+export const LETTER_T0=4.8,LETTER_CPS=90;
+export function vLetter(g: CanvasRenderingContext2D,W: number,H: number,t: number){
+  if(t<4.3)return;const k=vease((t-4.3)/.35),pw=W*.92,ph=H*.7,px=(W-pw)/2,py=H*.08+(1-k)*30;
+  g.save();g.globalAlpha=k;g.fillStyle='rgba(0,0,0,.45)';g.fillRect(px+6,py+8,pw,ph);g.fillStyle='#fffdf6';g.fillRect(px,py,pw,ph);
+  const hb=clamp(ph*.12,34,60);g.fillStyle='#b32626';g.fillRect(px,py,pw,hb);g.fillStyle='#fff';g.textAlign='left';g.textBaseline='middle';g.font='900 '+Math.round(hb*.5)+'px Arial Black, Arial, sans-serif';g.fillText('CONVOCATION',px+14,py+hb/2);
+  if(W>520){g.textAlign='right';g.font='bold '+Math.round(hb*.3)+'px Arial';g.fillText('URGENT · DRH',px+pw-14,py+hb/2)}
+  /* mise en page : on réduit la police jusqu'à tout faire tenir */
+  const full=LETTER.join(' ');let sz=clamp(Math.min(W*.05,ph*.075),13,30),lines: string[]=[];
+  for(;sz>=12;sz-=1){g.font='600 '+sz+'px Arial';lines=[];for(const para of LETTER){let l='';for(const w of para.split(' ')){const tt=l?l+' '+w:w;if(g.measureText(tt).width>pw-32&&l){lines.push(l);l=w}else l=tt}lines.push(l);lines.push('')}
+    if(lines.length*sz*1.32<=ph-hb-24)break}
+  let n=Math.floor(clamp((t-LETTER_T0)*LETTER_CPS,0,full.length+10)),y=py+hb+16;g.textAlign='left';g.textBaseline='top';g.fillStyle='#14171f';g.font='600 '+sz+'px Arial';
+  for(const l of lines){if(n<=0)break;const seg=l.slice(0,n);g.fillText(seg,px+16,y);n-=l.length+(l===''?0:1);y+=sz*1.32}
+  g.restore()}
+/** Faux éléments de gameplay pendant la course finale : actions, cônes, alertes, minicarte */
+export function vFake(g: CanvasRenderingContext2D,W: number,H: number,t: number){
+  const acts:[number,string,string][]=[[.6,'🥤','Gobelet lancé : le garde file nettoyer'],[2.0,'🚬','Clope offerte : fumoir pour 60 s'],[3.4,'🗣️','Baratin : « disruptons votre verticale »'],[4.8,'💻','Porte piratée en 8 s'],[6.2,'💡','Lumière coupée : 60 s de répit'],[7.6,'📷','Caméra hors service']];
+  const f=clamp(W*.04,13,20);
+  /* barre d'actions en haut à droite */
+  const bs=clamp(W*.085,30,48);acts.forEach((a,i)=>{const x=W-8-(acts.length-i)*(bs+5),on=t>=a[0]&&t<a[0]+1.2;g.fillStyle=on?'#ffb36b':'rgba(10,14,30,.75)';vrr(g,x,H*.2,bs,bs,8);g.fill();g.strokeStyle='rgba(255,255,255,.4)';g.stroke();g.font=Math.round(bs*.55)+'px Arial';g.textAlign='center';g.textBaseline='middle';g.fillStyle='#fff';g.fillText(a[1],x+bs/2,H*.2+bs/2+1)});
+  /* bandeau d'action */
+  for(const a of acts){const u=t-a[0];if(u<0||u>1.7)continue;const k=Math.min(1,u/.15,(1.7-u)/.2);g.save();g.globalAlpha=k;g.font='bold '+f+'px Arial';const w=Math.min(W*.92,g.measureText(a[2]).width+f*3.4);g.fillStyle='rgba(8,12,26,.9)';vrr(g,(W-w)/2,H*.3+(1-k)*14,w,f*2.4,10);g.fill();g.fillStyle='#ffb36b';g.fillRect((W-w)/2,H*.3+(1-k)*14,5,f*2.4);g.fillStyle='#fff';g.textAlign='left';g.textBaseline='middle';g.fillText(a[1]+' '+a[2],(W-w)/2+14,H*.3+(1-k)*14+f*1.2);g.restore()}
+  /* garde dans le couloir avec cône balayant et jauge de détection */
+  const gx=W*(.34+.04*Math.sin(t*.9)),gy=H*.56,gs=H*.0042,ang=-.2+Math.sin(t*1.7)*.5;
+  g.save();g.fillStyle=(t>3.1&&t<4.6)?'rgba(255,70,70,.28)':'rgba(255,220,90,.22)';g.beginPath();g.moveTo(gx,gy-gs*30);g.lineTo(gx+Math.cos(ang-.45)*W*.5,gy-gs*30+Math.sin(ang-.45)*H*.4+H*.15);g.lineTo(gx+Math.cos(ang+.45)*W*.5,gy-gs*30+Math.sin(ang+.45)*H*.4+H*.15);g.closePath();g.fill();g.restore();
+  drawPerson(g,gx,gy,{look:'vigile',kind:'vigile',dir:ang,moving:true,s:gs*1.1,ph:t});
+  const det=t>3.1&&t<4.6?(t-3.1)/1.5:t>=4.6&&t<5.6?Math.max(0,1-(t-4.6)):0;if(det>0){g.fillStyle='#10131f';g.fillRect(gx-22,gy-gs*72,44,6);g.fillStyle=det>.6?'#ff5d5d':'#ffb347';g.fillRect(gx-22,gy-gs*72,44*det,6);if(det>.6){g.fillStyle='#ff5d5d';g.font='900 '+f*1.4+'px Arial';g.textAlign='center';g.fillText('!',gx,gy-gs*80)}}
+  /* gobelet lancé */
+  if(t>.5&&t<1.6){const u=(t-.5)/1.1;g.fillStyle='#e9eef7';g.beginPath();g.arc(W*.5+(gx-W*.5)*u,H*.85-(H*.85-gy)*u-Math.sin(u*3.14)*H*.22,6,0,7);g.fill()}
+  /* minicarte */
+  const mw=clamp(W*.28,86,150),mh=mw*.62,mx=10,my=H-mh-H*.2;g.fillStyle='rgba(8,12,26,.8)';g.fillRect(mx,my,mw,mh);g.strokeStyle='rgba(255,255,255,.35)';g.strokeRect(mx,my,mw,mh);
+  g.fillStyle='rgba(255,255,255,.2)';g.fillRect(mx+6,my+mh*.4,mw-12,mh*.2);g.fillStyle='#ff8a3d';g.beginPath();g.arc(mx+mw*.15+((t*.1)%1)*mw*.7,my+mh*.5,4,0,7);g.fill();g.fillStyle='#ff5d5d';g.beginPath();g.arc(mx+mw*.55+Math.sin(t)*8,my+mh*.5,3,0,7);g.arc(mx+mw*.8,my+mh*.5,3,0,7);g.fill();
+  g.fillStyle='#fff';g.font='bold '+Math.max(9,f*.6)+'px Arial';g.textAlign='left';g.textBaseline='top';g.fillText('ÉTAGE 2',mx+5,my+4)}
 /* scène 3 : le téléphone */
 export function vPhone(g: CanvasRenderingContext2D,W: number,H: number,t: number){
   const bg=g.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#10131f');bg.addColorStop(1,'#222a40');g.fillStyle=bg;g.fillRect(0,0,W,H);
@@ -134,22 +172,27 @@ export function vTitle(g: CanvasRenderingContext2D,W: number,H: number,t: number
   const k=1-Math.pow(1-clamp(t/.35,0,1),3),sh=t<.5?(.5-t)*18:0;
   g.save();g.translate((Math.random()-.5)*sh,(Math.random()-.5)*sh);g.textAlign='center';g.textBaseline='middle';g.translate(W/2,H*.42);g.scale(1.7-.7*k,1.7-.7*k);g.globalAlpha=k;
   const fs=Math.round(Math.min(W/5.5,120));g.font='900 '+fs+'px Impact, Arial Black, sans-serif';g.lineJoin='round';g.lineWidth=fs*.1;g.strokeStyle='#000';g.strokeText('PLAN',0,-fs*.55);g.strokeText('SOCIAL',0,fs*.55);g.fillStyle='#fff';g.fillText('PLAN',0,-fs*.55);g.fillStyle='#ff8a3d';g.fillText('SOCIAL',0,fs*.55);
-  g.font='bold '+Math.round(Math.max(13,fs*.16))+'px Arial';g.lineWidth=0;g.fillStyle='#aab3d0';g.fillText("Licenciés à 18h. Pas avant d'avoir fini de nuire.",0,fs*1.3);g.restore();
+  g.restore();
+  /* texte de fin : bandeau opaque, gros caractères, contraste maximal */
+  {const k2=vease((t-.7)/.5),ts=Math.round(clamp(W*.052,17,32)),by=H*.7;g.save();g.globalAlpha=k2;g.fillStyle='rgba(0,0,0,.82)';g.fillRect(0,by,W,ts*5.4);g.fillStyle='#ff8a3d';g.fillRect(0,by,W,4);
+   g.textAlign='center';g.textBaseline='top';g.font='900 '+ts+'px Arial';g.fillStyle='#ffffff';vwrapC(g,"Licenciés à 18h. Pas avant d'avoir fini de nuire.",W/2,by+ts*.6,W*.9,ts*1.3);
+   g.font='bold '+Math.round(ts*.85)+'px Arial';g.fillStyle='#ffd2a8';vwrapC(g,'Récupérez la clé du DG et sortez tous ensemble avant 18h.',W/2,by+ts*3.1,W*.9,ts*1.2);g.restore()}
+
   vflash(g,W,H,t<.2?.9*(1-t/.2):0)}
 export function vflash(g: CanvasRenderingContext2D,W: number,H: number,a: number){if(a>0){g.fillStyle='rgba(255,255,255,'+Math.min(1,a)+')';g.fillRect(0,0,W,H)}}
 /* montage : bureau 0-7, panorama 7-17, téléphone 17-22, course 22-28, titre */
-export const VT={desk:7,pan:7,gap:2.5,phone:17,run:22,title:28};
+export const VT={desk:11,pan:11,gap:2.5,phone:21.5,run:26.5,title:35.5};
 export function drawVid(W: number,H: number,t: number){
   const g=vg;g.setTransform(vd,0,0,vd,0,0);g.globalAlpha=1;g.textAlign='left';
   let lid=0,dip=0;
-  if(t<VT.desk){vDesk(g,W,H,t);lid=t<.9?1-vease(t/.9):0;
-    vsub(g,W,H,'17h45. Vendredi. Plus que quinze minutes à faire semblant.',1,3.2,t);vsub(g,W,H,'Je n\'avais pas prévu que le plus long serait le dernier quart d\'heure.',5.2,6.9,t,'#ffd2a8');dip=t>6.6?(t-6.6)/.4:0}
+  if(t<VT.desk){vDesk(g,W,H,t);vLetter(g,W,H,t);lid=t<.9?1-vease(t/.9):0;
+    vsub(g,W,H,'17h45. Vendredi. Plus que quinze minutes à faire semblant.',1,3.2,t);vsub(g,W,H,'Je n\'avais pas prévu que le plus long serait le dernier quart d\'heure.',9.7,10.9,t,'#ffd2a8');dip=t>10.6?(t-10.6)/.4:0}
   else if(t<VT.phone){const tt=t-VT.pan;vPan(g,W,H,t,VT.pan+.4,VT.gap);dip=tt<.3?1-tt/.3:t>VT.phone-.4?(t-(VT.phone-.4))/.4:0;
-    vsub(g,W,H,'Je les connais tous. Eux aussi sont sur la liste.',VT.pan+.5,VT.pan+2.4,t)}
+    ;void 0}
   else if(t<VT.run){const tt=t-VT.phone;vPhone(g,W,H,tt);dip=tt<.15?1-tt/.15:t>VT.run-.4?(t-(VT.run-.4))/.4:0;
     vsub(g,W,H,'Un message anonyme. Sûrement un RH sympa. Ça n\'existe pas.',VT.phone+.9,VT.phone+3.2,t);vsub(g,W,H,'Quatre licenciés, une clé, quinze minutes.',VT.phone+3.6,VT.run-.3,t,'#ffd2a8')}
-  else if(t<VT.title){const tt=t-VT.run;vRun(g,W,H,tt);dip=tt<.15?1-tt/.15:t>VT.title-.15?(t-(VT.title-.15))/.15:0;
-    vsub(g,W,H,'Le plan : monter, ouvrir le coffre, sortir. Il ne tiendra pas jusqu\'à l\'étage 1.',VT.run+.6,VT.run+3.2,t)}
+  else if(t<VT.title){const tt=t-VT.run;vRun(g,W,H,tt);vFake(g,W,H,tt);dip=tt<.15?1-tt/.15:t>VT.title-.15?(t-(VT.title-.15))/.15:0;
+    vsub(g,W,H,'Le plan : monter, ouvrir le coffre, sortir. Il ne tiendra pas jusqu\'à l\'étage 1.',VT.run+.3,VT.run+3.2,t);vsub(g,W,H,'Chaque action compte. Chaque seconde aussi.',VT.run+5.6,VT.run+8.8,t,'#ffd2a8')}
   else{vTitle(g,W,H,t-VT.title)}
   if(t<VT.title){vvign(g,W,H,1);vlid(g,W,H,lid);if(dip>0){g.fillStyle='rgba(0,0,0,'+Math.min(1,dip)+')';g.fillRect(0,0,W,H)}
     if(t>1.5&&t<VT.title){g.fillStyle='rgba(255,255,255,.04)';for(let i=0;i<4;i++)g.fillRect(0,(t*90+i*H/4)%H,W,2)}}}
@@ -160,7 +203,7 @@ function vidSize(force: boolean){if(force||!vSz.w){const r=$('vid').getBoundingC
 addEventListener('resize',()=>{vSz.w=0});
 export function vidFrame(t: number){const z=vidSize(false);vd=z.k;drawVid(z.w,z.h,t)}
 /* Temps d'arrêt (instant de la vidéo, durée réelle en secondes) : le texte reste lisible avant chaque changement de scène */
-export const HOLDS: [number,number][]=[[3.0,2.6],[6.8,2.8],[9.3,2.6],[20.0,2.6],[21.6,2.8],[25.0,2.8]];
+export const HOLDS: [number,number][]=[[3.0,2.6],[10.8,3.6],[11.9,1.6],[14.4,1.6],[16.9,1.6],[19.4,1.6],[24.5,2.6],[26.1,2.4],[35.0,2.2]];
 export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(now-VID.last)/1000);VID.last=now;
   if(VID.hold&&VID.hold>0){if(!VID.drawn){vidFrame(VID.t);VID.drawn=true}VID.hold-=dt;if(VID.hold<=0)VID.drawn=false;requestAnimationFrame(vidLoop);return}
   VID.t+=dt*VSLOW;const t=VID.t;
@@ -170,7 +213,7 @@ export function vidLoop(now: number){if(!VID.run)return;const dt=Math.min(.05,(n
   if(t<VT.desk){while(VID.tick<t&&t<3.2){VID.tick+=.13;snd(900+Math.random()*300,.025,'square',.012)}}
   vonce('ping',3,()=>{snd(880,.18,'triangle',.06);setTimeout(()=>snd(660,.3,'triangle',.06),160)});
   vonce('sting',4.3,()=>{snd(110,.9,'sawtooth',.06,-30)});
-  vonce('whoosh1',6.8,()=>snd(400,.5,'sawtooth',.03,-300));
+  vonce('whoosh1',10.9,()=>snd(400,.5,'sawtooth',.03,-300));
   for(let i=0;i<4;i++)vonce('p'+i,VT.pan+.4+i*VT.gap+1,()=>{snd(300+i*50,.12,'triangle',.05,200)});
   vonce('buzz',VT.phone+.02,()=>{snd(90,.5,'square',.06);setTimeout(()=>snd(90,.5,'square',.06),600)});
   if(t>VT.run&&t<VT.title){while(VID.tick<t){VID.tick+=.32;snd(75,.07,'square',.07,-20)}}

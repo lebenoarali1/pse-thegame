@@ -42,6 +42,9 @@ export function pcChoose(k: string){const c=getC('nadege');if(!pcm||c.out)return
   if((Number(ST.S.flags['pc_'+k])||0)>ST.S.t){toast('Déjà fait il y a peu, attendez un peu','w');return}
   pcClose();if(k==='code'){startBusy(c,'hack',a.t,{what:'code',f:c.f});return}if(k==='cams2'){startBusy(c,'hack',a.t,{what:'cams',f:c.f});return}if(k==='portillon'){startBusy(c,'hack',a.t,{what:'accueil',f:c.f});return}startBusy(c,'hack',a.t,{what:'pcact',act:k,f:c.f})}
 export function lightsTick(){const L=ST.S.team.lightsOff;if(!L)return;for(const k of Object.keys(L)){const f=Number(k);if(!L[f])continue;const id=(ST.S.team.lightsWho||{})[f]||'';const e=id?ST.S.enemies.find(q=>q.id===id):undefined;
+  if(L[f]>ST.S.t&&(!e||e.ko||e.state==='chase'||e.state!=='coffee')){/* le préposé a été pris ou assommé : un autre va rallumer */
+    const r=ST.S.enemies.filter(q=>q.f===f&&!q.ko&&q.type!=='camera'&&q.type!=='dg'&&q.type!=='drh'&&q.state!=='chase'&&q.state!=='break'&&q.id!==id).sort((a,b)=>Math.hypot(a.x-SWITCH[f].x,a.y-SWITCH[f].y)-Math.hypot(b.x-SWITCH[f].x,b.y-SWITCH[f].y))[0];
+    if(r&&sendTo(r,SWITCH[f],4,['Disjoncteur...','Encore une coupure.'],'Personne n\'a rallumé ? J\'y vais.',0,PRI.lumiere)){ST.S.team.lightsWho=ST.S.team.lightsWho||{};ST.S.team.lightsWho[f]=r.id}}
   const done=L[f]<=ST.S.t||(e&&e.state==='coffee'&&e.cof&&e.cof.arrived);if(done&&L[f]>ST.S.t){L[f]=0;toast('La lumière revient','g');if(e)say(e,'Voilà, un disjoncteur de remis.',2.4)}else if(done)L[f]=0}}
 /** Durée (s) avant que le support réactive les caméras coupées */
 export const CAM_OFF_S=120;

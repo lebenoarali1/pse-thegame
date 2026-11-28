@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.19
+- Bouton ☰ Menu en jeu : reprendre, sauvegarder, charger, commandes, retour à l'écran titre
+- Interrupteur : si l'employé parti rallumer est assommé ou lance une poursuite, un autre prend le relais
+- Vidéo d'intro refaite : convocation DRH grande, longue et lisible avec pause de lecture, bandeaux de personnages plus percutants (nom géant, rôle, pouvoirs, faiblesse, pause par personnage), faux éléments de gameplay pendant la course finale, texte de fin sur bandeau opaque
+- Page Recette dans la documentation (cases à cocher mémorisées), backlog mis à jour
+
 ## 1.18
 - Écran de démarrage allégé (titre, résumé, Commencer, difficulté) ; vidéo plus fluide (résolution plafonnée, taille mesurée une fois, image figée pas redessinée pendant les pauses)
 - Interrupteur : tout le monde peut couper ou rallumer la lumière en le touchant
